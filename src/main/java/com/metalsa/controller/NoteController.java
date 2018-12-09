@@ -1,8 +1,9 @@
-package com.example.easynotes.controller;
+package com.metalsa.controller;
 
-import com.example.easynotes.exception.ResourceNotFoundException;
-import com.example.easynotes.model.Note;
-import com.example.easynotes.repository.NoteRepository;
+import com.metalsa.domain.Note;
+import com.metalsa.exception.ExceptionHandler;
+import com.metalsa.repository.NoteRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,7 @@ public class NoteController {
     @GetMapping("/notes/{id}")
     public Note getNoteById(@PathVariable(value = "id") Long noteId) {
         return noteRepository.findById(noteId)
-                .orElseThrow(() -> new ResourceNotFoundException("Note", "id", noteId));
+                .orElseThrow(() -> new ExceptionHandler("Note", "id", noteId));
     }
 
     @PutMapping("/notes/{id}")
@@ -41,7 +42,7 @@ public class NoteController {
                                            @Valid @RequestBody Note noteDetails) {
 
         Note note = noteRepository.findById(noteId)
-                .orElseThrow(() -> new ResourceNotFoundException("Note", "id", noteId));
+                .orElseThrow(() -> new ExceptionHandler("Note", "id", noteId));
 
         note.setTitle(noteDetails.getTitle());
         note.setContent(noteDetails.getContent());
@@ -53,7 +54,7 @@ public class NoteController {
     @DeleteMapping("/notes/{id}")
     public ResponseEntity<?> deleteNote(@PathVariable(value = "id") Long noteId) {
         Note note = noteRepository.findById(noteId)
-                .orElseThrow(() -> new ResourceNotFoundException("Note", "id", noteId));
+                .orElseThrow(() -> new ExceptionHandler("Note", "id", noteId));
 
         noteRepository.delete(note);
 
