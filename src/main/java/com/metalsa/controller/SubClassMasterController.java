@@ -40,7 +40,7 @@ public class SubClassMasterController {
     }
 
     @GetMapping("/subclass/{id}")
-    public SubclassMasterUt getClassById(@PathVariable(value = "id") Long id) {
+    public SubclassMasterUt getSubClassById(@PathVariable(value = "id") Long id) {
         return subClassRepository.findById(id)
                 .orElseThrow(() -> new ExceptionHandler("SubClassMasterUt", "id", id));
     }

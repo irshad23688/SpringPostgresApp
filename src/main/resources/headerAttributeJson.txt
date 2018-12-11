@@ -1,0 +1,24 @@
+Request Json
+
+        {
+            "name": "Carbon Steel",
+            "description": "Carbon Steel",
+            "createdOn": 1335205592410,
+            "createdBy": "Jay",
+            "modifiedOn": 1335205592410 ,
+            "modifiedBy": "Jay"
+        }
+
+
+Response Json
+
+{
+    "id": 1,
+    "createdBy": "Jay",
+    "createdOn": "2012-04-23T18:26:32.410+0000",
+    "description": "Carbon Steel",
+    "istableheaderFlag": null,
+    "modifiedBy": "Jay",
+    "modifiedOn": "2012-04-23T18:26:32.410+0000",
+    "name": "Carbon Steel"
+}
