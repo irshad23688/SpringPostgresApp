@@ -1,10 +1,15 @@
 package com.metalsa.controller;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,8 +40,13 @@ public class ClassMasterController {
     }
 
     @PostMapping("/class")
-    public ClassMasterUt createClass(@Valid @RequestBody ClassMasterUt classMaster) {
-        return classRepository.save(classMaster);
+    public Resource<ClassMasterUt> createClass(@Valid @RequestBody ClassMasterUt classMaster) {
+    	//return classRepository.save(classMaster);
+    	ClassMasterUt classMasterUtSaved =  classRepository.save(classMaster);
+    	Resource<ClassMasterUt> resource = new Resource<ClassMasterUt>(classMasterUtSaved);
+    	ControllerLinkBuilder linkTo = linkTo(methodOn(this.getClass()).getAllClass());
+    	resource.add(linkTo.withRel("class"));
+    	return resource;
     }
 
     @GetMapping("/class/{id}")

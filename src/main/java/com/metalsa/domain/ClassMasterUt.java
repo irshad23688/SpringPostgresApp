@@ -36,6 +36,7 @@ public class ClassMasterUt implements Serializable {
 	@Column(name="modified_on")
 	private Date modifiedOn;
 
+	@Column(name="name",unique = true)
 	private String name;
 
 	private String status;
