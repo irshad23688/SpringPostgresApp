@@ -1,0 +1,32 @@
+Request Json
+
+        {
+            "name": "Carbon Steel",
+            "description": "Carbon Steel",
+            "createdOn": 1335205592410,
+            "createdBy": "Jay",
+            "modifiedOn": 1335205592410 ,
+            "modifiedBy": "Jay",
+            "abbrivation" : "CBR",
+            "status" : "Active"
+        }
+
+
+Response Json
+
+{
+    "id": 2,
+    "abbrivation": "CBR",
+    "createdBy": "Jay",
+    "createdOn": "2012-04-23T18:26:32.410+0000",
+    "description": "Carbon Steel",
+    "modifiedBy": "Jay",
+    "modifiedOn": "2012-04-23T18:26:32.410+0000",
+    "name": "Carbon Steel",
+    "status": "Active",
+    "_links": {
+        "region": {
+            "href": "http://localhost:8083/api/region"
+        }
+    }
+}

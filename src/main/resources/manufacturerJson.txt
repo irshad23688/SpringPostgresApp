@@ -1,0 +1,37 @@
+Request Json
+
+        {
+            "name": "Carbon Steel",
+            "description": "Carbon Steel",
+            "createdOn": 1335205592410,
+            "createdBy": "Jay",
+            "modifiedOn": 1335205592410 ,
+            "modifiedBy": "Jay",
+            "status" : "Active"
+        }
+
+
+Response Json
+
+{
+    "id": 3,
+    "createdBy": "Jay",
+    "createdOn": "2012-04-23T18:26:32.410+0000",
+    "description": "Carbon Steel",
+    "modifiedBy": "Jay",
+    "modifiedOn": "2012-04-23T18:26:32.410+0000",
+    "name": "Carbon Steel",
+    "status": "Active",
+    "_links": {
+        "manufacturer": {
+            "href": "http://localhost:8083/api/manufacturer"
+        }
+    }
+}
+
+Multiple Object Response
+
+[{"id":1,"createdBy":"Jay","createdOn":"2012-04-23","description":"Carbon Steel","modifiedBy":"Jay","modifiedOn":"2012-04-23","name":"Carbon Steel","status":"Active"},
+{"id":2,"createdBy":"Jay","createdOn":"2012-04-23","description":"Carbon Steel","modifiedBy":"Jay","modifiedOn":"2012-04-23","name":"Carbon Comp","status":"Active"},
+{"id":3,"createdBy":"Jay","createdOn":"2012-04-23","description":"Carbon Steel","modifiedBy":"Jay","modifiedOn":"2012-04-23","name":"Carbon Value","status":"Active"}
+]

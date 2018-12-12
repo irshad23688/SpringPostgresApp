@@ -1,0 +1,36 @@
+Request Json
+
+        {
+            "headerAttributeId" : "1",
+            "name": "Carbon Value",
+            "description": "Carbon Steel",
+            "createdOn": 1335205592410,
+            "createdBy": "Jay",
+            "dataTypeId" : 1,
+            "displayName" : "BaseAttr1",
+            "defaultValue" : "DefaultValue",
+            "modifiedOn": 1335205592410 ,
+            "modifiedBy": "Jay",
+            "status" : "Active",
+            "symbol" : "Symbol Representation" ,
+            "tooltip" : "tooltip information"
+        }
+
+Response Json
+
+{
+    "id": 2,
+    "createdBy": "Jay",
+    "createdOn": "2012-04-23T18:26:32.410+0000",
+    "dataTypeId": 1,
+    "defaultValue": "DefaultValue",
+    "description": "Carbon Steel",
+    "displayName": "BaseAttr1",
+    "headerAttributeId": 1,
+    "modifiedBy": "Jay",
+    "modifiedOn": "2012-04-23T18:26:32.410+0000",
+    "name": "Carbon Value",
+    "status": "Active",
+    "symbol": "Symbol Representation",
+    "tooltip": "tooltip information"
+}
