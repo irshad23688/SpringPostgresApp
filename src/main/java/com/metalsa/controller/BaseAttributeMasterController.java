@@ -56,7 +56,7 @@ public class BaseAttributeMasterController {
     @DeleteMapping("/baseattribute/{id}")
     public ResponseEntity<?> deleteBaseAttribute(@PathVariable(value = "id") Long baseAttributeId) {
     	 BaseAttributeMasterUt baseAttributeMaster = baseAttributeRepository.findById(baseAttributeId)
-                .orElseThrow(() -> new ExceptionHandler("Note", "id", baseAttributeId));
+                .orElseThrow(() -> new ExceptionHandler("BaseAttributeMasterUt", "id", baseAttributeId));
 
         baseAttributeRepository.delete(baseAttributeMaster);
 

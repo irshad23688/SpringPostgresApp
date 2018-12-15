@@ -154,6 +154,22 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         final ApiError apiError = new ApiError(HttpStatus.UNSUPPORTED_MEDIA_TYPE, ex.getLocalizedMessage(), builder.substring(0, builder.length() - 2));
         return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
     }
+    
+    
+    /**
+     * 
+     * Custom exception handler which will handle all custom exception of application  
+     * @param ex
+     * @param request
+     * @return
+     */
+    @ExceptionHandler({ CustomException.class })
+    public ResponseEntity<Object> handleCustomException(final CustomException ex, final WebRequest request) {
+        logger.info(ex.getClass().getName());
+        logger.error("error", ex);
+        final ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage(), "error occurred");
+        return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+    }
 
     // 500
 

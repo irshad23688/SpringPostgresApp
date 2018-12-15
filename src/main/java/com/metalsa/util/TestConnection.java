@@ -1,9 +1,9 @@
-package com.metalsa.model;
+package com.metalsa.util;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
 
-public class test {
+public class TestConnection {
 	public static void main(String[] s) {
 		try{  
 			Class.forName("oracle.jdbc.driver.OracleDriver");  

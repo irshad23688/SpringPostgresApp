@@ -3,11 +3,8 @@
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
     <logger name="com.metalsa" level="DEBUG" additivity="false">
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="FILE"/>
-    </logger>
-    <logger name="com.metalsa" level="DEBUG" additivity="false">
-        <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="FILE"/>
+<!--         TODO Remove when deployed - To check if need to set log file as given per path-->
+        <!-- <appender-ref ref="FILE"/> -->
     </logger>
  </configuration>
  

@@ -1,4 +1,4 @@
-package com.metalsa.error;
+package com.metalsa.exception;
 
 import java.io.IOException;
 

@@ -56,7 +56,7 @@ public class HeaderAttrMasterController {
     @DeleteMapping("/headerAttribute/{id}")
     public ResponseEntity<?> deleteHeaderAttribute(@PathVariable(value = "id") Long headerAttrMasterId) {
     	 HeaderAttributeMasterUt headerAttrMaster = headerAttrRepository.findById(headerAttrMasterId)
-                .orElseThrow(() -> new ExceptionHandler("Note", "id", headerAttrMasterId));
+                .orElseThrow(() -> new ExceptionHandler("HeaderAttributeMasterUt", "id", headerAttrMasterId));
 
         headerAttrRepository.delete(headerAttrMaster);
 

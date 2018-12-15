@@ -66,7 +66,7 @@ public class ClassMasterController {
     @DeleteMapping("/class/{id}")
     public ResponseEntity<?> deleteClass(@PathVariable(value = "id") Long classId) {
     	 ClassMasterUt classMaster = classRepository.findById(classId)
-                .orElseThrow(() -> new ExceptionHandler("Note", "id", classId));
+                .orElseThrow(() -> new ExceptionHandler("ClassMasterUt", "id", classId));
 
         classRepository.delete(classMaster);
 

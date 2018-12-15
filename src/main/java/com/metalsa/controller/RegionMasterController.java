@@ -66,10 +66,9 @@ public class RegionMasterController {
     @DeleteMapping("/region/{id}")
     public ResponseEntity<?> deleteRegion(@PathVariable(value = "id") Long regionId) {
     	 RegionMasterUt regionMaster = regionRepository.findById(regionId)
-                .orElseThrow(() -> new ExceptionHandler("Note", "id", regionId));
+                .orElseThrow(() -> new ExceptionHandler("RegionMasterUt", "id", regionId));
 
         regionRepository.delete(regionMaster);
-
         return ResponseEntity.ok().build();
     }
 

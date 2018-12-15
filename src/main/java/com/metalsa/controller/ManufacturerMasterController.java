@@ -66,7 +66,7 @@ public class ManufacturerMasterController {
     @DeleteMapping("/manufacturer/{id}")
     public ResponseEntity<?> deleteManufacturer(@PathVariable(value = "id") Long manufacturerId) {
     	 ManufacturerMasterUt manufacturerMaster = manufacturerRepository.findById(manufacturerId)
-                .orElseThrow(() -> new ExceptionHandler("Note", "id", manufacturerId));
+                .orElseThrow(() -> new ExceptionHandler("ManufacturerMasterUt", "id", manufacturerId));
 
         manufacturerRepository.delete(manufacturerMaster);
 

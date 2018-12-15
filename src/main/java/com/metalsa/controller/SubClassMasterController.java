@@ -56,7 +56,7 @@ public class SubClassMasterController {
     @DeleteMapping("/subclass/{id}")
     public ResponseEntity<?> deleteSubClass(@PathVariable(value = "id") Long subClassId) {
     	 SubclassMasterUt subClassMaster = subClassRepository.findById(subClassId)
-                .orElseThrow(() -> new ExceptionHandler("Note", "id", subClassId));
+                .orElseThrow(() -> new ExceptionHandler("SubClassMasterUt", "id", subClassId));
 
         subClassRepository.delete(subClassMaster);
 
