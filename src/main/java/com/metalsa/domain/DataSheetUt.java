@@ -28,9 +28,19 @@ public class DataSheetUt implements Serializable {
 
 	@Column(name="class_id")
 	private Integer classId;
+	
+	
+	@Column(name="revision_id")
+	private Integer revisionId;
+	
+	@Column(name="region_id")
+	private Integer regionId;
 
 	@Column(name="created_by")
 	private String createdBy;
+	
+	@Column(name="metalsa_designation")
+	private String metalsaDesignation;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="created_on")

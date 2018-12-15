@@ -19,7 +19,7 @@ public class RegionMasterUt implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 
-	private String abbrivation;
+	private String abbreviation;
 
 	@Column(name="created_by")
 	private String createdBy;
@@ -52,12 +52,14 @@ public class RegionMasterUt implements Serializable {
 		this.id = id;
 	}
 
-	public String getAbbrivation() {
-		return this.abbrivation;
+	 
+
+	public String getAbbreviation() {
+		return abbreviation;
 	}
 
-	public void setAbbrivation(String abbrivation) {
-		this.abbrivation = abbrivation;
+	public void setAbbreviation(String abbreviation) {
+		this.abbreviation = abbreviation;
 	}
 
 	public String getCreatedBy() {

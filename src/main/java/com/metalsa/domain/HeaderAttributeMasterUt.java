@@ -27,6 +27,8 @@ public class HeaderAttributeMasterUt implements Serializable {
 	private Date createdOn;
 
 	private String description;
+	
+	private String status;
 
 	@Column(name="istableheader_flag")
 	private String istableheaderFlag;
@@ -42,6 +44,17 @@ public class HeaderAttributeMasterUt implements Serializable {
 
 	public HeaderAttributeMasterUt() {
 	}
+
+	
+	public String getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 
 	public Integer getId() {
 		return this.id;
