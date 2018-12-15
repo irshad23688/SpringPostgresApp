@@ -28,7 +28,7 @@ import com.metalsa.repository.ClassRepository;
  * Created by jayesh on 9/12/18.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/master")
 public class ClassMasterController {
 	
     @Autowired

@@ -23,7 +23,7 @@ import com.metalsa.repository.SubClassRepository;
  * Created by jayesh on 9/12/18.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/admin")
 public class SubClassMasterController {
 	
     @Autowired
