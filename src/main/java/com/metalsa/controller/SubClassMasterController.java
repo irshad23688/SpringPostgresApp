@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,13 +32,13 @@ public class SubClassMasterController {
 
     @GetMapping("/subclass")
     public List<MmrSubclassMasterUt> getAllSubClass() {
-        return subClassRepository.findAll();
+        return subClassRepository.findAll(new Sort(Sort.Direction.DESC,"modifiedOn"));
     }
 
     @PostMapping("/subclass")
     public List<MmrSubclassMasterUt> createSubClass(@Valid @RequestBody MmrSubclassMasterUt subClassMaster) {
     	subClassRepository.save(subClassMaster);
-        return subClassRepository.findAll();
+        return subClassRepository.findAll(new Sort(Sort.Direction.DESC,"modifiedOn"));
     }
 
     @GetMapping("/subclass/{id}")

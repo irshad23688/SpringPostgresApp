@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +32,7 @@ public class BaseAttributeMasterController {
 
     @GetMapping("/baseattribute")
     public List<BaseAttributeMasterUt> getAllBaseAttribute() {
-        return baseAttributeRepository.findAll();
+        return baseAttributeRepository.findAll(new Sort(Sort.Direction.DESC,"createdOn"));
     }
 
     @PostMapping("/baseattribute")

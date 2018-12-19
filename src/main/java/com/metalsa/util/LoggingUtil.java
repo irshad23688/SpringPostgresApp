@@ -16,9 +16,9 @@ public class LoggingUtil {
 	@Around("execution(* com.metalsa.controller..*.*(..)) || execution(* com.metalsa.service..*.*(..))"
 			+ " || execution(* com.metalsa.repository..*.*(..))")
 	public Object logMethods(ProceedingJoinPoint joinPoint) throws Throwable {
-			log.info(String.format("Entering class () method ()",joinPoint.getTarget().getClass().getName(),joinPoint.getSignature().getName()));
+			log.info(String.format("Entering class %s method %s",joinPoint.getTarget().getClass().getName(),joinPoint.getSignature().getName()));
 			Object retVal = joinPoint.proceed();
-			log.info(String.format("Exiting class () method ()",joinPoint.getTarget().getClass().getName(),joinPoint.getSignature().getName()));
+			log.info(String.format("Exiting class %s method %s",joinPoint.getTarget().getClass().getName(),joinPoint.getSignature().getName()));
 			return retVal;
 	}
 

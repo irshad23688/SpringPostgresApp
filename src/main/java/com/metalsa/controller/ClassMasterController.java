@@ -1,15 +1,11 @@
 package com.metalsa.controller;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
-
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.mvc.ControllerLinkBuilder;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,17 +32,13 @@ public class ClassMasterController {
 
     @GetMapping("/class")
     public List<MmrClassMasterUt> getAllClass() {
-        return classRepository.findAll();
+        return classRepository.findAll(new Sort(Sort.Direction.DESC,"modifiedOn"));
     }
 
     @PostMapping("/class")
     public List<MmrClassMasterUt> createClass(@Valid @RequestBody MmrClassMasterUt classMaster) {
     	classRepository.save(classMaster);
-    	/*return classRepository.save(classMaster);
-    	Resource<MmrClassMasterUt> resource = new Resource<MmrClassMasterUt>(classMasterUtSaved);
-    	ControllerLinkBuilder linkTo = linkTo(methodOn(this.getClass()).getAllClass());
-    	resource.add(linkTo.withRel("class"));*/
-    	return classRepository.findAll();
+    	return classRepository.findAll(new Sort(Sort.Direction.DESC,"modifiedOn"));
     }
 
     @GetMapping("/class/{id}")
