@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.metalsa.domain.SubclassMasterUt;
+import com.metalsa.domain.MmrSubclassMasterUt;
 import com.metalsa.exception.ExceptionHandler;
 import com.metalsa.repository.SubClassRepository;
 
@@ -23,39 +23,40 @@ import com.metalsa.repository.SubClassRepository;
  * Created by jayesh on 9/12/18.
  */
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/api/master")
 public class SubClassMasterController {
 	
     @Autowired
     private SubClassRepository subClassRepository;
 
     @GetMapping("/subclass")
-    public List<SubclassMasterUt> getAllSubClass() {
+    public List<MmrSubclassMasterUt> getAllSubClass() {
         return subClassRepository.findAll();
     }
 
     @PostMapping("/subclass")
-    public SubclassMasterUt createSubClass(@Valid @RequestBody SubclassMasterUt subClassMaster) {
-        return subClassRepository.save(subClassMaster);
+    public List<MmrSubclassMasterUt> createSubClass(@Valid @RequestBody MmrSubclassMasterUt subClassMaster) {
+    	subClassRepository.save(subClassMaster);
+        return subClassRepository.findAll();
     }
 
     @GetMapping("/subclass/{id}")
-    public SubclassMasterUt getSubClassById(@PathVariable(value = "id") Long id) {
+    public MmrSubclassMasterUt getSubClassById(@PathVariable(value = "id") Long id) {
         return subClassRepository.findById(id)
                 .orElseThrow(() -> new ExceptionHandler("SubClassMasterUt", "id", id));
     }
 
     @PutMapping("/subclass/{id}")
-    public SubclassMasterUt updateSubClass(@PathVariable(value = "id") Long id,
-                                           @Valid @RequestBody SubclassMasterUt subClassMasterDetails) {
-        SubclassMasterUt subClassMaster = subClassRepository.findById(id)
+    public MmrSubclassMasterUt updateSubClass(@PathVariable(value = "id") Long id,
+                                           @Valid @RequestBody MmrSubclassMasterUt subClassMasterDetails) {
+        MmrSubclassMasterUt subClassMaster = subClassRepository.findById(id)
                 .orElseThrow(() -> new ExceptionHandler("SubClassMasterUt", "id", id));
         return subClassRepository.save(subClassMaster);
     }
     
     @DeleteMapping("/subclass/{id}")
     public ResponseEntity<?> deleteSubClass(@PathVariable(value = "id") Long subClassId) {
-    	 SubclassMasterUt subClassMaster = subClassRepository.findById(subClassId)
+    	 MmrSubclassMasterUt subClassMaster = subClassRepository.findById(subClassId)
                 .orElseThrow(() -> new ExceptionHandler("SubClassMasterUt", "id", subClassId));
 
         subClassRepository.delete(subClassMaster);

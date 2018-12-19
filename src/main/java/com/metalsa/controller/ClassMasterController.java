@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.metalsa.domain.ClassMasterUt;
+import com.metalsa.domain.MmrClassMasterUt;
 import com.metalsa.exception.ExceptionHandler;
 import com.metalsa.repository.ClassRepository;
 
@@ -35,38 +35,38 @@ public class ClassMasterController {
     private ClassRepository classRepository;
 
     @GetMapping("/class")
-    public List<ClassMasterUt> getAllClass() {
+    public List<MmrClassMasterUt> getAllClass() {
         return classRepository.findAll();
     }
 
     @PostMapping("/class")
-    public Resource<ClassMasterUt> createClass(@Valid @RequestBody ClassMasterUt classMaster) {
-    	//return classRepository.save(classMaster);
-    	ClassMasterUt classMasterUtSaved =  classRepository.save(classMaster);
-    	Resource<ClassMasterUt> resource = new Resource<ClassMasterUt>(classMasterUtSaved);
+    public List<MmrClassMasterUt> createClass(@Valid @RequestBody MmrClassMasterUt classMaster) {
+    	classRepository.save(classMaster);
+    	/*return classRepository.save(classMaster);
+    	Resource<MmrClassMasterUt> resource = new Resource<MmrClassMasterUt>(classMasterUtSaved);
     	ControllerLinkBuilder linkTo = linkTo(methodOn(this.getClass()).getAllClass());
-    	resource.add(linkTo.withRel("class"));
-    	return resource;
+    	resource.add(linkTo.withRel("class"));*/
+    	return classRepository.findAll();
     }
 
     @GetMapping("/class/{id}")
-    public ClassMasterUt getClassById(@PathVariable(value = "id") Long id) {
+    public MmrClassMasterUt getClassById(@PathVariable(value = "id") Long id) {
         return classRepository.findById(id)
-                .orElseThrow(() -> new ExceptionHandler("ClassMasterUt", "id", id));
+                .orElseThrow(() -> new ExceptionHandler("MmrClassMasterUt", "id", id));
     }
 
     @PutMapping("/class/{id}")
-    public ClassMasterUt updateClass(@PathVariable(value = "id") Long id,
-                                           @Valid @RequestBody ClassMasterUt classMasterDetails) {
-        ClassMasterUt classMaster = classRepository.findById(id)
-                .orElseThrow(() -> new ExceptionHandler("ClassMasterUt", "id", id));
+    public MmrClassMasterUt updateClass(@PathVariable(value = "id") Long id,
+                                           @Valid @RequestBody MmrClassMasterUt classMasterDetails) {
+        MmrClassMasterUt classMaster = classRepository.findById(id)
+                .orElseThrow(() -> new ExceptionHandler("MmrClassMasterUt", "id", id));
         return classRepository.save(classMaster);
     }
     
     @DeleteMapping("/class/{id}")
     public ResponseEntity<?> deleteClass(@PathVariable(value = "id") Long classId) {
-    	 ClassMasterUt classMaster = classRepository.findById(classId)
-                .orElseThrow(() -> new ExceptionHandler("ClassMasterUt", "id", classId));
+    	 MmrClassMasterUt classMaster = classRepository.findById(classId)
+                .orElseThrow(() -> new ExceptionHandler("MmrClassMasterUt", "id", classId));
 
         classRepository.delete(classMaster);
 

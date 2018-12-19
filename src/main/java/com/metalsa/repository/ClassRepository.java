@@ -3,9 +3,9 @@ package com.metalsa.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.metalsa.domain.ClassMasterUt;
+import com.metalsa.domain.MmrClassMasterUt;
 
 @Repository
-public interface ClassRepository extends JpaRepository<ClassMasterUt, Long> {
+public interface ClassRepository extends JpaRepository<MmrClassMasterUt, Long> {
 	
 }
