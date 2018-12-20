@@ -45,7 +45,7 @@ public class MmrHeaderAttributeMasterUt implements Serializable {
 	@Column(nullable=false, precision=38)
 	private BigDecimal status;
 
-	//bi-directional many-to-one association to MmrBaseAttributeMasterUt
+	/*//bi-directional many-to-one association to MmrBaseAttributeMasterUt
 	@OneToMany(mappedBy="mmrHeaderAttributeMasterUt")
 	private List<MmrBaseAttributeMasterUt> mmrBaseAttributeMasterUts;
 
@@ -55,7 +55,7 @@ public class MmrHeaderAttributeMasterUt implements Serializable {
 
 	//bi-directional many-to-one association to MmrTestSheetDetailUt
 	@OneToMany(mappedBy="mmrHeaderAttributeMasterUt")
-	private List<MmrTestSheetDetailUt> mmrTestSheetDetailUts;
+	private List<MmrTestSheetDetailUt> mmrTestSheetDetailUts;*/
 
 	public MmrHeaderAttributeMasterUt() {
 	}
@@ -132,7 +132,7 @@ public class MmrHeaderAttributeMasterUt implements Serializable {
 		this.status = status;
 	}
 
-	public List<MmrBaseAttributeMasterUt> getMmrBaseAttributeMasterUts() {
+	/*public List<MmrBaseAttributeMasterUt> getMmrBaseAttributeMasterUts() {
 		return this.mmrBaseAttributeMasterUts;
 	}
 
@@ -196,6 +196,6 @@ public class MmrHeaderAttributeMasterUt implements Serializable {
 		mmrTestSheetDetailUt.setMmrHeaderAttributeMasterUt(null);
 
 		return mmrTestSheetDetailUt;
-	}
+	}*/
 
 }

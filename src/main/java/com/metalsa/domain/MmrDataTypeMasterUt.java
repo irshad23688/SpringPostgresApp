@@ -42,10 +42,6 @@ public class MmrDataTypeMasterUt implements Serializable {
 	@Column(nullable=false, length=50)
 	private String status;
 
-	//bi-directional many-to-one association to MmrBaseAttributeMasterUt
-	@OneToMany(mappedBy="mmrDataTypeMasterUt")
-	private List<MmrBaseAttributeMasterUt> mmrBaseAttributeMasterUts;
-
 	public MmrDataTypeMasterUt() {
 	}
 
@@ -113,15 +109,15 @@ public class MmrDataTypeMasterUt implements Serializable {
 		this.status = status;
 	}
 
-	public List<MmrBaseAttributeMasterUt> getMmrBaseAttributeMasterUts() {
+	/*public List<MmrBaseAttributeMasterUt> getMmrBaseAttributeMasterUts() {
 		return this.mmrBaseAttributeMasterUts;
 	}
 
 	public void setMmrBaseAttributeMasterUts(List<MmrBaseAttributeMasterUt> mmrBaseAttributeMasterUts) {
 		this.mmrBaseAttributeMasterUts = mmrBaseAttributeMasterUts;
-	}
+	}*/
 
-	public MmrBaseAttributeMasterUt addMmrBaseAttributeMasterUt(MmrBaseAttributeMasterUt mmrBaseAttributeMasterUt) {
+	/*public MmrBaseAttributeMasterUt addMmrBaseAttributeMasterUt(MmrBaseAttributeMasterUt mmrBaseAttributeMasterUt) {
 		getMmrBaseAttributeMasterUts().add(mmrBaseAttributeMasterUt);
 		mmrBaseAttributeMasterUt.setMmrDataTypeMasterUt(this);
 
@@ -133,6 +129,6 @@ public class MmrDataTypeMasterUt implements Serializable {
 		mmrBaseAttributeMasterUt.setMmrDataTypeMasterUt(null);
 
 		return mmrBaseAttributeMasterUt;
-	}
+	}*/
 
 }

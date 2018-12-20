@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.metalsa.domain.HeaderAttributeMasterUt;
+import com.metalsa.domain.MmrHeaderAttributeMasterUt;
 import com.metalsa.exception.ExceptionHandler;
 import com.metalsa.repository.HeaderAttrRepository;
 
@@ -23,40 +23,40 @@ import com.metalsa.repository.HeaderAttrRepository;
  * Created by jayesh on 9/12/18.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/master")
 public class HeaderAttrMasterController {
 	
     @Autowired
     private HeaderAttrRepository headerAttrRepository;
 
     @GetMapping("/headerAttribute")
-    public List<HeaderAttributeMasterUt> getAllHeaderAttribute() {
+    public List<MmrHeaderAttributeMasterUt> getAllHeaderAttribute() {
         return headerAttrRepository.findAll();
     }
 
     @PostMapping("/headerAttribute")
-    public HeaderAttributeMasterUt createHeaderAttribute(@Valid @RequestBody HeaderAttributeMasterUt headerAttrMaster) {
+    public MmrHeaderAttributeMasterUt createHeaderAttribute(@Valid @RequestBody MmrHeaderAttributeMasterUt headerAttrMaster) {
         return headerAttrRepository.save(headerAttrMaster);
     }
 
     @GetMapping("/headerAttribute/{id}")
-    public HeaderAttributeMasterUt getHeaderAttributeById(@PathVariable(value = "id") Long id) {
+    public MmrHeaderAttributeMasterUt getHeaderAttributeById(@PathVariable(value = "id") Long id) {
         return headerAttrRepository.findById(id)
-                .orElseThrow(() -> new ExceptionHandler("HeaderAttributeMasterUt", "id", id));
+                .orElseThrow(() -> new ExceptionHandler("MmrHeaderAttributeMasterUt", "id", id));
     }
 
     @PutMapping("/headerAttribute/{id}")
-    public HeaderAttributeMasterUt updateHeaderAttribute(@PathVariable(value = "id") Long id,
-                                           @Valid @RequestBody HeaderAttributeMasterUt headerAttrMasterDetails) {
-        HeaderAttributeMasterUt headerAttrMaster = headerAttrRepository.findById(id)
-                .orElseThrow(() -> new ExceptionHandler("HeaderAttributeMasterUt", "id", id));
+    public MmrHeaderAttributeMasterUt updateHeaderAttribute(@PathVariable(value = "id") Long id,
+                                           @Valid @RequestBody MmrHeaderAttributeMasterUt headerAttrMasterDetails) {
+        MmrHeaderAttributeMasterUt headerAttrMaster = headerAttrRepository.findById(id)
+                .orElseThrow(() -> new ExceptionHandler("MmrHeaderAttributeMasterUt", "id", id));
         return headerAttrRepository.save(headerAttrMaster);
     }
     
     @DeleteMapping("/headerAttribute/{id}")
     public ResponseEntity<?> deleteHeaderAttribute(@PathVariable(value = "id") Long headerAttrMasterId) {
-    	 HeaderAttributeMasterUt headerAttrMaster = headerAttrRepository.findById(headerAttrMasterId)
-                .orElseThrow(() -> new ExceptionHandler("HeaderAttributeMasterUt", "id", headerAttrMasterId));
+    	 MmrHeaderAttributeMasterUt headerAttrMaster = headerAttrRepository.findById(headerAttrMasterId)
+                .orElseThrow(() -> new ExceptionHandler("MmrHeaderAttributeMasterUt", "id", headerAttrMasterId));
 
         headerAttrRepository.delete(headerAttrMaster);
 

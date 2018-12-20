@@ -18,19 +18,7 @@ Request Json
 
 Response Json
 
-{
-    "id": 2,
-    "createdBy": "Jay",
-    "createdOn": "2012-04-23T18:26:32.410+0000",
-    "dataTypeId": 1,
-    "defaultValue": "DefaultValue",
-    "description": "Carbon Steel",
-    "displayName": "BaseAttr1",
-    "headerAttributeId": 1,
-    "modifiedBy": "Jay",
-    "modifiedOn": "2012-04-23T18:26:32.410+0000",
-    "name": "Carbon Value",
-    "status": "Active",
-    "symbol": "Symbol Representation",
-    "tooltip": "tooltip information"
-}
+	{"headerAttrList":[{"id":2,"createdBy":1,"createdOn":"2018-11-20T18:30:00.000+0000","description":"Equivalent Standards","istableheaderFlag":"No","modifiedBy":1,"modifiedOn":"2018-11-20T18:30:00.000+0000","name":"Equivalent Standards","status":1},{"id":1,"createdBy":1,"createdOn":"2018-11-20T18:30:00.000+0000","description":"General Material Information","istableheaderFlag":"No","modifiedBy":1,"modifiedOn":"2018-11-20T18:30:00.000+0000","name":"General Material Information","status":1}],
+	"baseAttrList":[{"id":1,"createdBy":1,"createdOn":"2018-11-20T18:30:00.000+0000","defaultValue":"Nullable","description":"Metalsa Designation","displayName":"Metalsa Designation","modifiedBy":1,"modifiedOn":"2018-11-20T18:30:00.000+0000","name":"Metalsa Designation","status":1,"symbol":"MetalsaDes","tooltip":"Metalsa Designation","mmrDataTypeMasterUt":{"id":1,"createdBy":1,"createdOn":"2018-11-20T18:30:00.000+0000","description":"Text","modifiedBy":1,"modifiedOn":"2018-11-20T18:30:00.000+0000","name":"Text","status":"1"},"mmrHeaderAttributeMasterUt":{"id":1,"createdBy":1,"createdOn":"2018-11-20T18:30:00.000+0000","description":"General Material Information","istableheaderFlag":"No","modifiedBy":1,"modifiedOn":"2018-11-20T18:30:00.000+0000","name":"General Material Information","status":1}}],
+	"dataTypeList":[{"id":2,"createdBy":1,"createdOn":"2018-11-20T18:30:00.000+0000","description":"Length","modifiedBy":1,"modifiedOn":"2018-11-20T18:30:00.000+0000","name":"Length","status":"1"},{"id":1,"createdBy":1,"createdOn":"2018-11-20T18:30:00.000+0000","description":"Text","modifiedBy":1,"modifiedOn":"2018-11-20T18:30:00.000+0000","name":"Text","status":"1"}]
+	}	
