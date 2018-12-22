@@ -1,24 +1,190 @@
+-----------------------------------------------------------------------------------------------
 Request Json
+-----------------------------------------------------------------------------------------------
 
+   {
+    "headerAttrList": [
         {
-            "headerAttributeId" : "1",
-            "name": "Carbon Value",
-            "description": "Carbon Steel",
-            "createdOn": 1335205592410,
-            "createdBy": "Jay",
-            "dataTypeId" : 1,
-            "displayName" : "BaseAttr1",
-            "defaultValue" : "DefaultValue",
-            "modifiedOn": 1335205592410 ,
-            "modifiedBy": "Jay",
-            "status" : "Active",
-            "symbol" : "Symbol Representation" ,
-            "tooltip" : "tooltip information"
+            "id": 2,
+            "createdBy": 1,
+            "createdOn": "2018-11-20T18:30:00.000+0000",
+            "description": "Equivalent Standards",
+            "istableheaderFlag": "No",
+            "modifiedBy": 1,
+            "modifiedOn": "2018-11-20T18:30:00.000+0000",
+            "name": "Equivalent Standards",
+            "status": 1
         }
+    ],
+    "baseAttrList": [
+        {
+            "createdBy": 2,
+            "createdOn": "2018-11-20T18:30:00.000+0000",
+            "defaultValue": "Nullable",
+            "description": "Metalsa Designation2",
+            "displayName": "Metalsa Designation2",
+            "modifiedBy": 2,
+            "modifiedOn": "2018-11-20T18:30:00.000+0000",
+            "name": "Metalsa Designation2",
+            "status": 1,
+            "symbol": "MetalsaDes2",
+            "tooltip": "Metalsa Designation2",
+            "mmrDataTypeMasterUt": {
+                "id": 1,
+                "createdBy": 1,
+                "createdOn": "2018-11-20T18:30:00.000+0000",
+                "description": "Text",
+                "modifiedBy": 1,
+                "modifiedOn": "2018-11-20T18:30:00.000+0000",
+                "name": "Text",
+                "status": "1"
+            },
+            "mmrHeaderAttributeMasterUt": {
+                "id": 1,
+                "createdBy": 1,
+                "createdOn": "2018-11-20T18:30:00.000+0000",
+                "description": "General Material Information",
+                "istableheaderFlag": "No",
+                "modifiedBy": 1,
+                "modifiedOn": "2018-11-20T18:30:00.000+0000",
+                "name": "General Material Information",
+                "status": 1
+            },
+            "mmrBaseAttributeUomDetailsUts": [
+                {
+                    "createdBy": 2,
+                    "createdOn": "2018-11-20T18:30:00.000+0000",
+                    "modifiedBy": 2,
+                    "modifiedOn": "2018-11-20T18:30:00.000+0000",
+                    "som1ConversionFactor": "Perc2",
+                    "som1Isprimary": "1",
+                    "som1Uom": "Auto-gen2",
+                    "som2ConversionFactor": "Perc22",
+                    "som2Isprimary": "0",
+                    "som2Uom": "Auto-gen2",
+                    "status": 1
+                }
+            ]
+        }
+    ],
+    "dataTypeList": [
+        {
+            "id": 2,
+            "createdBy": 1,
+            "createdOn": "2018-11-20T18:30:00.000+0000",
+            "description": "Length",
+            "modifiedBy": 1,
+            "modifiedOn": "2018-11-20T18:30:00.000+0000",
+            "name": "Length",
+            "status": "1"
+        }
+    ]
+}
 
+-----------------------------------------------------------------------------------------------
 Response Json
+-----------------------------------------------------------------------------------------------
 
-	{"headerAttrList":[{"id":2,"createdBy":1,"createdOn":"2018-11-20T18:30:00.000+0000","description":"Equivalent Standards","istableheaderFlag":"No","modifiedBy":1,"modifiedOn":"2018-11-20T18:30:00.000+0000","name":"Equivalent Standards","status":1},{"id":1,"createdBy":1,"createdOn":"2018-11-20T18:30:00.000+0000","description":"General Material Information","istableheaderFlag":"No","modifiedBy":1,"modifiedOn":"2018-11-20T18:30:00.000+0000","name":"General Material Information","status":1}],
-	"baseAttrList":[{"id":1,"createdBy":1,"createdOn":"2018-11-20T18:30:00.000+0000","defaultValue":"Nullable","description":"Metalsa Designation","displayName":"Metalsa Designation","modifiedBy":1,"modifiedOn":"2018-11-20T18:30:00.000+0000","name":"Metalsa Designation","status":1,"symbol":"MetalsaDes","tooltip":"Metalsa Designation","mmrDataTypeMasterUt":{"id":1,"createdBy":1,"createdOn":"2018-11-20T18:30:00.000+0000","description":"Text","modifiedBy":1,"modifiedOn":"2018-11-20T18:30:00.000+0000","name":"Text","status":"1"},"mmrHeaderAttributeMasterUt":{"id":1,"createdBy":1,"createdOn":"2018-11-20T18:30:00.000+0000","description":"General Material Information","istableheaderFlag":"No","modifiedBy":1,"modifiedOn":"2018-11-20T18:30:00.000+0000","name":"General Material Information","status":1}}],
-	"dataTypeList":[{"id":2,"createdBy":1,"createdOn":"2018-11-20T18:30:00.000+0000","description":"Length","modifiedBy":1,"modifiedOn":"2018-11-20T18:30:00.000+0000","name":"Length","status":"1"},{"id":1,"createdBy":1,"createdOn":"2018-11-20T18:30:00.000+0000","description":"Text","modifiedBy":1,"modifiedOn":"2018-11-20T18:30:00.000+0000","name":"Text","status":"1"}]
-	}	
+
+	{
+    "headerAttrList": [
+        {
+            "id": 2,
+            "createdBy": 1,
+            "createdOn": "2018-11-20T18:30:00.000+0000",
+            "description": "Equivalent Standards",
+            "istableheaderFlag": "No",
+            "modifiedBy": 1,
+            "modifiedOn": "2018-11-20T18:30:00.000+0000",
+            "name": "Equivalent Standards",
+            "status": 1
+        },
+        {
+            "id": 1,
+            "createdBy": 1,
+            "createdOn": "2018-11-20T18:30:00.000+0000",
+            "description": "General Material Information",
+            "istableheaderFlag": "No",
+            "modifiedBy": 1,
+            "modifiedOn": "2018-11-20T18:30:00.000+0000",
+            "name": "General Material Information",
+            "status": 1
+        }
+    ],
+    "baseAttrList": [
+        {
+            "id": 1,
+            "createdBy": 1,
+            "createdOn": "2018-11-20T18:30:00.000+0000",
+            "defaultValue": "Nullable",
+            "description": "Metalsa Designation",
+            "displayName": "Metalsa Designation",
+            "modifiedBy": 1,
+            "modifiedOn": "2018-11-20T18:30:00.000+0000",
+            "name": "Metalsa Designation",
+            "status": 1,
+            "symbol": "MetalsaDes",
+            "tooltip": "Metalsa Designation",
+            "mmrDataTypeMasterUt": {
+                "id": 1,
+                "createdBy": 1,
+                "createdOn": "2018-11-20T18:30:00.000+0000",
+                "description": "Text",
+                "modifiedBy": 1,
+                "modifiedOn": "2018-11-20T18:30:00.000+0000",
+                "name": "Text",
+                "status": "1"
+            },
+            "mmrHeaderAttributeMasterUt": {
+                "id": 1,
+                "createdBy": 1,
+                "createdOn": "2018-11-20T18:30:00.000+0000",
+                "description": "General Material Information",
+                "istableheaderFlag": "No",
+                "modifiedBy": 1,
+                "modifiedOn": "2018-11-20T18:30:00.000+0000",
+                "name": "General Material Information",
+                "status": 1
+            },
+            "mmrBaseAttributeUomDetailsUts": [
+                {
+                    "id": 1,
+                    "createdBy": 1,
+                    "createdOn": "2018-11-20T18:30:00.000+0000",
+                    "modifiedBy": 1,
+                    "modifiedOn": "2018-11-20T18:30:00.000+0000",
+                    "som1ConversionFactor": "Perc",
+                    "som1Isprimary": "1",
+                    "som1Uom": "Auto-gen",
+                    "som2ConversionFactor": "Perc2",
+                    "som2Isprimary": "0",
+                    "som2Uom": "Auto-gen",
+                    "status": 1,
+                    "mmrBaseAttributeMasterUt": null
+                }
+            ]
+        }
+    ],
+    "dataTypeList": [
+        {
+            "id": 2,
+            "createdBy": 1,
+            "createdOn": "2018-11-20T18:30:00.000+0000",
+            "description": "Length",
+            "modifiedBy": 1,
+            "modifiedOn": "2018-11-20T18:30:00.000+0000",
+            "name": "Length",
+            "status": "1"
+        },
+        {
+            "id": 1,
+            "createdBy": 1,
+            "createdOn": "2018-11-20T18:30:00.000+0000",
+            "description": "Text",
+            "modifiedBy": 1,
+            "modifiedOn": "2018-11-20T18:30:00.000+0000",
+            "name": "Text",
+            "status": "1"
+        }
+    ]
+}	

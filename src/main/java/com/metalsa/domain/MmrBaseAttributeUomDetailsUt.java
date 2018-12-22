@@ -2,6 +2,9 @@ package com.metalsa.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
@@ -54,8 +57,8 @@ public class MmrBaseAttributeUomDetailsUt implements Serializable {
 	private BigDecimal status;
 
 	//bi-directional many-to-one association to MmrBaseAttributeMasterUt
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="BASE_ATTRIBUTE_ID", nullable=false)
+	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinColumn(name="BASE_ATTRIBUTE_ID")
 	private MmrBaseAttributeMasterUt mmrBaseAttributeMasterUt;
 
 	public MmrBaseAttributeUomDetailsUt() {
@@ -157,6 +160,7 @@ public class MmrBaseAttributeUomDetailsUt implements Serializable {
 		this.status = status;
 	}
 
+	@JsonIgnore
 	public MmrBaseAttributeMasterUt getMmrBaseAttributeMasterUt() {
 		return this.mmrBaseAttributeMasterUt;
 	}

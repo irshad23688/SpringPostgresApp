@@ -64,7 +64,9 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 	@JoinColumn(name="HEADER_ATTRIBUTE_ID", nullable=false)
 	private MmrHeaderAttributeMasterUt mmrHeaderAttributeMasterUt;
 
-	
+	//bi-directional many-to-one association to MmrBaseAttributeUomDetailsUt
+	@OneToMany(mappedBy="mmrBaseAttributeMasterUt", cascade = CascadeType.ALL,  fetch=FetchType.EAGER)
+	private List<MmrBaseAttributeUomDetailsUt> mmrBaseAttributeUomDetailsUts;
 	
 	public MmrBaseAttributeMasterUt() {
 	}
@@ -203,15 +205,18 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 		return mmrBaseAttributeTableDataTypeUt;
 	}*/
 
-	/*public List<MmrBaseAttributeUomDetailsUt> getMmrBaseAttributeUomDetailsUts() {
+	public List<MmrBaseAttributeUomDetailsUt> getMmrBaseAttributeUomDetailsUts() {
 		return this.mmrBaseAttributeUomDetailsUts;
 	}
 
 	public void setMmrBaseAttributeUomDetailsUts(List<MmrBaseAttributeUomDetailsUt> mmrBaseAttributeUomDetailsUts) {
 		this.mmrBaseAttributeUomDetailsUts = mmrBaseAttributeUomDetailsUts;
-	}*/
+		for(MmrBaseAttributeUomDetailsUt mmrBaseAttributeUomDetailsUt : this.mmrBaseAttributeUomDetailsUts) {
+			mmrBaseAttributeUomDetailsUt.setMmrBaseAttributeMasterUt(this);
+		}
+	}	
 
-	/*public MmrBaseAttributeUomDetailsUt addMmrBaseAttributeUomDetailsUt(MmrBaseAttributeUomDetailsUt mmrBaseAttributeUomDetailsUt) {
+	public MmrBaseAttributeUomDetailsUt addMmrBaseAttributeUomDetailsUt(MmrBaseAttributeUomDetailsUt mmrBaseAttributeUomDetailsUt) {
 		getMmrBaseAttributeUomDetailsUts().add(mmrBaseAttributeUomDetailsUt);
 		mmrBaseAttributeUomDetailsUt.setMmrBaseAttributeMasterUt(this);
 
@@ -223,7 +228,7 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 		mmrBaseAttributeUomDetailsUt.setMmrBaseAttributeMasterUt(null);
 
 		return mmrBaseAttributeUomDetailsUt;
-	}*/
+	}
 
 	/*public List<MmrTestSheetDetailUt> getMmrTestSheetDetailUts() {
 		return this.mmrTestSheetDetailUts;
