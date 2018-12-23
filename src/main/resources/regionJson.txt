@@ -1,32 +1,35 @@
+-----------------------------------------------------------------------------------------------
 Request Json
+-----------------------------------------------------------------------------------------------
+
 
         {
-            "name": "Carbon Steel",
-            "description": "Carbon Steel",
+            "name": "Australia",
+            "description": "Australia",
             "createdOn": 1335205592410,
-            "createdBy": "Jay",
+            "createdBy": "123",
             "modifiedOn": 1335205592410 ,
-            "modifiedBy": "Jay",
-            "abbrivation" : "CBR",
-            "status" : "Active"
+            "modifiedBy": "123",
+            "abbreviation" : "AUS",
+            "status" : "1"
         }
 
 
+-----------------------------------------------------------------------------------------------
 Response Json
+-----------------------------------------------------------------------------------------------
 
-{
-    "id": 2,
-    "abbrivation": "CBR",
-    "createdBy": "Jay",
-    "createdOn": "2012-04-23T18:26:32.410+0000",
-    "description": "Carbon Steel",
-    "modifiedBy": "Jay",
-    "modifiedOn": "2012-04-23T18:26:32.410+0000",
-    "name": "Carbon Steel",
-    "status": "Active",
-    "_links": {
-        "region": {
-            "href": "http://localhost:8083/api/region"
-        }
+
+[
+    {
+        "id": 74,
+        "abbreviation": "AUS",
+        "createdBy": 123,
+        "createdOn": "2012-04-23T18:26:32.410+0000",
+        "description": "Australia",
+        "modifiedBy": 123,
+        "modifiedOn": "2012-04-23T18:26:32.410+0000",
+        "name": "Australia",
+        "status": 1
     }
-}
+]

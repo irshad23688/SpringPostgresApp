@@ -48,11 +48,12 @@ public class ClassMasterController {
     }
 
     @PutMapping("/class/{id}")
-    public MmrClassMasterUt updateClass(@PathVariable(value = "id") Long id,
+    public List<MmrClassMasterUt> updateClass(@PathVariable(value = "id") Long id,
                                            @Valid @RequestBody MmrClassMasterUt classMasterDetails) {
         MmrClassMasterUt classMaster = classRepository.findById(id)
                 .orElseThrow(() -> new ExceptionHandler("MmrClassMasterUt", "id", id));
-        return classRepository.save(classMaster);
+        classRepository.save(classMaster);
+        return classRepository.findAll(new Sort(Sort.Direction.DESC,"modifiedOn"));
     }
     
     @DeleteMapping("/class/{id}")

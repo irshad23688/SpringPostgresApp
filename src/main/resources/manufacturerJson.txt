@@ -1,37 +1,32 @@
+-----------------------------------------------------------------------------------------------
 Request Json
+-----------------------------------------------------------------------------------------------
 
-        {
-            "name": "Carbon Steel",
-            "description": "Carbon Steel",
+       {
+            "name": "Tata",
+            "description": "Tata",
             "createdOn": 1335205592410,
-            "createdBy": "Jay",
+            "createdBy": "123",
             "modifiedOn": 1335205592410 ,
-            "modifiedBy": "Jay",
-            "status" : "Active"
+            "modifiedBy": "123",
+            "status" : "1"
         }
 
 
+-----------------------------------------------------------------------------------------------
 Response Json
+-----------------------------------------------------------------------------------------------
 
-{
-    "id": 3,
-    "createdBy": "Jay",
-    "createdOn": "2012-04-23T18:26:32.410+0000",
-    "description": "Carbon Steel",
-    "modifiedBy": "Jay",
-    "modifiedOn": "2012-04-23T18:26:32.410+0000",
-    "name": "Carbon Steel",
-    "status": "Active",
-    "_links": {
-        "manufacturer": {
-            "href": "http://localhost:8083/api/manufacturer"
-        }
+
+[
+    {
+        "id": 75,
+        "createdBy": 123,
+        "createdOn": "2012-04-23T18:26:32.410+0000",
+        "description": "Tata",
+        "modifiedBy": 123,
+        "modifiedOn": "2012-04-23T18:26:32.410+0000",
+        "name": "Tata",
+        "status": 1
     }
-}
-
-Multiple Object Response
-
-[{"id":1,"createdBy":"Jay","createdOn":"2012-04-23","description":"Carbon Steel","modifiedBy":"Jay","modifiedOn":"2012-04-23","name":"Carbon Steel","status":"Active"},
-{"id":2,"createdBy":"Jay","createdOn":"2012-04-23","description":"Carbon Steel","modifiedBy":"Jay","modifiedOn":"2012-04-23","name":"Carbon Comp","status":"Active"},
-{"id":3,"createdBy":"Jay","createdOn":"2012-04-23","description":"Carbon Steel","modifiedBy":"Jay","modifiedOn":"2012-04-23","name":"Carbon Value","status":"Active"}
 ]

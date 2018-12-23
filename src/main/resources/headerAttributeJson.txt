@@ -1,24 +1,47 @@
+-----------------------------------------------------------------------------------------------
 Request Json
+-----------------------------------------------------------------------------------------------
+
 
         {
             "name": "Carbon Steel",
             "description": "Carbon Steel",
             "createdOn": 1335205592410,
-            "createdBy": "Jay",
+            "createdBy": "123",
             "modifiedOn": 1335205592410 ,
-            "modifiedBy": "Jay"
+            "modifiedBy": "1231",
+            "istableheaderFlag" : "1",
+            "status" : "1",
+            "isstaticFlag" : "1"
         }
 
 
+-----------------------------------------------------------------------------------------------
 Response Json
+-----------------------------------------------------------------------------------------------
 
-{
-    "id": 1,
-    "createdBy": "Jay",
-    "createdOn": "2012-04-23T18:26:32.410+0000",
-    "description": "Carbon Steel",
-    "istableheaderFlag": null,
-    "modifiedBy": "Jay",
-    "modifiedOn": "2012-04-23T18:26:32.410+0000",
-    "name": "Carbon Steel"
-}
+
+[
+    {
+        "id": 68,
+        "createdBy": 123,
+        "createdOn": "2012-04-23T18:26:32.410+0000",
+        "description": "Carbon Steel",
+        "modifiedBy": 1231,
+        "modifiedOn": "2012-04-23T18:26:32.410+0000",
+        "isstaticFlag": 1,
+        "name": "Carbon Steel",
+        "status": 1
+    },
+    {
+        "id": 69,
+        "createdBy": 1231,
+        "createdOn": "2012-04-23T18:26:32.410+0000",
+        "description": "Carbon Steel2",
+        "modifiedBy": 1231,
+        "modifiedOn": "2012-04-23T18:26:32.410+0000",
+        "isstaticFlag": 1,
+        "name": "Carbon Steel2",
+        "status": 1
+    }
+]

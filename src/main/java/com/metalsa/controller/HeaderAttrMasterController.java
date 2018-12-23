@@ -29,31 +29,33 @@ public class HeaderAttrMasterController {
     @Autowired
     private HeaderAttrRepository headerAttrRepository;
 
-    @GetMapping("/headerAttribute")
+    @GetMapping("/headerattribute")
     public List<MmrHeaderAttributeMasterUt> getAllHeaderAttribute() {
         return headerAttrRepository.findAll();
     }
 
-    @PostMapping("/headerAttribute")
-    public MmrHeaderAttributeMasterUt createHeaderAttribute(@Valid @RequestBody MmrHeaderAttributeMasterUt headerAttrMaster) {
-        return headerAttrRepository.save(headerAttrMaster);
+    @PostMapping("/headerattribute")
+    public List<MmrHeaderAttributeMasterUt> createHeaderAttribute(@Valid @RequestBody MmrHeaderAttributeMasterUt headerAttrMaster) {
+        headerAttrRepository.save(headerAttrMaster);
+        return headerAttrRepository.findAll();
     }
 
-    @GetMapping("/headerAttribute/{id}")
+    @GetMapping("/headerattribute/{id}")
     public MmrHeaderAttributeMasterUt getHeaderAttributeById(@PathVariable(value = "id") Long id) {
         return headerAttrRepository.findById(id)
                 .orElseThrow(() -> new ExceptionHandler("MmrHeaderAttributeMasterUt", "id", id));
     }
 
-    @PutMapping("/headerAttribute/{id}")
-    public MmrHeaderAttributeMasterUt updateHeaderAttribute(@PathVariable(value = "id") Long id,
+    @PutMapping("/headerattribute/{id}")
+    public List<MmrHeaderAttributeMasterUt> updateHeaderAttribute(@PathVariable(value = "id") Long id,
                                            @Valid @RequestBody MmrHeaderAttributeMasterUt headerAttrMasterDetails) {
         MmrHeaderAttributeMasterUt headerAttrMaster = headerAttrRepository.findById(id)
                 .orElseThrow(() -> new ExceptionHandler("MmrHeaderAttributeMasterUt", "id", id));
-        return headerAttrRepository.save(headerAttrMaster);
+        headerAttrRepository.save(headerAttrMaster);
+        return headerAttrRepository.findAll();
     }
     
-    @DeleteMapping("/headerAttribute/{id}")
+    @DeleteMapping("/headerattribute/{id}")
     public ResponseEntity<?> deleteHeaderAttribute(@PathVariable(value = "id") Long headerAttrMasterId) {
     	 MmrHeaderAttributeMasterUt headerAttrMaster = headerAttrRepository.findById(headerAttrMasterId)
                 .orElseThrow(() -> new ExceptionHandler("MmrHeaderAttributeMasterUt", "id", headerAttrMasterId));

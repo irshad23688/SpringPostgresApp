@@ -2,19 +2,19 @@
 Request Json
 -----------------------------------------------------------------------------------------------
 
-   {
+     {
     "headerAttrList": [
-        {
-            "id": 2,
-            "createdBy": 1,
-            "createdOn": "2018-11-20T18:30:00.000+0000",
-            "description": "Equivalent Standards",
-            "istableheaderFlag": "No",
-            "modifiedBy": 1,
-            "modifiedOn": "2018-11-20T18:30:00.000+0000",
-            "name": "Equivalent Standards",
+	        {
+	         "id": 68,
+            "createdBy": 123,
+            "createdOn": "2012-04-23T18:26:32.410+0000",
+            "description": "Carbon Steel",
+            "modifiedBy": 1231,
+            "modifiedOn": "2012-04-23T18:26:32.410+0000",
+            "isstaticFlag": 1,
+            "name": "Carbon Steel",
             "status": 1
-        }
+	    }
     ],
     "baseAttrList": [
         {
@@ -29,27 +29,11 @@ Request Json
             "status": 1,
             "symbol": "MetalsaDes2",
             "tooltip": "Metalsa Designation2",
-            "mmrDataTypeMasterUt": {
-                "id": 1,
-                "createdBy": 1,
-                "createdOn": "2018-11-20T18:30:00.000+0000",
-                "description": "Text",
-                "modifiedBy": 1,
-                "modifiedOn": "2018-11-20T18:30:00.000+0000",
-                "name": "Text",
-                "status": "1"
-            },
-            "mmrHeaderAttributeMasterUt": {
-                "id": 1,
-                "createdBy": 1,
-                "createdOn": "2018-11-20T18:30:00.000+0000",
-                "description": "General Material Information",
-                "istableheaderFlag": "No",
-                "modifiedBy": 1,
-                "modifiedOn": "2018-11-20T18:30:00.000+0000",
-                "name": "General Material Information",
-                "status": 1
-            },
+            "displayNameUom1" : "UOM1",
+		    "displayNameUom2" : "UOM2",
+		    "placeHolderText" : "placeText",
+            "mmrDataTypeMasterUt": {},
+            "mmrHeaderAttributeMasterUt": {},
             "mmrBaseAttributeUomDetailsUts": [
                 {
                     "createdBy": 2,
@@ -71,10 +55,10 @@ Request Json
         {
             "id": 2,
             "createdBy": 1,
-            "createdOn": "2018-11-20T18:30:00.000+0000",
+            "createdOn": "2018-12-23T18:25:44.095+0000",
             "description": "Length",
-            "modifiedBy": 1,
-            "modifiedOn": "2018-11-20T18:30:00.000+0000",
+            "modifiedBy": null,
+            "modifiedOn": null,
             "name": "Length",
             "status": "1"
         }
@@ -89,78 +73,79 @@ Response Json
 	{
     "headerAttrList": [
         {
-            "id": 2,
-            "createdBy": 1,
-            "createdOn": "2018-11-20T18:30:00.000+0000",
-            "description": "Equivalent Standards",
-            "istableheaderFlag": "No",
-            "modifiedBy": 1,
-            "modifiedOn": "2018-11-20T18:30:00.000+0000",
-            "name": "Equivalent Standards",
+            "id": 68,
+            "createdBy": 123,
+            "createdOn": "2012-04-23T18:26:32.410+0000",
+            "description": "Carbon Steel",
+            "modifiedBy": 1231,
+            "modifiedOn": "2012-04-23T18:26:32.410+0000",
+            "isstaticFlag": 1,
+            "name": "Carbon Steel",
             "status": 1
         },
         {
-            "id": 1,
-            "createdBy": 1,
-            "createdOn": "2018-11-20T18:30:00.000+0000",
-            "description": "General Material Information",
-            "istableheaderFlag": "No",
-            "modifiedBy": 1,
-            "modifiedOn": "2018-11-20T18:30:00.000+0000",
-            "name": "General Material Information",
+            "id": 69,
+            "createdBy": 1231,
+            "createdOn": "2012-04-23T18:26:32.410+0000",
+            "description": "Carbon Steel2",
+            "modifiedBy": 1231,
+            "modifiedOn": "2012-04-23T18:26:32.410+0000",
+            "isstaticFlag": 1,
+            "name": "Carbon Steel2",
             "status": 1
         }
     ],
     "baseAttrList": [
         {
-            "id": 1,
-            "createdBy": 1,
+            "id": 70,
+            "createdBy": 2,
             "createdOn": "2018-11-20T18:30:00.000+0000",
             "defaultValue": "Nullable",
-            "description": "Metalsa Designation",
-            "displayName": "Metalsa Designation",
-            "modifiedBy": 1,
+            "description": "Metalsa Designation2",
+            "displayNameUom1": "UOM1",
+            "displayNameUom2": "UOM2",
+            "placeHolderText": "placeText",
+            "modifiedBy": 2,
             "modifiedOn": "2018-11-20T18:30:00.000+0000",
-            "name": "Metalsa Designation",
+            "name": "Metalsa Designation2",
             "status": 1,
-            "symbol": "MetalsaDes",
-            "tooltip": "Metalsa Designation",
+            "symbol": "MetalsaDes2",
+            "tooltip": "Metalsa Designation2",
             "mmrDataTypeMasterUt": {
-                "id": 1,
+                "id": 2,
                 "createdBy": 1,
-                "createdOn": "2018-11-20T18:30:00.000+0000",
-                "description": "Text",
-                "modifiedBy": 1,
-                "modifiedOn": "2018-11-20T18:30:00.000+0000",
-                "name": "Text",
+                "createdOn": "2018-12-23T18:25:44.095+0000",
+                "description": "Length",
+                "modifiedBy": null,
+                "modifiedOn": null,
+                "name": "Length",
                 "status": "1"
             },
             "mmrHeaderAttributeMasterUt": {
-                "id": 1,
-                "createdBy": 1,
-                "createdOn": "2018-11-20T18:30:00.000+0000",
-                "description": "General Material Information",
-                "istableheaderFlag": "No",
-                "modifiedBy": 1,
-                "modifiedOn": "2018-11-20T18:30:00.000+0000",
-                "name": "General Material Information",
+                "id": 68,
+                "createdBy": 123,
+                "createdOn": "2012-04-23T18:26:32.410+0000",
+                "description": "Carbon Steel",
+                "modifiedBy": 1231,
+                "modifiedOn": "2012-04-23T18:26:32.410+0000",
+                "isstaticFlag": 1,
+                "name": "Carbon Steel",
                 "status": 1
             },
             "mmrBaseAttributeUomDetailsUts": [
                 {
-                    "id": 1,
-                    "createdBy": 1,
+                    "id": 71,
+                    "createdBy": 2,
                     "createdOn": "2018-11-20T18:30:00.000+0000",
-                    "modifiedBy": 1,
+                    "modifiedBy": 2,
                     "modifiedOn": "2018-11-20T18:30:00.000+0000",
-                    "som1ConversionFactor": "Perc",
+                    "som1ConversionFactor": "Perc2",
                     "som1Isprimary": "1",
-                    "som1Uom": "Auto-gen",
-                    "som2ConversionFactor": "Perc2",
+                    "som1Uom": "Auto-gen2",
+                    "som2ConversionFactor": "Perc22",
                     "som2Isprimary": "0",
-                    "som2Uom": "Auto-gen",
-                    "status": 1,
-                    "mmrBaseAttributeMasterUt": null
+                    "som2Uom": "Auto-gen2",
+                    "status": 1
                 }
             ]
         }
@@ -169,22 +154,22 @@ Response Json
         {
             "id": 2,
             "createdBy": 1,
-            "createdOn": "2018-11-20T18:30:00.000+0000",
+            "createdOn": "2018-12-23T18:25:44.095+0000",
             "description": "Length",
-            "modifiedBy": 1,
-            "modifiedOn": "2018-11-20T18:30:00.000+0000",
+            "modifiedBy": null,
+            "modifiedOn": null,
             "name": "Length",
             "status": "1"
         },
         {
             "id": 1,
             "createdBy": 1,
-            "createdOn": "2018-11-20T18:30:00.000+0000",
+            "createdOn": "2018-12-23T18:24:29.446+0000",
             "description": "Text",
-            "modifiedBy": 1,
-            "modifiedOn": "2018-11-20T18:30:00.000+0000",
+            "modifiedBy": null,
+            "modifiedOn": null,
             "name": "Text",
             "status": "1"
         }
     ]
-}	
+}

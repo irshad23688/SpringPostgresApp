@@ -33,8 +33,14 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 	@Column(nullable=false, length=500)
 	private String description;
 
-	@Column(name="DISPLAY_NAME", nullable=false, length=100)
-	private String displayName;
+	@Column(name="DISPLAY_NAME_UOM1", nullable=false, length=50)
+	private String displayNameUom1;
+	
+	@Column(name="DISPLAY_NAME_UOM2", nullable=false, length=50)
+	private String displayNameUom2;
+	
+	@Column(name="PLACE_HOLDER_TEXT", nullable=false, length=100)
+	private String placeHolderText;
 
 	@Column(name="MODIFIED_BY", precision=38)
 	private BigDecimal modifiedBy;
@@ -109,14 +115,6 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public String getDisplayName() {
-		return this.displayName;
-	}
-
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
 	}
 
 	public BigDecimal getModifiedBy() {
@@ -229,6 +227,32 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 
 		return mmrBaseAttributeUomDetailsUt;
 	}
+
+	public String getDisplayNameUom1() {
+		return displayNameUom1;
+	}
+
+	public void setDisplayNameUom1(String displayNameUom1) {
+		this.displayNameUom1 = displayNameUom1;
+	}
+
+	public String getDisplayNameUom2() {
+		return displayNameUom2;
+	}
+
+	public void setDisplayNameUom2(String displayNameUom2) {
+		this.displayNameUom2 = displayNameUom2;
+	}
+
+	public String getPlaceHolderText() {
+		return placeHolderText;
+	}
+
+	public void setPlaceHolderText(String placeHolderText) {
+		this.placeHolderText = placeHolderText;
+	}
+	
+	
 
 	/*public List<MmrTestSheetDetailUt> getMmrTestSheetDetailUts() {
 		return this.mmrTestSheetDetailUts;

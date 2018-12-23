@@ -1,47 +1,111 @@
+-----------------------------------------------------------------------------------------------
 Request Json
+-----------------------------------------------------------------------------------------------
 
-               {
-            "name": "Carbon Steel",
-            "description": "Carbon Steel",
-            "status": "Active",
-            "createdOn": 1335205592410,
-            "createdBy": "Jay",
-            "modifiedOn": 1335205592410 ,
-            "modifiedBy": "Jay",
-            "classMasterUt": 
-                           {
-    							"id": 4,
-    							"createdBy": "Jay",
-    							"createdOn": "2012-04-23T18:26:32.410+0000",
-    							"description": "Carbon Steel",
-    							"modifiedBy": "Jay",
-    							"modifiedOn": "2012-04-23T18:26:32.410+0000",
-    							"name": "Carbon Steel",
-    							"status": "Active"
-    						}
+
+            {
+    "classUts": [
+        {
+            "id": 1,
+            "abbreviation": "CLS!",
+            "createdBy": 123,
+            "createdOn": "2018-12-23T07:00:09.982+0000",
+            "description": "Class One",
+            "modifiedBy": null,
+            "modifiedOn": null,
+            "name": "Class1",
+            "status": 1
         }
+    ],
+    "subclassUts": [
+        {
+            "abbreviation": "SubCls 2",
+            "createdBy": 1232,
+            "createdOn": "2018-12-23T07:03:14.487+0000",
+            "description": "SubClass Two",
+            "modifiedBy": null,
+            "modifiedOn": null,
+            "name": "SubClass2",
+            "status": 1,
+            "mmrClassMasterUt": {}
+        }
+    ]
+} 
 
-
+-----------------------------------------------------------------------------------------------
 Response Json
+-----------------------------------------------------------------------------------------------
+
 
 {
-    "id": 5,
-    "createdBy": "Jay",
-    "createdOn": "2012-04-23T18:26:32.410+0000",
-    "description": "Carbon Steel",
-    "modifiedBy": "Jay",
-    "modifiedOn": "2012-04-23T18:26:32.410+0000",
-    "name": "Carbon Steel",
-    "status": "Active",
-    "classMasterUt": {
-        "id": 4,
-        "createdBy": "Jay",
-        "createdOn": "2012-04-23T18:26:32.410+0000",
-        "description": "Carbon Steel",
-        "modifiedBy": "Jay",
-        "modifiedOn": "2012-04-23T18:26:32.410+0000",
-        "name": "Carbon Steel",
-        "status": "Active",
-        "subclassMasterUts": null
-    }
+    "classUts": [
+        {
+            "id": 1,
+            "abbreviation": "CLS!",
+            "createdBy": 123,
+            "createdOn": "2018-12-23T07:00:09.982+0000",
+            "description": "Class One",
+            "modifiedBy": null,
+            "modifiedOn": null,
+            "name": "Class1",
+            "status": 1
+        },
+        {
+            "id": 61,
+            "abbreviation": "CLS2!",
+            "createdBy": 1231,
+            "createdOn": "2018-12-23T07:00:09.982+0000",
+            "description": "Class Two",
+            "modifiedBy": null,
+            "modifiedOn": null,
+            "name": "Class2",
+            "status": 1
+        }
+    ],
+    "subclassUts": [
+        {
+            "id": 1,
+            "abbreviation": "SubCls 1",
+            "createdBy": 123,
+            "createdOn": "2018-12-23T07:03:14.487+0000",
+            "description": "SubClass One",
+            "modifiedBy": null,
+            "modifiedOn": null,
+            "name": "SubClass1",
+            "status": 1,
+            "mmrClassMasterUt": {
+                "id": 1,
+                "abbreviation": "CLS!",
+                "createdBy": 123,
+                "createdOn": "2018-12-23T07:00:09.982+0000",
+                "description": "Class One",
+                "modifiedBy": null,
+                "modifiedOn": null,
+                "name": "Class1",
+                "status": 1
+            }
+        },
+        {
+            "id": 62,
+            "abbreviation": "SubCls 2",
+            "createdBy": 1232,
+            "createdOn": "2018-12-23T07:03:14.487+0000",
+            "description": "SubClass Two",
+            "modifiedBy": null,
+            "modifiedOn": null,
+            "name": "SubClass2",
+            "status": 1,
+            "mmrClassMasterUt": {
+                "id": 1,
+                "abbreviation": "CLS!",
+                "createdBy": 123,
+                "createdOn": "2018-12-23T07:00:09.982+0000",
+                "description": "Class One",
+                "modifiedBy": null,
+                "modifiedOn": null,
+                "name": "Class1",
+                "status": 1
+            }
+        }
+    ]
 }

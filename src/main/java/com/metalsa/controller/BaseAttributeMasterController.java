@@ -34,7 +34,6 @@ public class BaseAttributeMasterController {
 
     @GetMapping("/baseattribute")
     public BaseAttrModel getAllBaseAttribute() {
-       // return baseAttributeRepository.findAll(new Sort(Sort.Direction.DESC,"createdOn"));
     	return baseAttrService.getBaseAttrData();
     }
 
@@ -51,11 +50,12 @@ public class BaseAttributeMasterController {
     }
 
     @PutMapping("/baseattribute/{id}")
-    public MmrBaseAttributeMasterUt updateBaseAttribute(@PathVariable(value = "id") Long id,
+    public BaseAttrModel updateBaseAttribute(@PathVariable(value = "id") Long id,
                                            @Valid @RequestBody MmrBaseAttributeMasterUt baseAttributeMasterDetails) {
     	MmrBaseAttributeMasterUt baseAttributeMaster = baseAttributeRepository.findById(id)
                 .orElseThrow(() -> new ExceptionHandler("BaseAttributeMasterUt", "id", id));
-        return baseAttributeRepository.save(baseAttributeMaster);
+        baseAttributeRepository.save(baseAttributeMaster);
+        return baseAttrService.getBaseAttrData();
     }
     
     @DeleteMapping("/baseattribute/{id}")

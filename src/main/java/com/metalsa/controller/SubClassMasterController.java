@@ -1,11 +1,8 @@
 package com.metalsa.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.metalsa.domain.MmrSubclassMasterUt;
 import com.metalsa.exception.ExceptionHandler;
+import com.metalsa.model.SubClassModel;
 import com.metalsa.repository.SubClassRepository;
+import com.metalsa.service.SubClassService;
 
 /**
  * Created by jayesh on 9/12/18.
@@ -29,16 +28,18 @@ public class SubClassMasterController {
 	
     @Autowired
     private SubClassRepository subClassRepository;
+    
+    @Autowired
+    private SubClassService subClassService;
 
     @GetMapping("/subclass")
-    public List<MmrSubclassMasterUt> getAllSubClass() {
-        return subClassRepository.findAll(new Sort(Sort.Direction.DESC,"modifiedOn"));
+    public SubClassModel getAllSubClass() {
+    	return subClassService.getSubClassData();
     }
 
     @PostMapping("/subclass")
-    public List<MmrSubclassMasterUt> createSubClass(@Valid @RequestBody MmrSubclassMasterUt subClassMaster) {
-    	subClassRepository.save(subClassMaster);
-        return subClassRepository.findAll(new Sort(Sort.Direction.DESC,"modifiedOn"));
+    public SubClassModel createSubClass(@Valid @RequestBody SubClassModel subClassModel) {
+    	return subClassService.persistSubClass(subClassModel);
     }
 
     @GetMapping("/subclass/{id}")
@@ -48,11 +49,12 @@ public class SubClassMasterController {
     }
 
     @PutMapping("/subclass/{id}")
-    public MmrSubclassMasterUt updateSubClass(@PathVariable(value = "id") Long id,
+    public SubClassModel updateSubClass(@PathVariable(value = "id") Long id,
                                            @Valid @RequestBody MmrSubclassMasterUt subClassMasterDetails) {
         MmrSubclassMasterUt subClassMaster = subClassRepository.findById(id)
                 .orElseThrow(() -> new ExceptionHandler("SubClassMasterUt", "id", id));
-        return subClassRepository.save(subClassMaster);
+        subClassRepository.save(subClassMaster);
+        return subClassService.getSubClassData();
     }
     
     @DeleteMapping("/subclass/{id}")

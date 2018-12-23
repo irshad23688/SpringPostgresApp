@@ -1,10 +1,15 @@
 package com.metalsa.domain;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 
 /**
@@ -31,13 +36,16 @@ public class MmrHeaderAttributeMasterUt implements Serializable {
 	private String description;
 
 	@Column(name="ISTABLEHEADER_FLAG", length=3)
-	private String istableheaderFlag;
+	private BigDecimal istableheaderFlag;
 
 	@Column(name="MODIFIED_BY", precision=38)
 	private BigDecimal modifiedBy;
 
 	@Column(name="MODIFIED_ON")
 	private Timestamp modifiedOn;
+	
+	@Column(name="ISSTATIC_FLAG")
+	private BigDecimal isstaticFlag;
 
 	@Column(nullable=false, length=100)
 	private String name;
@@ -92,14 +100,6 @@ public class MmrHeaderAttributeMasterUt implements Serializable {
 		this.description = description;
 	}
 
-	public String getIstableheaderFlag() {
-		return this.istableheaderFlag;
-	}
-
-	public void setIstableheaderFlag(String istableheaderFlag) {
-		this.istableheaderFlag = istableheaderFlag;
-	}
-
 	public BigDecimal getModifiedBy() {
 		return this.modifiedBy;
 	}
@@ -131,6 +131,20 @@ public class MmrHeaderAttributeMasterUt implements Serializable {
 	public void setStatus(BigDecimal status) {
 		this.status = status;
 	}
+
+	public BigDecimal getIsstaticFlag() {
+		return isstaticFlag;
+	}
+
+	public void setIsstaticFlag(BigDecimal isstaticFlag) {
+		this.isstaticFlag = isstaticFlag;
+	}
+
+	public void setIstableheaderFlag(BigDecimal istableheaderFlag) {
+		this.istableheaderFlag = istableheaderFlag;
+	}
+	
+	
 
 	/*public List<MmrBaseAttributeMasterUt> getMmrBaseAttributeMasterUts() {
 		return this.mmrBaseAttributeMasterUts;
