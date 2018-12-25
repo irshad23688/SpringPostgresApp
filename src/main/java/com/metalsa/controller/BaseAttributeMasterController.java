@@ -1,5 +1,7 @@
 package com.metalsa.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +39,16 @@ public class BaseAttributeMasterController {
     	return baseAttrService.getBaseAttrData();
     }
 
-    @PostMapping("/baseattribute")
+   /* @PostMapping("/baseattribute")
     public BaseAttrModel createBaseAttribute(@Valid @RequestBody BaseAttrModel baseAttrModel) {
         //return baseAttributeRepository.save(baseAttributeMaster);
     	return baseAttrService.persistBaseAttr(baseAttrModel);
+    }*/
+    @PostMapping("/baseattribute")
+    public List<MmrBaseAttributeMasterUt> createBaseAttribute(@Valid @RequestBody MmrBaseAttributeMasterUt baseAttributeMaster) {
+    	 baseAttributeRepository.save(baseAttributeMaster);
+    	return baseAttributeRepository.findAll();
+//    	return baseAttrService.persistBaseAttr(baseAttrModel);
     }
 
     @GetMapping("/baseattribute/{id}")

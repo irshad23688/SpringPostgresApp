@@ -2,6 +2,9 @@ package com.metalsa.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
@@ -66,7 +69,8 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 	private MmrDataTypeMasterUt mmrDataTypeMasterUt;
 
 	//bi-directional many-to-one association to MmrHeaderAttributeMasterUt
-	@ManyToOne(fetch=FetchType.EAGER)
+	@JsonIgnore
+	@ManyToOne
 	@JoinColumn(name="HEADER_ATTRIBUTE_ID", nullable=false)
 	private MmrHeaderAttributeMasterUt mmrHeaderAttributeMasterUt;
 

@@ -3,13 +3,17 @@ package com.metalsa.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
@@ -53,11 +57,11 @@ public class MmrHeaderAttributeMasterUt implements Serializable {
 	@Column(nullable=false, precision=38)
 	private BigDecimal status;
 
-	/*//bi-directional many-to-one association to MmrBaseAttributeMasterUt
+	//bi-directional many-to-one association to MmrBaseAttributeMasterUt
 	@OneToMany(mappedBy="mmrHeaderAttributeMasterUt")
 	private List<MmrBaseAttributeMasterUt> mmrBaseAttributeMasterUts;
 
-	//bi-directional many-to-one association to MmrBaseAttributeTableDataTypeUt
+	/*//bi-directional many-to-one association to MmrBaseAttributeTableDataTypeUt
 	@OneToMany(mappedBy="mmrHeaderAttributeMasterUt")
 	private List<MmrBaseAttributeTableDataTypeUt> mmrBaseAttributeTableDataTypeUts;
 
@@ -146,7 +150,7 @@ public class MmrHeaderAttributeMasterUt implements Serializable {
 	
 	
 
-	/*public List<MmrBaseAttributeMasterUt> getMmrBaseAttributeMasterUts() {
+	public List<MmrBaseAttributeMasterUt> getMmrBaseAttributeMasterUts() {
 		return this.mmrBaseAttributeMasterUts;
 	}
 
@@ -168,7 +172,7 @@ public class MmrHeaderAttributeMasterUt implements Serializable {
 		return mmrBaseAttributeMasterUt;
 	}
 
-	public List<MmrBaseAttributeTableDataTypeUt> getMmrBaseAttributeTableDataTypeUts() {
+	/*public List<MmrBaseAttributeTableDataTypeUt> getMmrBaseAttributeTableDataTypeUts() {
 		return this.mmrBaseAttributeTableDataTypeUts;
 	}
 

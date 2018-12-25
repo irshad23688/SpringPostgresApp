@@ -1,5 +1,7 @@
 package com.metalsa.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +39,14 @@ public class SubClassMasterController {
     	return subClassService.getSubClassData();
     }
 
-    @PostMapping("/subclass")
+    /*@PostMapping("/subclass")
     public SubClassModel createSubClass(@Valid @RequestBody SubClassModel subClassModel) {
     	return subClassService.persistSubClass(subClassModel);
+    }*/
+    @PostMapping("/subclass")
+    public List<MmrSubclassMasterUt> createSubClass(@Valid @RequestBody MmrSubclassMasterUt mmrSubclassMasterUt) {
+    	 subClassRepository.save(mmrSubclassMasterUt);
+    	return subClassRepository.findAll();
     }
 
     @GetMapping("/subclass/{id}")
