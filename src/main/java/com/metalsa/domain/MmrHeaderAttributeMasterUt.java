@@ -160,7 +160,7 @@ public class MmrHeaderAttributeMasterUt implements Serializable {
 
 	public MmrBaseAttributeMasterUt addMmrBaseAttributeMasterUt(MmrBaseAttributeMasterUt mmrBaseAttributeMasterUt) {
 		getMmrBaseAttributeMasterUts().add(mmrBaseAttributeMasterUt);
-		mmrBaseAttributeMasterUt.setMmrHeaderAttributeMasterUt(this);
+		//mmrBaseAttributeMasterUt.setMmrHeaderAttributeMasterUt(this);
 
 		return mmrBaseAttributeMasterUt;
 	}

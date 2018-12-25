@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.metalsa.domain.MmrBaseAttributeMasterUt;
+import com.metalsa.domain.MmrHeaderAttributeMasterUt;
 import com.metalsa.exception.ExceptionHandler;
 import com.metalsa.model.BaseAttrModel;
 import com.metalsa.repository.BaseAttributeRepository;
@@ -39,16 +40,10 @@ public class BaseAttributeMasterController {
     	return baseAttrService.getBaseAttrData();
     }
 
-   /* @PostMapping("/baseattribute")
-    public BaseAttrModel createBaseAttribute(@Valid @RequestBody BaseAttrModel baseAttrModel) {
-        //return baseAttributeRepository.save(baseAttributeMaster);
-    	return baseAttrService.persistBaseAttr(baseAttrModel);
-    }*/
     @PostMapping("/baseattribute")
     public List<MmrBaseAttributeMasterUt> createBaseAttribute(@Valid @RequestBody MmrBaseAttributeMasterUt baseAttributeMaster) {
-    	 baseAttributeRepository.save(baseAttributeMaster);
+    	baseAttributeRepository.save(baseAttributeMaster);
     	return baseAttributeRepository.findAll();
-//    	return baseAttrService.persistBaseAttr(baseAttrModel);
     }
 
     @GetMapping("/baseattribute/{id}")

@@ -35,8 +35,8 @@ public class SubClassMasterController {
     private SubClassService subClassService;
 
     @GetMapping("/subclass")
-    public SubClassModel getAllSubClass() {
-    	return subClassService.getSubClassData();
+    public List<MmrSubclassMasterUt> getAllSubClass() {
+    	return subClassRepository.findAll();
     }
 
     /*@PostMapping("/subclass")

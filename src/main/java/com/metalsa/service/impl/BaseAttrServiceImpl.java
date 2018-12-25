@@ -34,7 +34,7 @@ public class BaseAttrServiceImpl implements BaseAttrService {
 		baseAttrModel.getHeaderAttrList().get(0).getId();
 		baseAttrModel.getDataTypeList().get(0).getId();
 		MmrBaseAttributeMasterUt mmrBaseAttributeMasterUt = baseAttrModel.getBaseAttrList().get(0);
-		mmrBaseAttributeMasterUt.setMmrHeaderAttributeMasterUt(baseAttrModel.getHeaderAttrList().get(0));
+		//mmrBaseAttributeMasterUt.setMmrHeaderAttributeMasterUt(baseAttrModel.getHeaderAttrList().get(0));
 		mmrBaseAttributeMasterUt.setMmrDataTypeMasterUt(baseAttrModel.getDataTypeList().get(0));
 		baseAttributeRepository.save(mmrBaseAttributeMasterUt);
 		

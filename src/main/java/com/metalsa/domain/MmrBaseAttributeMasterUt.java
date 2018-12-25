@@ -1,13 +1,21 @@
 package com.metalsa.domain;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 /**
@@ -38,10 +46,10 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 
 	@Column(name="DISPLAY_NAME_UOM1", nullable=false, length=50)
 	private String displayNameUom1;
-	
+
 	@Column(name="DISPLAY_NAME_UOM2", nullable=false, length=50)
 	private String displayNameUom2;
-	
+
 	@Column(name="PLACE_HOLDER_TEXT", nullable=false, length=100)
 	private String placeHolderText;
 
@@ -68,16 +76,15 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 	@JoinColumn(name="DATA_TYPE_ID", nullable=false)
 	private MmrDataTypeMasterUt mmrDataTypeMasterUt;
 
-	//bi-directional many-to-one association to MmrHeaderAttributeMasterUt
-	@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name="HEADER_ATTRIBUTE_ID", nullable=false)
-	private MmrHeaderAttributeMasterUt mmrHeaderAttributeMasterUt;
+
+	@Column(name="HEADER_ATTRIBUTE_ID",nullable=false)
+	private Long mmrHeaderAttributeMasterUt;
 
 	//bi-directional many-to-one association to MmrBaseAttributeUomDetailsUt
 	@OneToMany(mappedBy="mmrBaseAttributeMasterUt", cascade = CascadeType.ALL,  fetch=FetchType.EAGER)
 	private List<MmrBaseAttributeUomDetailsUt> mmrBaseAttributeUomDetailsUts;
-	
+
+
 	public MmrBaseAttributeMasterUt() {
 	}
 
@@ -177,14 +184,12 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 		this.mmrDataTypeMasterUt = mmrDataTypeMasterUt;
 	}
 
-	public MmrHeaderAttributeMasterUt getMmrHeaderAttributeMasterUt() {
-		return this.mmrHeaderAttributeMasterUt;
-	}
-
-	public void setMmrHeaderAttributeMasterUt(MmrHeaderAttributeMasterUt mmrHeaderAttributeMasterUt) {
+	public void setMmrHeaderAttributeMasterUt(Long mmrHeaderAttributeMasterUt) {
 		this.mmrHeaderAttributeMasterUt = mmrHeaderAttributeMasterUt;
 	}
+	
 
+	 
 	/*public List<MmrBaseAttributeTableDataTypeUt> getMmrBaseAttributeTableDataTypeUts() {
 		return this.mmrBaseAttributeTableDataTypeUts;
 	}
@@ -206,6 +211,10 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 
 		return mmrBaseAttributeTableDataTypeUt;
 	}*/
+
+	public Long getMmrHeaderAttributeMasterUt() {
+		return mmrHeaderAttributeMasterUt;
+	}
 
 	public List<MmrBaseAttributeUomDetailsUt> getMmrBaseAttributeUomDetailsUts() {
 		return this.mmrBaseAttributeUomDetailsUts;
@@ -255,8 +264,9 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 	public void setPlaceHolderText(String placeHolderText) {
 		this.placeHolderText = placeHolderText;
 	}
-	
-	
+
+
+
 
 	/*public List<MmrTestSheetDetailUt> getMmrTestSheetDetailUts() {
 		return this.mmrTestSheetDetailUts;
@@ -279,5 +289,7 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 
 		return mmrTestSheetDetailUt;
 	}*/
+
+
 
 }

@@ -55,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
 //            .antMatchers("/api/csrfAttacker*").permitAll()
 //            .antMatchers("/api/customer/**").permitAll()
-            .antMatchers("/api/master/**").authenticated()
+            .antMatchers("/api/master/**").permitAll()
             .antMatchers("/api/search/**").permitAll()
             .antMatchers("/api/admin/**").hasRole("ADMIN")
             .and()
