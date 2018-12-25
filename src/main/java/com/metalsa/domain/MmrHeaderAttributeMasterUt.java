@@ -56,6 +56,9 @@ public class MmrHeaderAttributeMasterUt implements Serializable {
 
 	@Column(nullable=false, precision=38)
 	private BigDecimal status;
+	
+	@Column(name="IS_SEARCH",nullable=false, precision=38)
+	private BigDecimal isSearch;
 
 	//bi-directional many-to-one association to MmrBaseAttributeMasterUt
 	@OneToMany(mappedBy="mmrHeaderAttributeMasterUt")
@@ -160,7 +163,7 @@ public class MmrHeaderAttributeMasterUt implements Serializable {
 
 	public MmrBaseAttributeMasterUt addMmrBaseAttributeMasterUt(MmrBaseAttributeMasterUt mmrBaseAttributeMasterUt) {
 		getMmrBaseAttributeMasterUts().add(mmrBaseAttributeMasterUt);
-		//mmrBaseAttributeMasterUt.setMmrHeaderAttributeMasterUt(this);
+//		mmrBaseAttributeMasterUt.setMmrHeaderAttributeMasterUt(this.mmrBaseAttributeMasterUts);
 
 		return mmrBaseAttributeMasterUt;
 	}
@@ -172,48 +175,19 @@ public class MmrHeaderAttributeMasterUt implements Serializable {
 		return mmrBaseAttributeMasterUt;
 	}
 
-	/*public List<MmrBaseAttributeTableDataTypeUt> getMmrBaseAttributeTableDataTypeUts() {
-		return this.mmrBaseAttributeTableDataTypeUts;
+	public BigDecimal getIsSearch() {
+		return isSearch;
 	}
 
-	public void setMmrBaseAttributeTableDataTypeUts(List<MmrBaseAttributeTableDataTypeUt> mmrBaseAttributeTableDataTypeUts) {
-		this.mmrBaseAttributeTableDataTypeUts = mmrBaseAttributeTableDataTypeUts;
+	public void setIsSearch(BigDecimal isSearch) {
+		this.isSearch = isSearch;
 	}
 
-	public MmrBaseAttributeTableDataTypeUt addMmrBaseAttributeTableDataTypeUt(MmrBaseAttributeTableDataTypeUt mmrBaseAttributeTableDataTypeUt) {
-		getMmrBaseAttributeTableDataTypeUts().add(mmrBaseAttributeTableDataTypeUt);
-		mmrBaseAttributeTableDataTypeUt.setMmrHeaderAttributeMasterUt(this);
-
-		return mmrBaseAttributeTableDataTypeUt;
+	public BigDecimal getIstableheaderFlag() {
+		return istableheaderFlag;
 	}
+	
+	
 
-	public MmrBaseAttributeTableDataTypeUt removeMmrBaseAttributeTableDataTypeUt(MmrBaseAttributeTableDataTypeUt mmrBaseAttributeTableDataTypeUt) {
-		getMmrBaseAttributeTableDataTypeUts().remove(mmrBaseAttributeTableDataTypeUt);
-		mmrBaseAttributeTableDataTypeUt.setMmrHeaderAttributeMasterUt(null);
-
-		return mmrBaseAttributeTableDataTypeUt;
-	}
-
-	public List<MmrTestSheetDetailUt> getMmrTestSheetDetailUts() {
-		return this.mmrTestSheetDetailUts;
-	}
-
-	public void setMmrTestSheetDetailUts(List<MmrTestSheetDetailUt> mmrTestSheetDetailUts) {
-		this.mmrTestSheetDetailUts = mmrTestSheetDetailUts;
-	}
-
-	public MmrTestSheetDetailUt addMmrTestSheetDetailUt(MmrTestSheetDetailUt mmrTestSheetDetailUt) {
-		getMmrTestSheetDetailUts().add(mmrTestSheetDetailUt);
-		mmrTestSheetDetailUt.setMmrHeaderAttributeMasterUt(this);
-
-		return mmrTestSheetDetailUt;
-	}
-
-	public MmrTestSheetDetailUt removeMmrTestSheetDetailUt(MmrTestSheetDetailUt mmrTestSheetDetailUt) {
-		getMmrTestSheetDetailUts().remove(mmrTestSheetDetailUt);
-		mmrTestSheetDetailUt.setMmrHeaderAttributeMasterUt(null);
-
-		return mmrTestSheetDetailUt;
-	}*/
-
+ 
 }
