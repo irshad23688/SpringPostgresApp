@@ -17,8 +17,11 @@ public class LoggingUtil {
 			+ " || execution(* com.metalsa.repository..*.*(..))")
 	public Object logMethods(ProceedingJoinPoint joinPoint) throws Throwable {
 			log.info(String.format("Entering class %s method %s",joinPoint.getTarget().getClass().getName(),joinPoint.getSignature().getName()));
+			long startTime = System.nanoTime();
 			Object retVal = joinPoint.proceed();
-			log.info(String.format("Exiting class %s method %s",joinPoint.getTarget().getClass().getName(),joinPoint.getSignature().getName()));
+			long endTime = System.nanoTime();
+			long totatTime = endTime - startTime;
+			log.info(String.format("Exiting class %s method %s total time elapsed %s ms",joinPoint.getTarget().getClass().getName(),joinPoint.getSignature().getName(),totatTime/1000000));
 			return retVal;
 	}
 
