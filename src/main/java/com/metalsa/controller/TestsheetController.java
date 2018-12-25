@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.metalsa.domain.MmrBaseAttributeMasterUt;
 import com.metalsa.domain.MmrTestSheetUt;
 import com.metalsa.exception.ExceptionHandler;
 import com.metalsa.model.BaseAttrModel;
@@ -36,20 +35,14 @@ public class TestsheetController {
     private BaseAttrService baseAttrService;
 
     @GetMapping("/testsheet")
-    public List<MmrTestSheetUt> getAllBaseAttribute() {
+    public List<MmrTestSheetUt> getAllTestsheet() {
     	return testSheetRepository.findAll();
     }
-
-   /* @PostMapping("/testsheet")
-    public BaseAttrModel createBaseAttribute(@Valid @RequestBody BaseAttrModel baseAttrModel) {
-        //return baseAttributeRepository.save(baseAttributeMaster);
-    	return baseAttrService.persistBaseAttr(baseAttrModel);
-    }*/
+    
     @PostMapping("/testsheet")
-    public List<MmrTestSheetUt> createBaseAttribute(@Valid @RequestBody MmrTestSheetUt baseAttributeMaster) {
-    	 testSheetRepository.save(baseAttributeMaster);
+    public List<MmrTestSheetUt> createTestsheet(@Valid @RequestBody MmrTestSheetUt testSheetUt) {
+    	 testSheetRepository.save(testSheetUt);
     	return testSheetRepository.findAll();
-//    	return baseAttrService.persistBaseAttr(baseAttrModel);
     }
 
     @GetMapping("/testsheet/{id}")
@@ -61,18 +54,18 @@ public class TestsheetController {
     @PutMapping("/testsheet/{id}")
     public BaseAttrModel updateBaseAttribute(@PathVariable(value = "id") Long id,
                                            @Valid @RequestBody MmrTestSheetUt baseAttributeMasterDetails) {
-    	MmrTestSheetUt baseAttributeMaster = testSheetRepository.findById(id)
+    	MmrTestSheetUt testSheetUt = testSheetRepository.findById(id)
                 .orElseThrow(() -> new ExceptionHandler("BaseAttributeMasterUt", "id", id));
-        testSheetRepository.save(baseAttributeMaster);
+        testSheetRepository.save(testSheetUt);
         return baseAttrService.getBaseAttrData();
     }
     
     @DeleteMapping("/testsheet/{id}")
     public ResponseEntity<?> deleteBaseAttribute(@PathVariable(value = "id") Long baseAttributeId) {
-    	MmrTestSheetUt baseAttributeMaster = testSheetRepository.findById(baseAttributeId)
+    	MmrTestSheetUt testSheetUt = testSheetRepository.findById(baseAttributeId)
                 .orElseThrow(() -> new ExceptionHandler("BaseAttributeMasterUt", "id", baseAttributeId));
 
-        testSheetRepository.delete(baseAttributeMaster);
+        testSheetRepository.delete(testSheetUt);
 
         return ResponseEntity.ok().build();
     }
