@@ -39,20 +39,21 @@ public class MmrTestSheetDetailUt implements Serializable {
 	private BigDecimal status;
 
 	//bi-directional many-to-one association to MmrBaseAttributeMasterUt
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="BASE_ATTRIBUTE_ID", nullable=false)
-	private MmrBaseAttributeMasterUt mmrBaseAttributeMasterUt;
+	/*@ManyToOne(fetch=FetchType.LAZY)
+	*/
+	@Column(name="BASE_ATTRIBUTE_ID", nullable=false)
+	private Long mmrBaseAttributeMasterUt;
 
 	//bi-directional many-to-one association to MmrHeaderAttributeMasterUt
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="HEADER_ATTRIBUTE_ID", nullable=false)
-	private MmrHeaderAttributeMasterUt mmrHeaderAttributeMasterUt;
-
-	//bi-directional many-to-one association to MmrTestSheetUt
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="TEST_SHEET_ID", nullable=false)
-	private MmrTestSheetUt mmrTestSheetUt;
-
+	/*@ManyToOne(fetch=FetchType.LAZY)
+	*/
+	@Column(name="HEADER_ATTRIBUTE_ID", nullable=false)
+	private Long mmrHeaderAttributeMasterUt;
+	
+	@Column(name="TEST_SHEET_ID", nullable=false)
+	private Long mmrTestSheetUt;
+	
+	
 	public MmrTestSheetDetailUt() {
 	}
 
@@ -112,27 +113,27 @@ public class MmrTestSheetDetailUt implements Serializable {
 		this.status = status;
 	}
 
-	public MmrBaseAttributeMasterUt getMmrBaseAttributeMasterUt() {
+	public Long getMmrBaseAttributeMasterUt() {
 		return this.mmrBaseAttributeMasterUt;
 	}
 
-	public void setMmrBaseAttributeMasterUt(MmrBaseAttributeMasterUt mmrBaseAttributeMasterUt) {
+	public void setMmrBaseAttributeMasterUt(Long mmrBaseAttributeMasterUt) {
 		this.mmrBaseAttributeMasterUt = mmrBaseAttributeMasterUt;
 	}
 
-	public MmrHeaderAttributeMasterUt getMmrHeaderAttributeMasterUt() {
+	public Long getMmrHeaderAttributeMasterUt() {
 		return this.mmrHeaderAttributeMasterUt;
 	}
 
-	public void setMmrHeaderAttributeMasterUt(MmrHeaderAttributeMasterUt mmrHeaderAttributeMasterUt) {
+	public void setMmrHeaderAttributeMasterUt(Long mmrHeaderAttributeMasterUt) {
 		this.mmrHeaderAttributeMasterUt = mmrHeaderAttributeMasterUt;
 	}
 
-	public MmrTestSheetUt getMmrTestSheetUt() {
+	public Long getMmrTestSheetUt() {
 		return this.mmrTestSheetUt;
 	}
 
-	public void setMmrTestSheetUt(MmrTestSheetUt mmrTestSheetUt) {
+	public void setMmrTestSheetUt(Long mmrTestSheetUt) {
 		this.mmrTestSheetUt = mmrTestSheetUt;
 	}
 

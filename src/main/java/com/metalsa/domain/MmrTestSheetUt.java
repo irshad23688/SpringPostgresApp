@@ -48,19 +48,20 @@ public class MmrTestSheetUt implements Serializable {
 	@Column(nullable=false, precision=38)
 	private BigDecimal status;
 
-	//bi-directional many-to-one association to MmrTestSheetDetailUt
-	@OneToMany(mappedBy="mmrTestSheetUt")
+	/*//bi-directional many-to-one association to MmrTestSheetDetailUt
+	*/@OneToMany(mappedBy="mmrTestSheetUt")
 	private List<MmrTestSheetDetailUt> mmrTestSheetDetailUts;
 
 	//bi-directional many-to-one association to MmrClassMasterUt
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="CLASS_ID", nullable=false)
-	private MmrClassMasterUt mmrClassMasterUt;
+	/*@ManyToOne(fetch=FetchType.LAZY)
+	*/@Column(name="CLASS_ID", nullable=false)
+	private Long mmrClassMasterUt;
 
 	//bi-directional many-to-one association to MmrSubclassMasterUt
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="SUBCLASS_ID", nullable=false)
-	private MmrSubclassMasterUt mmrSubclassMasterUt;
+	/*@ManyToOne(fetch=FetchType.LAZY)
+	*/
+	@Column(name="SUBCLASS_ID", nullable=false)
+	private Long mmrSubclassMasterUt;
 
 	public MmrTestSheetUt() {
 	}
@@ -155,7 +156,7 @@ public class MmrTestSheetUt implements Serializable {
 
 	public MmrTestSheetDetailUt addMmrTestSheetDetailUt(MmrTestSheetDetailUt mmrTestSheetDetailUt) {
 		getMmrTestSheetDetailUts().add(mmrTestSheetDetailUt);
-		mmrTestSheetDetailUt.setMmrTestSheetUt(this);
+		mmrTestSheetDetailUt.setMmrTestSheetUt(this.getId());
 
 		return mmrTestSheetDetailUt;
 	}
@@ -167,19 +168,19 @@ public class MmrTestSheetUt implements Serializable {
 		return mmrTestSheetDetailUt;
 	}
 
-	public MmrClassMasterUt getMmrClassMasterUt() {
+	public Long getMmrClassMasterUt() {
 		return this.mmrClassMasterUt;
 	}
 
-	public void setMmrClassMasterUt(MmrClassMasterUt mmrClassMasterUt) {
+	public void setMmrClassMasterUt(Long mmrClassMasterUt) {
 		this.mmrClassMasterUt = mmrClassMasterUt;
 	}
 
-	public MmrSubclassMasterUt getMmrSubclassMasterUt() {
+	public Long getMmrSubclassMasterUt() {
 		return this.mmrSubclassMasterUt;
 	}
 
-	public void setMmrSubclassMasterUt(MmrSubclassMasterUt mmrSubclassMasterUt) {
+	public void setMmrSubclassMasterUt(Long mmrSubclassMasterUt) {
 		this.mmrSubclassMasterUt = mmrSubclassMasterUt;
 	}
 
