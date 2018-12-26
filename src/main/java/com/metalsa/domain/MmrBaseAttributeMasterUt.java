@@ -80,8 +80,8 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 	@Column(name="HEADER_ATTRIBUTE_ID",nullable=false)
 	private Long mmrHeaderAttributeMasterUt;
 	
-	@Column(name="IS_SEARCH",nullable=false, precision=38)
-	private BigDecimal isSearch;
+	/*@Column(name="IS_SEARCH",nullable=false, precision=38)
+	private BigDecimal isSearch;*/
 
 	//bi-directional many-to-one association to MmrBaseAttributeUomDetailsUt
 	@OneToMany(mappedBy="mmrBaseAttributeMasterUt", cascade = CascadeType.ALL,  fetch=FetchType.EAGER)
@@ -268,13 +268,13 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 		this.placeHolderText = placeHolderText;
 	}
 
-	public BigDecimal getIsSearch() {
+	/*public BigDecimal getIsSearch() {
 		return isSearch;
 	}
 
 	public void setIsSearch(BigDecimal isSearch) {
 		this.isSearch = isSearch;
-	}
+	}*/
 
 
 

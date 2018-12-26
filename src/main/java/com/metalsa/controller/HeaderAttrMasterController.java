@@ -49,9 +49,9 @@ public class HeaderAttrMasterController {
     @PutMapping("/headerattribute/{id}")
     public List<MmrHeaderAttributeMasterUt> updateHeaderAttribute(@PathVariable(value = "id") Long id,
                                            @Valid @RequestBody MmrHeaderAttributeMasterUt headerAttrMasterDetails) {
-        MmrHeaderAttributeMasterUt headerAttrMaster = headerAttrRepository.findById(id)
+        headerAttrRepository.findById(id)
                 .orElseThrow(() -> new ExceptionHandler("MmrHeaderAttributeMasterUt", "id", id));
-        headerAttrRepository.save(headerAttrMaster);
+        headerAttrRepository.save(headerAttrMasterDetails);
         return headerAttrRepository.findAll();
     }
     

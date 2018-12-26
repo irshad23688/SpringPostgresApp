@@ -50,9 +50,9 @@ public class ClassMasterController {
     @PutMapping("/class/{id}")
     public List<MmrClassMasterUt> updateClass(@PathVariable(value = "id") Long id,
                                            @Valid @RequestBody MmrClassMasterUt classMasterDetails) {
-        MmrClassMasterUt classMaster = classRepository.findById(id)
+        classRepository.findById(id)
                 .orElseThrow(() -> new ExceptionHandler("MmrClassMasterUt", "id", id));
-        classRepository.save(classMaster);
+        classRepository.save(classMasterDetails);
         return classRepository.findAll(new Sort(Sort.Direction.DESC,"modifiedOn"));
     }
     

@@ -59,9 +59,9 @@ public class ManufacturerMasterController {
     @PutMapping("/manufacturer/{id}")
     public List<MmrManufacturerMasterUt> updateManufacturer(@PathVariable(value = "id") Long id,
                                            @Valid @RequestBody MmrManufacturerMasterUt manufacturerMasterDetails) {
-    	MmrManufacturerMasterUt manufacturerMaster = manufacturerRepository.findById(id)
+    	manufacturerRepository.findById(id)
                 .orElseThrow(() -> new ExceptionHandler("ManufacturerMasterUt", "id", id));
-        manufacturerRepository.save(manufacturerMaster);
+        manufacturerRepository.save(manufacturerMasterDetails);
         return manufacturerRepository.findAll();
     }
     

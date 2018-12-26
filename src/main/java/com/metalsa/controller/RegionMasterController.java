@@ -54,9 +54,9 @@ public class RegionMasterController {
     @PutMapping("/region/{id}")
     public List<MmrRegionMasterUt> updateRegion(@PathVariable(value = "id") Long id,
                                            @Valid @RequestBody MmrRegionMasterUt mmrRegionMasterUt) {
-    	MmrRegionMasterUt regionMaster = regionRepository.findById(id)
+    	regionRepository.findById(id)
                 .orElseThrow(() -> new ExceptionHandler("MmrRegionMasterUt", "id", id));
-        regionRepository.save(regionMaster);
+        regionRepository.save(mmrRegionMasterUt);
         return regionRepository.findAll();
     }
     

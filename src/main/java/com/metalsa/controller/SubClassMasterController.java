@@ -58,9 +58,9 @@ public class SubClassMasterController {
     @PutMapping("/subclass/{id}")
     public SubClassModel updateSubClass(@PathVariable(value = "id") Long id,
                                            @Valid @RequestBody MmrSubclassMasterUt subClassMasterDetails) {
-        MmrSubclassMasterUt subClassMaster = subClassRepository.findById(id)
+        subClassRepository.findById(id)
                 .orElseThrow(() -> new ExceptionHandler("SubClassMasterUt", "id", id));
-        subClassRepository.save(subClassMaster);
+        subClassRepository.save(subClassMasterDetails);
         return subClassService.getSubClassData();
     }
     

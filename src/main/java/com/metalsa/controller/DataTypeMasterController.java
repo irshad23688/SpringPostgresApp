@@ -50,9 +50,9 @@ public class DataTypeMasterController {
     @PutMapping("/datatype/{id}")
     public List<MmrDataTypeMasterUt> updateDataType(@PathVariable(value = "id") Long id,
                                            @Valid @RequestBody MmrDataTypeMasterUt dataTypeMasterDetails) {
-        MmrDataTypeMasterUt dataTypeMasterUt = dataTypeRepository.findById(id)
+        dataTypeRepository.findById(id)
                 .orElseThrow(() -> new ExceptionHandler("MmrDataTypeMasterUt", "id", id));
-        dataTypeRepository.save(dataTypeMasterUt);
+        dataTypeRepository.save(dataTypeMasterDetails);
         return dataTypeRepository.findAll(new Sort(Sort.Direction.DESC,"modifiedOn"));
     }
     
