@@ -28,7 +28,7 @@ public class MmrDataSheetUt implements Serializable {
 	private Timestamp approvedOn;
 
 	@Column(name="CLASS_ID", nullable=false, precision=38)
-	private BigDecimal classId;
+	private Long classId;
 
 	@Column(name="CREATED_BY", nullable=false, precision=38)
 	private BigDecimal createdBy;
@@ -55,10 +55,10 @@ public class MmrDataSheetUt implements Serializable {
 	private BigDecimal status;
 
 	@Column(name="SUBCLASS_ID", nullable=false, precision=38)
-	private BigDecimal subclassId;
+	private Long subclassId;
 
 	@Column(name="TEST_SHEET_ID", nullable=false, precision=38)
-	private BigDecimal testSheetId;
+	private Long testSheetId;
 
 	//bi-directional many-to-one association to MmrDataSheetDetailUt
 	@OneToMany(mappedBy="mmrDataSheetUt")
@@ -91,13 +91,6 @@ public class MmrDataSheetUt implements Serializable {
 		this.approvedOn = approvedOn;
 	}
 
-	public BigDecimal getClassId() {
-		return this.classId;
-	}
-
-	public void setClassId(BigDecimal classId) {
-		this.classId = classId;
-	}
 
 	public BigDecimal getCreatedBy() {
 		return this.createdBy;
@@ -163,19 +156,27 @@ public class MmrDataSheetUt implements Serializable {
 		this.status = status;
 	}
 
-	public BigDecimal getSubclassId() {
-		return this.subclassId;
+	public Long getClassId() {
+		return classId;
 	}
 
-	public void setSubclassId(BigDecimal subclassId) {
+	public void setClassId(Long classId) {
+		this.classId = classId;
+	}
+
+	public Long getSubclassId() {
+		return subclassId;
+	}
+
+	public void setSubclassId(Long subclassId) {
 		this.subclassId = subclassId;
 	}
 
-	public BigDecimal getTestSheetId() {
-		return this.testSheetId;
+	public Long getTestSheetId() {
+		return testSheetId;
 	}
 
-	public void setTestSheetId(BigDecimal testSheetId) {
+	public void setTestSheetId(Long testSheetId) {
 		this.testSheetId = testSheetId;
 	}
 
@@ -189,15 +190,12 @@ public class MmrDataSheetUt implements Serializable {
 
 	public MmrDataSheetDetailUt addMmrDataSheetDetailUt(MmrDataSheetDetailUt mmrDataSheetDetailUt) {
 		getMmrDataSheetDetailUts().add(mmrDataSheetDetailUt);
-		mmrDataSheetDetailUt.setMmrDataSheetUt(this);
-
 		return mmrDataSheetDetailUt;
 	}
 
 	public MmrDataSheetDetailUt removeMmrDataSheetDetailUt(MmrDataSheetDetailUt mmrDataSheetDetailUt) {
 		getMmrDataSheetDetailUts().remove(mmrDataSheetDetailUt);
 		mmrDataSheetDetailUt.setMmrDataSheetUt(null);
-
 		return mmrDataSheetDetailUt;
 	}
 

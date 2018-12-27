@@ -2,14 +2,11 @@ package com.metalsa.repository;
 
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
-
-import com.metalsa.model.ParameterConfig;
+import com.metalsa.model.SearchModel;
 
 
 public interface SearchNCompareRepository {
 
-	List<ParameterConfig> getConfigParameters();
-	
+	List<Object[]> searchData(SearchModel model);
 	
 }

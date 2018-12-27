@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.metalsa.domain.MmrBaseAttributeMasterUt;
 import com.metalsa.exception.ExceptionHandler;
-import com.metalsa.model.BaseAttrModel;
 import com.metalsa.repository.BaseAttributeRepository;
 
 /**

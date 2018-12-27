@@ -15,7 +15,7 @@ public class TestConnection {
 			System.out.println(con.isClosed());  
 
 		}catch(Exception e){ System.out.println(e);}  */
-		new JsonCreator().createJson(new MmrSubclassMasterUt());
+		JsonCreator.createJson(new MmrSubclassMasterUt());
 
 
 	}

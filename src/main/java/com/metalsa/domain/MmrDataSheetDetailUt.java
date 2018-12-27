@@ -52,7 +52,7 @@ public class MmrDataSheetDetailUt implements Serializable {
 	private String supplierInformationTableType;
 
 	@Column(name="TEST_SHEET_DETAIL_ID", nullable=false, precision=38)
-	private BigDecimal testSheetDetailId;
+	private Long testSheetDetailId;
 
 	@Column(name="TESTING_INFORMATION", nullable=false, length=100)
 	private String testingInformation;
@@ -71,9 +71,8 @@ public class MmrDataSheetDetailUt implements Serializable {
 	private String userUom2;
 
 	//bi-directional many-to-one association to MmrDataSheetUt
-	@ManyToOne
-	@JoinColumn(name="DATA_SHEET_ID", nullable=false)
-	private MmrDataSheetUt mmrDataSheetUt;
+	@Column(name="DATA_SHEET_ID", nullable=false)
+	private Long mmrDataSheetUt;
 
 	public MmrDataSheetDetailUt() {
 	}
@@ -166,14 +165,6 @@ public class MmrDataSheetDetailUt implements Serializable {
 		this.supplierInformationTableType = supplierInformationTableType;
 	}
 
-	public BigDecimal getTestSheetDetailId() {
-		return this.testSheetDetailId;
-	}
-
-	public void setTestSheetDetailId(BigDecimal testSheetDetailId) {
-		this.testSheetDetailId = testSheetDetailId;
-	}
-
 	public String getTestingInformation() {
 		return this.testingInformation;
 	}
@@ -214,11 +205,19 @@ public class MmrDataSheetDetailUt implements Serializable {
 		this.userUom2 = userUom2;
 	}
 
-	public MmrDataSheetUt getMmrDataSheetUt() {
-		return this.mmrDataSheetUt;
+	public Long getTestSheetDetailId() {
+		return testSheetDetailId;
 	}
 
-	public void setMmrDataSheetUt(MmrDataSheetUt mmrDataSheetUt) {
+	public void setTestSheetDetailId(Long testSheetDetailId) {
+		this.testSheetDetailId = testSheetDetailId;
+	}
+
+	public Long getMmrDataSheetUt() {
+		return mmrDataSheetUt;
+	}
+
+	public void setMmrDataSheetUt(Long mmrDataSheetUt) {
 		this.mmrDataSheetUt = mmrDataSheetUt;
 	}
 

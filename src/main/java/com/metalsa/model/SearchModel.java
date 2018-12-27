@@ -5,17 +5,18 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.metalsa.domain.MmrHeaderAttributeMasterUt;
+
 public class SearchModel {
 
 	private boolean isShowRevision;
 	private boolean isShowSupplier;
 	// will contain text base and range base paramter of dropdown list
-	private List<ParameterConfig> dropDownList = new ArrayList<>();
+	private List<MmrHeaderAttributeMasterUt> dropDownList = new ArrayList<>();
 	private Map<String, String> textBaseParameterMap = new LinkedHashMap<>();
 	private List<RangeBaseModel> rangeBaseParameterList = new ArrayList<>();
-	private List<String> uomList = new ArrayList<>();
-	private List<SearchDataListModel> searchDataList = new ArrayList<>();
-	
+	private Map<String, Map<String, String>> searchDataMap = new LinkedHashMap<>();
+		
 	public boolean isShowRevision() {
 		return isShowRevision;
 	}
@@ -28,10 +29,10 @@ public class SearchModel {
 	public void setShowSupplier(boolean isShowSupplier) {
 		this.isShowSupplier = isShowSupplier;
 	}
-	public List<ParameterConfig> getDropDownList() {
+	public List<MmrHeaderAttributeMasterUt> getDropDownList() {
 		return dropDownList;
 	}
-	public void setDropDownList(List<ParameterConfig> dropDownList) {
+	public void setDropDownList(List<MmrHeaderAttributeMasterUt> dropDownList) {
 		this.dropDownList = dropDownList;
 	}
 	public Map<String, String> getTextBaseParameterMap() {
@@ -47,17 +48,12 @@ public class SearchModel {
 	public void setRangeBaseParameterList(List<RangeBaseModel> rangeBaseParameterList) {
 		this.rangeBaseParameterList = rangeBaseParameterList;
 	}
-	public List<String> getUomList() {
-		return uomList;
+	public Map<String, Map<String, String>> getSearchDataMap() {
+		return searchDataMap;
 	}
-	public void setUomList(List<String> uomList) {
-		this.uomList = uomList;
+	public void setSearchDataMap(Map<String, Map<String, String>> searchDataMap) {
+		this.searchDataMap = searchDataMap;
 	}
-	public List<SearchDataListModel> getSearchDataList() {
-		return searchDataList;
-	}
-	public void setSearchDataList(List<SearchDataListModel> searchDataList) {
-		this.searchDataList = searchDataList;
-	}
+	
 	
 }

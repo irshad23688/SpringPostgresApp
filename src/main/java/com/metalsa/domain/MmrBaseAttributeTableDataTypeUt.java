@@ -36,12 +36,12 @@ public class MmrBaseAttributeTableDataTypeUt implements Serializable {
 	private BigDecimal status;
 
 	//bi-directional many-to-one association to MmrBaseAttributeMasterUt
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="BASE_ATTRIBUTE_ID", nullable=false)
 	private MmrBaseAttributeMasterUt mmrBaseAttributeMasterUt;
 
 	//bi-directional many-to-one association to MmrHeaderAttributeMasterUt
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="PARAMETER_BASE_ATTRIBUTE_ID", nullable=false)
 	private MmrHeaderAttributeMasterUt mmrHeaderAttributeMasterUt;
 

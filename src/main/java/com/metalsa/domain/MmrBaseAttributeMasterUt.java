@@ -72,7 +72,7 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 	private String tooltip;
 
 	//bi-directional many-to-one association to MmrDataTypeMasterUt
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name="DATA_TYPE_ID", nullable=false)
 	private MmrDataTypeMasterUt mmrDataTypeMasterUt;
 
@@ -84,7 +84,7 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 	private BigDecimal isSearch;*/
 
 	//bi-directional many-to-one association to MmrBaseAttributeUomDetailsUt
-	@OneToMany(mappedBy="mmrBaseAttributeMasterUt", cascade = CascadeType.ALL,  fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="mmrBaseAttributeMasterUt", cascade = CascadeType.ALL)
 	private List<MmrBaseAttributeUomDetailsUt> mmrBaseAttributeUomDetailsUts;
 
 

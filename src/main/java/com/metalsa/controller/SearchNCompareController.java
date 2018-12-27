@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.metalsa.model.SearchModel;
+import com.metalsa.repository.HeaderAttrRepository;
 import com.metalsa.service.SearchNCompareService;
-import com.metalsa.util.JsonCreator;
 
 @RestController
 @RequestMapping("/api/search")
@@ -17,21 +17,24 @@ public class SearchNCompareController {
 
 	@Autowired
     private SearchNCompareService service;
+	
+	@Autowired
+    private HeaderAttrRepository headerAttrRepository;
 
     @GetMapping("/getconfig")
     public SearchModel getConfigParameters() {
+    	headerAttrRepository.findAll();
         return service.getConfigParameters();
     }
     @PostMapping("/searchData")
     public SearchModel getSearchData(@RequestBody SearchModel model) {
-    	// logic search an dpoplate it in 
+    	// logic search and populate it in 
     	return service.getSearchdata(model);
     }
     @GetMapping("/showfilterdata")
     public SearchModel getSearch(@RequestBody SearchModel model) {
-    	// logic search an dpoplate it in 
-    	return service.getFilterData(model);
+    	// logic search and populate it in 
+    	return service.getSearchdata(model);
     }
-
-    
+   
 }
