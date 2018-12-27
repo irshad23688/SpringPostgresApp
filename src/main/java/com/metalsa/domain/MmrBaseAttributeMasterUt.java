@@ -13,9 +13,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 /**
@@ -87,6 +91,8 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 	@OneToMany(mappedBy="mmrBaseAttributeMasterUt", cascade = CascadeType.ALL)
 	private List<MmrBaseAttributeUomDetailsUt> mmrBaseAttributeUomDetailsUts;
 
+	@OneToMany(mappedBy="mmrBaseAttributeMasterUt", cascade = CascadeType.ALL)
+	private List<MmrBaseAttributeTableDataTypeUt> mmrBaseAttributeTableDataTypeUts;
 
 	public MmrBaseAttributeMasterUt() {
 	}
@@ -228,7 +234,24 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 		for(MmrBaseAttributeUomDetailsUt mmrBaseAttributeUomDetailsUt : this.mmrBaseAttributeUomDetailsUts) {
 			mmrBaseAttributeUomDetailsUt.setMmrBaseAttributeMasterUt(this);
 		}
-	}	
+	}
+	
+	public List<MmrBaseAttributeTableDataTypeUt> getMmrBaseAttributeTableDataTypeUts() {
+		return mmrBaseAttributeTableDataTypeUts;
+	}
+
+	public void setMmrBaseAttributeTableDataTypeUts(
+			List<MmrBaseAttributeTableDataTypeUt> mmrBaseAttributeTableDataTypeUts) {
+		this.mmrBaseAttributeTableDataTypeUts = mmrBaseAttributeTableDataTypeUts;
+		for(MmrBaseAttributeTableDataTypeUt mmrBaseAttributeTableDataTypeUt : this.mmrBaseAttributeTableDataTypeUts) {
+			MmrHeaderAttributeMasterUt headerAttribute = new MmrHeaderAttributeMasterUt();
+			mmrBaseAttributeTableDataTypeUt.setMmrBaseAttributeMasterUt(this);
+			headerAttribute.setId(mmrBaseAttributeTableDataTypeUt.getMmrHeaderAttributeMasterUtId());
+			mmrBaseAttributeTableDataTypeUt.setMmrHeaderAttributeMasterUt(headerAttribute);
+			
+		}
+		
+	}
 
 	public MmrBaseAttributeUomDetailsUt addMmrBaseAttributeUomDetailsUt(MmrBaseAttributeUomDetailsUt mmrBaseAttributeUomDetailsUt) {
 		getMmrBaseAttributeUomDetailsUts().add(mmrBaseAttributeUomDetailsUt);
