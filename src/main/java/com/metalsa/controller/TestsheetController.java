@@ -52,18 +52,18 @@ public class TestsheetController {
     }
 
     @PutMapping("/testsheet/{id}")
-    public BaseAttrModel updateBaseAttribute(@PathVariable(value = "id") Long id,
-                                           @Valid @RequestBody MmrTestSheetUt baseAttributeMasterDetails) {
-    	MmrTestSheetUt testSheetUt = testSheetRepository.findById(id)
-                .orElseThrow(() -> new ExceptionHandler("BaseAttributeMasterUt", "id", id));
-        testSheetRepository.save(testSheetUt);
-        return baseAttrService.getBaseAttrData();
+    public List<MmrTestSheetUt> updateBaseAttribute(@PathVariable(value = "id") Long id,
+                                           @Valid @RequestBody MmrTestSheetUt mmrTestSheetUt) {
+    	testSheetRepository.findById(id)
+                .orElseThrow(() -> new ExceptionHandler("MmrTestSheetUt", "id", id));
+        testSheetRepository.save(mmrTestSheetUt);
+        return testSheetRepository.findAll();
     }
     
     @DeleteMapping("/testsheet/{id}")
-    public ResponseEntity<?> deleteBaseAttribute(@PathVariable(value = "id") Long baseAttributeId) {
-    	MmrTestSheetUt testSheetUt = testSheetRepository.findById(baseAttributeId)
-                .orElseThrow(() -> new ExceptionHandler("BaseAttributeMasterUt", "id", baseAttributeId));
+    public ResponseEntity<?> deleteBaseAttribute(@PathVariable(value = "id") Long mmrTestSheetUtId) {
+    	MmrTestSheetUt testSheetUt = testSheetRepository.findById(mmrTestSheetUtId)
+                .orElseThrow(() -> new ExceptionHandler("BaseAttributeMasterUt", "id", mmrTestSheetUtId));
 
         testSheetRepository.delete(testSheetUt);
 

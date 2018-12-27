@@ -5,7 +5,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.mockito.internal.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +14,6 @@ import com.metalsa.repository.CustomRepository;
 import com.metalsa.repository.HeaderAttrRepository;
 import com.metalsa.repository.SearchNCompareRepository;
 import com.metalsa.service.SearchNCompareService;
-
-import antlr.StringUtils;
 
 
 @Service

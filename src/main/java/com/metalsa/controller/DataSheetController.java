@@ -37,11 +37,11 @@ public class DataSheetController {
     
     
     @GetMapping("/datasheet")
-    public List<MmrClassMasterUt> getAllClass() {
-    	return classRepository.findAll(new Sort(Sort.Direction.DESC,"modifiedOn"));
+    public List<MmrDataSheetUt> getAllClass() {
+    	return dataSheetRepository.findAll();
     }
     
-    @GetMapping("/datasheet/{classId}/{subClassId}")
+    /*@GetMapping("/datasheet/{classId}/{subClassId}")
     public List<MmrDataSheetUt> getDataSheetByClassNSubclass(@PathVariable(value = "classId") Long classId,
     		@PathVariable(value = "subClassId") Long subClassId) {
         return customRepository.getDataSheetByClassNSubclass(classId,subClassId);
@@ -51,13 +51,13 @@ public class DataSheetController {
     public MmrTestSheetUt createNewDataSheet(@PathVariable(value = "classId") Long classId,
     		@PathVariable(value = "subClassId") Long subClassId) {
     	return customRepository.getTestSheetByClassNSubclass(classId,subClassId);
-    }
+    }*/
     
     @PostMapping("/datasheet")
-    public MmrDataSheetUt createdatasheet(@Valid @RequestBody MmrDataSheetUt datasheetUt) {
+    public List<MmrDataSheetUt> createdatasheet(@Valid @RequestBody MmrDataSheetUt datasheetUt) {
     	//customRepository.saveOrUpdate(datasheetUt);
     	dataSheetRepository.save(datasheetUt);
-    	return datasheetUt;
+    	return dataSheetRepository.findAll();
     }
 
 }
