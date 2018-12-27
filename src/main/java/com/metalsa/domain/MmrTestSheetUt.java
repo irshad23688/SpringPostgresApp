@@ -49,139 +49,138 @@ public class MmrTestSheetUt implements Serializable {
 	private BigDecimal status;
 
 	/*//bi-directional many-to-one association to MmrTestSheetDetailUt
-	*/@OneToMany(mappedBy="mmrTestSheetUt")
-	private List<MmrTestSheetDetailUt> mmrTestSheetDetailUts;
+	 */@OneToMany(mappedBy="mmrTestSheetUt",cascade = CascadeType.ALL)
+	 private List<MmrTestSheetDetailUt> mmrTestSheetDetailUts;
 
-	//bi-directional many-to-one association to MmrClassMasterUt
-	/*@ManyToOne(fetch=FetchType.LAZY)
-	*/@Column(name="CLASS_ID", nullable=false)
-	private Long mmrClassMasterUt;
+	 //bi-directional many-to-one association to MmrClassMasterUt
+	 /*@ManyToOne(fetch=FetchType.LAZY)
+	  */@Column(name="CLASS_ID", nullable=false)
+	  private Long mmrClassMasterUt;
 
-	//bi-directional many-to-one association to MmrSubclassMasterUt
-	/*@ManyToOne(fetch=FetchType.LAZY)
-	*/
-	@Column(name="SUBCLASS_ID", nullable=false)
-	private Long mmrSubclassMasterUt;
+	  //bi-directional many-to-one association to MmrSubclassMasterUt
+	  /*@ManyToOne(fetch=FetchType.LAZY)
+	   */
+	  @Column(name="SUBCLASS_ID", nullable=false)
+	  private Long mmrSubclassMasterUt;
 
-	public MmrTestSheetUt() {
-	}
+	  public MmrTestSheetUt() {
+	  }
 
-	public long getId() {
-		return this.id;
-	}
+	  public long getId() {
+		  return this.id;
+	  }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+	  public void setId(long id) {
+		  this.id = id;
+	  }
 
-	public BigDecimal getApprovedBy() {
-		return this.approvedBy;
-	}
+	  public BigDecimal getApprovedBy() {
+		  return this.approvedBy;
+	  }
 
-	public void setApprovedBy(BigDecimal approvedBy) {
-		this.approvedBy = approvedBy;
-	}
+	  public void setApprovedBy(BigDecimal approvedBy) {
+		  this.approvedBy = approvedBy;
+	  }
 
-	public Timestamp getApprovedOn() {
-		return this.approvedOn;
-	}
+	  public Timestamp getApprovedOn() {
+		  return this.approvedOn;
+	  }
 
-	public void setApprovedOn(Timestamp approvedOn) {
-		this.approvedOn = approvedOn;
-	}
+	  public void setApprovedOn(Timestamp approvedOn) {
+		  this.approvedOn = approvedOn;
+	  }
 
-	public BigDecimal getCreatedBy() {
-		return this.createdBy;
-	}
+	  public BigDecimal getCreatedBy() {
+		  return this.createdBy;
+	  }
 
-	public void setCreatedBy(BigDecimal createdBy) {
-		this.createdBy = createdBy;
-	}
+	  public void setCreatedBy(BigDecimal createdBy) {
+		  this.createdBy = createdBy;
+	  }
 
-	public Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
+	  public Timestamp getCreatedOn() {
+		  return this.createdOn;
+	  }
 
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
+	  public void setCreatedOn(Timestamp createdOn) {
+		  this.createdOn = createdOn;
+	  }
 
-	public String getDescription() {
-		return this.description;
-	}
+	  public String getDescription() {
+		  return this.description;
+	  }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+	  public void setDescription(String description) {
+		  this.description = description;
+	  }
 
-	public BigDecimal getModifiedBy() {
-		return this.modifiedBy;
-	}
+	  public BigDecimal getModifiedBy() {
+		  return this.modifiedBy;
+	  }
 
-	public void setModifiedBy(BigDecimal modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+	  public void setModifiedBy(BigDecimal modifiedBy) {
+		  this.modifiedBy = modifiedBy;
+	  }
 
-	public Timestamp getModifiedOn() {
-		return this.modifiedOn;
-	}
+	  public Timestamp getModifiedOn() {
+		  return this.modifiedOn;
+	  }
 
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+	  public void setModifiedOn(Timestamp modifiedOn) {
+		  this.modifiedOn = modifiedOn;
+	  }
 
-	public String getName() {
-		return this.name;
-	}
+	  public String getName() {
+		  return this.name;
+	  }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+	  public void setName(String name) {
+		  this.name = name;
+	  }
 
-	public BigDecimal getStatus() {
-		return this.status;
-	}
+	  public BigDecimal getStatus() {
+		  return this.status;
+	  }
 
-	public void setStatus(BigDecimal status) {
-		this.status = status;
-	}
+	  public void setStatus(BigDecimal status) {
+		  this.status = status;
+	  }
 
-	public List<MmrTestSheetDetailUt> getMmrTestSheetDetailUts() {
-		return this.mmrTestSheetDetailUts;
-	}
+	  public List<MmrTestSheetDetailUt> getMmrTestSheetDetailUts() {
+		  return this.mmrTestSheetDetailUts;
+	  }
 
-	public void setMmrTestSheetDetailUts(List<MmrTestSheetDetailUt> mmrTestSheetDetailUts) {
-		this.mmrTestSheetDetailUts = mmrTestSheetDetailUts;
-	}
+	  public void addMmrTestSheetDetailUts(MmrTestSheetDetailUt detail) {
+		  detail.setMmrTestSheetUt(this);
+		  getMmrTestSheetDetailUts().add(detail);
+	  }
 
-	public MmrTestSheetDetailUt addMmrTestSheetDetailUt(MmrTestSheetDetailUt mmrTestSheetDetailUt) {
-		getMmrTestSheetDetailUts().add(mmrTestSheetDetailUt);
-		mmrTestSheetDetailUt.setMmrTestSheetUt(this.getId());
+	  public void removeMmrTestSheetDetailUts(MmrTestSheetDetailUt detail) {
+		  detail.setMmrTestSheetUt(null);
+		  getMmrTestSheetDetailUts().remove(detail);
+	  }
+	  public void setMmrTestSheetDetailUts(List<MmrTestSheetDetailUt> mmrTestSheetDetailUts) {
+		  this.mmrTestSheetDetailUts = mmrTestSheetDetailUts;
+		  for(MmrTestSheetDetailUt mmrTestSheetDetailUt : this.mmrTestSheetDetailUts) {
+			  mmrTestSheetDetailUt.setMmrTestSheetUt(this);
+		  }
+	  }	
 
-		return mmrTestSheetDetailUt;
-	}
 
-	public MmrTestSheetDetailUt removeMmrTestSheetDetailUt(MmrTestSheetDetailUt mmrTestSheetDetailUt) {
-		getMmrTestSheetDetailUts().remove(mmrTestSheetDetailUt);
-		mmrTestSheetDetailUt.setMmrTestSheetUt(null);
+	  public Long getMmrClassMasterUt() {
+		  return this.mmrClassMasterUt;
+	  }
 
-		return mmrTestSheetDetailUt;
-	}
+	  public void setMmrClassMasterUt(Long mmrClassMasterUt) {
+		  this.mmrClassMasterUt = mmrClassMasterUt;
+	  }
 
-	public Long getMmrClassMasterUt() {
-		return this.mmrClassMasterUt;
-	}
+	  public Long getMmrSubclassMasterUt() {
+		  return this.mmrSubclassMasterUt;
+	  }
 
-	public void setMmrClassMasterUt(Long mmrClassMasterUt) {
-		this.mmrClassMasterUt = mmrClassMasterUt;
-	}
-
-	public Long getMmrSubclassMasterUt() {
-		return this.mmrSubclassMasterUt;
-	}
-
-	public void setMmrSubclassMasterUt(Long mmrSubclassMasterUt) {
-		this.mmrSubclassMasterUt = mmrSubclassMasterUt;
-	}
+	  public void setMmrSubclassMasterUt(Long mmrSubclassMasterUt) {
+		  this.mmrSubclassMasterUt = mmrSubclassMasterUt;
+	  }
 
 }

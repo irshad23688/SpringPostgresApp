@@ -2,6 +2,9 @@ package com.metalsa.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
@@ -50,9 +53,11 @@ public class MmrTestSheetDetailUt implements Serializable {
 	@Column(name="HEADER_ATTRIBUTE_ID", nullable=false)
 	private Long mmrHeaderAttributeMasterUt;
 	
-	@Column(name="TEST_SHEET_ID", nullable=false)
-	private Long mmrTestSheetUt;
-	
+	 
+	@JsonIgnore
+	@ManyToOne
+//	@JoinColumn(name="TEST_SHEET_UT_ID")
+	private MmrTestSheetUt mmrTestSheetUt;
 	
 	public MmrTestSheetDetailUt() {
 	}
@@ -129,12 +134,13 @@ public class MmrTestSheetDetailUt implements Serializable {
 		this.mmrHeaderAttributeMasterUt = mmrHeaderAttributeMasterUt;
 	}
 
-	public Long getMmrTestSheetUt() {
-		return this.mmrTestSheetUt;
+	public MmrTestSheetUt getMmrTestSheetUt() {
+		return mmrTestSheetUt;
 	}
 
-	public void setMmrTestSheetUt(Long mmrTestSheetUt) {
+	public void setMmrTestSheetUt(MmrTestSheetUt mmrTestSheetUt) {
 		this.mmrTestSheetUt = mmrTestSheetUt;
 	}
 
+ 
 }
