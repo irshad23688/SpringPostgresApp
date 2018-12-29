@@ -18,6 +18,7 @@ import com.metalsa.domain.MmrDataSheetUt;
 import com.metalsa.domain.MmrTestSheetUt;
 import com.metalsa.repository.ClassRepository;
 import com.metalsa.repository.CustomRepository;
+import com.metalsa.repository.DataSheetRepository;
 
 
 @RestController
@@ -29,6 +30,11 @@ public class DataSheetController {
     
     @Autowired
     private CustomRepository customRepository ;
+    
+    @Autowired
+    private DataSheetRepository dataSheetRepository ;
+    
+    
     
     @GetMapping("/datasheet")
     public List<MmrClassMasterUt> getAllClass() {
@@ -49,13 +55,9 @@ public class DataSheetController {
     
     @PostMapping("/datasheet")
     public MmrDataSheetUt createdatasheet(@Valid @RequestBody MmrDataSheetUt datasheetUt) {
-    	customRepository.saveOrUpdate(datasheetUt);
+    	//customRepository.saveOrUpdate(datasheetUt);
+    	dataSheetRepository.save(datasheetUt);
     	return datasheetUt;
-    }
-    
-    @PostMapping("/datasheet/savelater")
-    public void saveDataSheet(@Valid @RequestBody MmrDataSheetUt datasheetUt) {
-    	customRepository.saveOrUpdate(datasheetUt);
     }
 
 }

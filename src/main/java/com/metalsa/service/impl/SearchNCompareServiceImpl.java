@@ -5,13 +5,18 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.mockito.internal.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.metalsa.domain.MmrSearchDataSheetView;
 import com.metalsa.model.SearchModel;
+import com.metalsa.repository.CustomRepository;
 import com.metalsa.repository.HeaderAttrRepository;
 import com.metalsa.repository.SearchNCompareRepository;
 import com.metalsa.service.SearchNCompareService;
+
+import antlr.StringUtils;
 
 
 @Service
@@ -19,9 +24,11 @@ public class SearchNCompareServiceImpl implements SearchNCompareService {
 
 	@Autowired
 	private SearchNCompareRepository repository;
-	
+
 	@Autowired
-    private HeaderAttrRepository headerAttrRepository;
+	private HeaderAttrRepository headerAttrRepository;
+	@Autowired
+	private CustomRepository customRepository;
 
 	@Override
 	public SearchModel getConfigParameters() {
@@ -32,30 +39,34 @@ public class SearchNCompareServiceImpl implements SearchNCompareService {
 
 	@Override
 	public SearchModel getSearchdata(final SearchModel model) {
-		List<Object[]> results = repository.searchData(model);
-		Map<String,Map<String, String>> materialMap = new LinkedHashMap<>();
-		results.stream().forEach((record) -> {
-			if(null!=record[0]) {
-				if(materialMap.keySet().contains(record[0].toString())){
-					Map<String,String> material = materialMap.get(record[0].toString());
-					if(null!=record[1] && null!=record[2]) {
-						material.put(record[1].toString(), record[2].toString());
+		List<MmrSearchDataSheetView> results = repository.findAll();
+		final Map<String,Map<String, String>> materialMap = new LinkedHashMap<>();
+		for (MmrSearchDataSheetView viewObj : results) {
+			
+			if(0l!=viewObj.getDataSheetId()) {
+				if(materialMap.keySet().contains(viewObj.getDataSheetId()+"")){
+					Map<String,String> material = materialMap.get(viewObj.getDataSheetId()+"");
+					if(null!=viewObj.getBaseAttributeName()) {
+						material.put(viewObj.getBaseAttributeName(), 
+								viewObj.getTestingInformation()!=null? viewObj.getTestingInformation():"");
 					}
 				}else {
 					Map<String,String> material = new HashMap<>();
-					if(null!=record[1] && null!=record[2]) {
-						material.put(record[1].toString(), record[2].toString());
+					if(null!=viewObj.getBaseAttributeName()) {
+
+						material.put(viewObj.getBaseAttributeName(), 
+								viewObj.getTestingInformation()!=null?viewObj.getTestingInformation():"");
 					}
-					if(null!=record[3]) {
-						material.put("Revision", record[3].toString());
+					if(null!=viewObj.getRevision()) {
+						material.put("Revision", viewObj.getRevision());
 					}
-					if(null!=record[4]) {
-						material.put("Supplier", record[4].toString());
+					if(null!=viewObj.getSupplierInfo()) {
+						material.put("Supplier", viewObj.getSupplierInfo());
 					}
-					materialMap.put(record[0].toString(),material);
+					materialMap.put(viewObj.getDataSheetId()+"",material);
 				}
 			}
-		});	
+		}	
 		model.setSearchDataMap(materialMap);		
 		return model;
 	}

@@ -61,7 +61,7 @@ public class MmrDataSheetUt implements Serializable {
 	private Long testSheetId;
 
 	//bi-directional many-to-one association to MmrDataSheetDetailUt
-	@OneToMany(mappedBy="mmrDataSheetUt")
+	@OneToMany(mappedBy="mmrDataSheetUt", cascade = CascadeType.ALL)
 	private List<MmrDataSheetDetailUt> mmrDataSheetDetailUts;
 
 	public MmrDataSheetUt() {
@@ -186,6 +186,9 @@ public class MmrDataSheetUt implements Serializable {
 
 	public void setMmrDataSheetDetailUts(List<MmrDataSheetDetailUt> mmrDataSheetDetailUts) {
 		this.mmrDataSheetDetailUts = mmrDataSheetDetailUts;
+		for(MmrDataSheetDetailUt dataSheetDetailUt : this.mmrDataSheetDetailUts) {
+			dataSheetDetailUt.setMmrDataSheetUt(this);
+		}
 	}
 
 	public MmrDataSheetDetailUt addMmrDataSheetDetailUt(MmrDataSheetDetailUt mmrDataSheetDetailUt) {

@@ -12,7 +12,7 @@ import com.metalsa.model.SearchModel;
 import com.metalsa.repository.SearchNCompareRepository;
 
 @Repository
-public class SearchNCompareRepositoryImpl implements SearchNCompareRepository {
+public class SearchNCompareRepositoryImpl  {
 
 	@Autowired
 	private EntityManagerFactory entityManagerFactory;
@@ -28,9 +28,6 @@ public class SearchNCompareRepositoryImpl implements SearchNCompareRepository {
 				"";
 		if(model.isShowRevision()) {
 			//fetch revision
-		}
-		if(model.isShowSupplier()) {
-			// fetch supplier info
 		}
 		
 		return getResultList(sql);

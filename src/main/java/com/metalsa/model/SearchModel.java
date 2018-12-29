@@ -9,25 +9,25 @@ import com.metalsa.domain.MmrHeaderAttributeMasterUt;
 
 public class SearchModel {
 
+	private String staticBaseAttributeIds;
 	private boolean isShowRevision;
-	private boolean isShowSupplier;
-	// will contain text base and range base paramter of dropdown list
 	private List<MmrHeaderAttributeMasterUt> dropDownList = new ArrayList<>();
-	private Map<String, String> textBaseParameterMap = new LinkedHashMap<>();
-	private List<RangeBaseModel> rangeBaseParameterList = new ArrayList<>();
+	private List<SearchBaseModel> rangeBaseParameterList = new ArrayList<>();
+	private List<SearchBaseModel> textBaseAttributeList = new ArrayList<>();
+	private List<SearchBaseModel> textMasterAttributeList = new ArrayList<>();
 	private Map<String, Map<String, String>> searchDataMap = new LinkedHashMap<>();
 		
+	public String getStaticBaseAttributeIds() {
+		return staticBaseAttributeIds;
+	}
+	public void setStaticBaseAttributeIds(String staticBaseAttributeIds) {
+		this.staticBaseAttributeIds = staticBaseAttributeIds;
+	}
 	public boolean isShowRevision() {
 		return isShowRevision;
 	}
 	public void setShowRevision(boolean isShowRevision) {
 		this.isShowRevision = isShowRevision;
-	}
-	public boolean isShowSupplier() {
-		return isShowSupplier;
-	}
-	public void setShowSupplier(boolean isShowSupplier) {
-		this.isShowSupplier = isShowSupplier;
 	}
 	public List<MmrHeaderAttributeMasterUt> getDropDownList() {
 		return dropDownList;
@@ -35,17 +35,22 @@ public class SearchModel {
 	public void setDropDownList(List<MmrHeaderAttributeMasterUt> dropDownList) {
 		this.dropDownList = dropDownList;
 	}
-	public Map<String, String> getTextBaseParameterMap() {
-		return textBaseParameterMap;
+	public List<SearchBaseModel> getTextBaseAttributeList() {
+		return textBaseAttributeList;
 	}
-	public void setTextBaseParameterMap(Map<String, String> textBaseParameterMap) {
-		this.textBaseParameterMap = textBaseParameterMap;
+	public void setTextBaseAttributeList(List<SearchBaseModel> textBaseAttributeList) {
+		this.textBaseAttributeList = textBaseAttributeList;
 	}
-	 
-	public List<RangeBaseModel> getRangeBaseParameterList() {
+	public List<SearchBaseModel> getTextMasterAttributeList() {
+		return textMasterAttributeList;
+	}
+	public void setTextMasterAttributeList(List<SearchBaseModel> textMasterAttributeList) {
+		this.textMasterAttributeList = textMasterAttributeList;
+	}
+	public List<SearchBaseModel> getRangeBaseParameterList() {
 		return rangeBaseParameterList;
 	}
-	public void setRangeBaseParameterList(List<RangeBaseModel> rangeBaseParameterList) {
+	public void setRangeBaseParameterList(List<SearchBaseModel> rangeBaseParameterList) {
 		this.rangeBaseParameterList = rangeBaseParameterList;
 	}
 	public Map<String, Map<String, String>> getSearchDataMap() {

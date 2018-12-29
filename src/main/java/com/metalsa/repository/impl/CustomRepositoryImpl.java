@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.metalsa.domain.MmrDataSheetUt;
+import com.metalsa.domain.MmrSearchDataSheetView;
 import com.metalsa.domain.MmrTestSheetUt;
+import com.metalsa.model.SearchModel;
 import com.metalsa.repository.CustomRepository;
 
 @Repository
@@ -31,10 +33,10 @@ public class CustomRepositoryImpl implements CustomRepository {
 		
 		Predicate[] predicates = new Predicate[2];
 		predicates[0] = cb.equal(root.get("classId"),classId);
-		predicates[1] = cb.equal(root.get("subClassId"), subClassId);
+		predicates[1] = cb.equal(root.get("subclassId"), subClassId);
 		cr.select(root).where(predicates);
-		Session session = entityManagerFactory.unwrap(Session.class);
-	
+		Session session = (Session)entityManagerFactory.createEntityManager().getDelegate();
+		
 		Query<MmrDataSheetUt> query = session.createQuery(cr);
 		return query.getResultList();
 	}
@@ -46,25 +48,34 @@ public class CustomRepositoryImpl implements CustomRepository {
 		Root<MmrTestSheetUt> root = cr.from(MmrTestSheetUt.class);
 		
 		Predicate[] predicates = new Predicate[3];
-		predicates[0] = cb.equal(root.get("classId"),classId);
-		predicates[1] = cb.equal(root.get("subClassId"), subClassId);
-		// TODO: TO CHECK STATUS
-		//predicates[2] = cb.equal(root.get("status"), 1);
+		predicates[0] = cb.equal(root.get("mmrClassMasterUt"),classId);
+		predicates[1] = cb.equal(root.get("mmrSubclassMasterUt"), subClassId);
+		predicates[2] = cb.equal(root.get("status"), 1);
 		cr.select(root).where(predicates);
-		Session session = entityManagerFactory.unwrap(Session.class);
+		Session session = (Session)entityManagerFactory.createEntityManager().getDelegate();
 		
 		Query<MmrTestSheetUt> query = session.createQuery(cr);
 		//TODO: TO CHANGE ACCORDINGLY
-		// Considering only one active active sheet
+		// Considering only one active sheet
 		if(!query.getResultList().isEmpty()) {
 			return query.getResultList().get(0);
 		}
 		return new MmrTestSheetUt();
 	}
-	
-	public void saveOrUpdate(Object obj) {
-		Session session = entityManagerFactory.unwrap(Session.class);
-		session.saveOrUpdate(obj);
-	}
 
+	@Override
+	public List<MmrSearchDataSheetView> getSearchDataSheetView(SearchModel model) {
+		CriteriaBuilder cb = entityManagerFactory.getCriteriaBuilder();
+		CriteriaQuery<MmrSearchDataSheetView> cr = cb.createQuery(MmrSearchDataSheetView.class);
+		Root<MmrSearchDataSheetView> root = cr.from(MmrSearchDataSheetView.class);
+		
+		/*Predicate[] predicates = new Predicate[2];
+		predicates[0] = cb.equal(root.get("classId"),classId);
+		predicates[1] = cb.equal(root.get("subclassId"), subClassId);*/
+		cr.select(root);
+		Session session = (Session)entityManagerFactory.createEntityManager().getDelegate();
+		
+		Query<MmrSearchDataSheetView> query = session.createQuery(cr);
+		return query.getResultList();
+	}
 }

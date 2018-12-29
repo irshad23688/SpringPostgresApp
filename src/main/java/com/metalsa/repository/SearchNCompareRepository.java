@@ -1,12 +1,11 @@
 package com.metalsa.repository;
 
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.metalsa.model.SearchModel;
+import com.metalsa.domain.MmrSearchDataSheetView;
 
 
-public interface SearchNCompareRepository {
+public interface SearchNCompareRepository extends JpaRepository<MmrSearchDataSheetView, Long> {
 
-	List<Object[]> searchData(SearchModel model);
 	
 }

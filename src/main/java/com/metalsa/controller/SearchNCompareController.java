@@ -20,7 +20,7 @@ public class SearchNCompareController {
 	
 	@Autowired
     private HeaderAttrRepository headerAttrRepository;
-
+	
     @GetMapping("/getconfig")
     public SearchModel getConfigParameters() {
     	headerAttrRepository.findAll();
@@ -32,9 +32,14 @@ public class SearchNCompareController {
     	return service.getSearchdata(model);
     }
     @GetMapping("/showfilterdata")
+    public SearchModel getSearch() {
+    	// logic search and populate it in 
+    	return service.getSearchdata(new SearchModel());
+    }
+/*    @GetMapping("/showfilterdata")
     public SearchModel getSearch(@RequestBody SearchModel model) {
     	// logic search and populate it in 
     	return service.getSearchdata(model);
     }
-   
+*/   
 }

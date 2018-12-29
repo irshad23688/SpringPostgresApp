@@ -56,7 +56,6 @@ public class MmrTestSheetDetailUt implements Serializable {
 	 
 	@JsonIgnore
 	@ManyToOne
-//	@JoinColumn(name="TEST_SHEET_UT_ID")
 	private MmrTestSheetUt mmrTestSheetUt;
 	
 	public MmrTestSheetDetailUt() {
