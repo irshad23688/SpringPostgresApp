@@ -2,6 +2,11 @@ package com.metalsa.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
@@ -15,6 +20,9 @@ import java.sql.Timestamp;
 public class MmrBaseAttributeTableDataTypeUt implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Transient
+	private Long mmrHeaderAttributeMasterUtId;
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(unique=true, nullable=false, precision=38)
@@ -36,11 +44,14 @@ public class MmrBaseAttributeTableDataTypeUt implements Serializable {
 	private BigDecimal status;
 
 	//bi-directional many-to-one association to MmrBaseAttributeMasterUt
-	@ManyToOne
+	@JsonIgnore
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="BASE_ATTRIBUTE_ID", nullable=false)
+	//@JsonManagedReference
 	private MmrBaseAttributeMasterUt mmrBaseAttributeMasterUt;
 
 	//bi-directional many-to-one association to MmrHeaderAttributeMasterUt
+	//@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="PARAMETER_BASE_ATTRIBUTE_ID", nullable=false)
 	private MmrHeaderAttributeMasterUt mmrHeaderAttributeMasterUt;
@@ -104,6 +115,7 @@ public class MmrBaseAttributeTableDataTypeUt implements Serializable {
 		this.mmrBaseAttributeMasterUt = mmrBaseAttributeMasterUt;
 	}
 
+	@JsonIgnore
 	public MmrHeaderAttributeMasterUt getMmrHeaderAttributeMasterUt() {
 		return this.mmrHeaderAttributeMasterUt;
 	}
@@ -111,5 +123,18 @@ public class MmrBaseAttributeTableDataTypeUt implements Serializable {
 	public void setMmrHeaderAttributeMasterUt(MmrHeaderAttributeMasterUt mmrHeaderAttributeMasterUt) {
 		this.mmrHeaderAttributeMasterUt = mmrHeaderAttributeMasterUt;
 	}
+
+	public Long getMmrHeaderAttributeMasterUtId() {
+		return mmrHeaderAttributeMasterUtId;
+	}
+
+	public void setMmrHeaderAttributeMasterUtId(Long mmrHeaderAttributeMasterUtId) {
+		this.mmrHeaderAttributeMasterUtId = mmrHeaderAttributeMasterUtId;
+	}
+
+	
+	
+	
+	
 
 }
