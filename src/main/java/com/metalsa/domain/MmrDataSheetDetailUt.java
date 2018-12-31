@@ -41,13 +41,13 @@ public class MmrDataSheetDetailUt implements Serializable {
 	@Column(name="STATUS_ID", nullable=false, precision=38)
 	private BigDecimal statusId;
 
-	@Column(name="SUPPLIER_INFORMATION_LHS", nullable=false, length=50)
+	@Column(name="SUPPLIER_INFORMATION_LHS",  length=50)
 	private String supplierInformationLhs;
 
-	@Column(name="SUPPLIER_INFORMATION_OPERATOR", nullable=false, length=50)
+	@Column(name="SUPPLIER_INFORMATION_OPERATOR",  length=50)
 	private String supplierInformationOperator;
 
-	@Column(name="SUPPLIER_INFORMATION_RHS", nullable=false, length=50)
+	@Column(name="SUPPLIER_INFORMATION_RHS",  length=50)
 	private String supplierInformationRhs;
 
 	@Lob
@@ -64,13 +64,13 @@ public class MmrDataSheetDetailUt implements Serializable {
 	@Column(name="TESTING_INFORMATION_TABLE_TYPE")
 	private String testingInformationTableType;
 
-	@Column(name="USER_SELECT_UOM", nullable=false, precision=38)
-	private BigDecimal userSelectUom;
+	@Column(name="USER_SELECT_UOM",  precision=38)
+	private String userSelectUom;
 
-	@Column(name="USER_UOM1", nullable=false, length=50)
+	@Column(name="USER_UOM1", length=50)
 	private String userUom1;
 
-	@Column(name="USER_UOM2", nullable=false, length=50)
+	@Column(name="USER_UOM2", length=50)
 	private String userUom2;
 
 	@JsonIgnore
@@ -184,11 +184,12 @@ public class MmrDataSheetDetailUt implements Serializable {
 		this.testingInformationTableType = testingInformationTableType;
 	}
 
-	public BigDecimal getUserSelectUom() {
-		return this.userSelectUom;
+
+	public String getUserSelectUom() {
+		return userSelectUom;
 	}
 
-	public void setUserSelectUom(BigDecimal userSelectUom) {
+	public void setUserSelectUom(String userSelectUom) {
 		this.userSelectUom = userSelectUom;
 	}
 

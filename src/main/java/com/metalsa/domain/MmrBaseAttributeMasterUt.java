@@ -82,12 +82,12 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 	private MmrDataTypeMasterUt mmrDataTypeMasterUt;
 
 
-	/*@Column(name="HEADER_ATTRIBUTE_ID",nullable=false)
-	private Long mmrHeaderAttributeMasterUt;*/
+	@Column(name="HEADER_ATTRIBUTE_ID",nullable=false)
+	private Long mmrHeaderAttributeMasterUt;
 	
-	@ManyToOne
+	/*@ManyToOne
 	@JoinColumn(name="HEADER_ATTRIBUTE_ID", nullable=false)
-	private MmrHeaderAttributeMasterUt mmrHeaderAttributeMasterUt;
+	private MmrHeaderAttributeMasterUt mmrHeaderAttributeMasterUt;*/
 	
 	/*@Column(name="IS_SEARCH",nullable=false, precision=38)
 	private BigDecimal isSearch;*/
@@ -229,11 +229,12 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 		return this.mmrBaseAttributeUomDetailsUts;
 	}
 
-	public MmrHeaderAttributeMasterUt getMmrHeaderAttributeMasterUt() {
+
+	public Long getMmrHeaderAttributeMasterUt() {
 		return mmrHeaderAttributeMasterUt;
 	}
 
-	public void setMmrHeaderAttributeMasterUt(MmrHeaderAttributeMasterUt mmrHeaderAttributeMasterUt) {
+	public void setMmrHeaderAttributeMasterUt(Long mmrHeaderAttributeMasterUt) {
 		this.mmrHeaderAttributeMasterUt = mmrHeaderAttributeMasterUt;
 	}
 

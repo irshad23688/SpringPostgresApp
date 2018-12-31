@@ -21,10 +21,10 @@ public class MmrTestSheetUt implements Serializable {
 	@Column(unique=true, nullable=false, precision=38)
 	private long id;
 
-	@Column(name="APPROVED_BY", nullable=false, precision=38)
+	@Column(name="APPROVED_BY", precision=38)
 	private BigDecimal approvedBy;
 
-	@Column(name="APPROVED_ON", nullable=false)
+	@Column(name="APPROVED_ON")
 	private Timestamp approvedOn;
 
 	@Column(name="CREATED_BY", nullable=false, precision=38)
