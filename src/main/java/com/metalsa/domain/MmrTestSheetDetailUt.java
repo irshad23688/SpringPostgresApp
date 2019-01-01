@@ -41,15 +41,9 @@ public class MmrTestSheetDetailUt implements Serializable {
 	@Column(nullable=false, precision=38)
 	private BigDecimal status;
 
-	//bi-directional many-to-one association to MmrBaseAttributeMasterUt
-	/*@ManyToOne(fetch=FetchType.LAZY)
-	*/
 	@Column(name="BASE_ATTRIBUTE_ID", nullable=false)
 	private Long mmrBaseAttributeMasterUt;
 
-	//bi-directional many-to-one association to MmrHeaderAttributeMasterUt
-	/*@ManyToOne(fetch=FetchType.LAZY)
-	*/
 	@Column(name="HEADER_ATTRIBUTE_ID", nullable=false)
 	private Long mmrHeaderAttributeMasterUt;
 	
@@ -57,6 +51,9 @@ public class MmrTestSheetDetailUt implements Serializable {
 	@JsonIgnore
 	@ManyToOne
 	private MmrTestSheetUt mmrTestSheetUt;
+	
+	@Column(name="ISMANADATORY")
+	private Integer isMandatory;
 	
 	public MmrTestSheetDetailUt() {
 	}
@@ -67,6 +64,14 @@ public class MmrTestSheetDetailUt implements Serializable {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	public Integer getIsMandatory() {
+		return isMandatory;
+	}
+
+	public void setIsMandatory(Integer isMandatory) {
+		this.isMandatory = isMandatory;
 	}
 
 	public BigDecimal getBaseAttributeSequenceNo() {
@@ -140,6 +145,4 @@ public class MmrTestSheetDetailUt implements Serializable {
 	public void setMmrTestSheetUt(MmrTestSheetUt mmrTestSheetUt) {
 		this.mmrTestSheetUt = mmrTestSheetUt;
 	}
-
- 
 }
