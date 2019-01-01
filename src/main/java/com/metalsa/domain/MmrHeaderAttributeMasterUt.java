@@ -64,7 +64,6 @@ public class MmrHeaderAttributeMasterUt implements Serializable {
 
 	//bi-directional many-to-one association to MmrBaseAttributeMasterUt
 	@OneToMany(mappedBy="mmrHeaderAttributeMasterUt")
-	@JsonBackReference
 	private List<MmrBaseAttributeMasterUt> mmrBaseAttributeMasterUts;
 
 	/*//bi-directional many-to-one association to MmrBaseAttributeTableDataTypeUt
