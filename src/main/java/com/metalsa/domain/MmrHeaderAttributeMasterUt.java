@@ -50,9 +50,7 @@ public class MmrHeaderAttributeMasterUt implements Serializable {
 	@Column(name="MODIFIED_ON")
 	private Timestamp modifiedOn;
 	
-	@Column(name="ISSTATIC_FLAG")
-	private BigDecimal isstaticFlag;
-
+	 
 	@Column(nullable=false, length=100)
 	private String name;
 
@@ -141,19 +139,9 @@ public class MmrHeaderAttributeMasterUt implements Serializable {
 		this.status = status;
 	}
 
-	public BigDecimal getIsstaticFlag() {
-		return isstaticFlag;
-	}
-
-	public void setIsstaticFlag(BigDecimal isstaticFlag) {
-		this.isstaticFlag = isstaticFlag;
-	}
-
 	public void setIstableheaderFlag(BigDecimal istableheaderFlag) {
 		this.istableheaderFlag = istableheaderFlag;
 	}
-	
-	
 
 	public List<MmrBaseAttributeMasterUt> getMmrBaseAttributeMasterUts() {
 		return this.mmrBaseAttributeMasterUts;
