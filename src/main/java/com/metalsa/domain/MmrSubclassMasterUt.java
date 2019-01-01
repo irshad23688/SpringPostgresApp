@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 /**
  * The persistent class for the MMR_SUBCLASS_MASTER_UT database table.
@@ -133,6 +135,7 @@ public class MmrSubclassMasterUt implements Serializable {
 		this.status = status;
 	}
 
+	@JsonIgnore
 	public MmrClassMasterUt getMmrClassMasterUt() {
 		return this.mmrClassMasterUt;
 	}
