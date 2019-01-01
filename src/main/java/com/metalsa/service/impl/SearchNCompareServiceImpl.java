@@ -1,5 +1,6 @@
 package com.metalsa.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.metalsa.domain.MmrDataSheetUt;
 import com.metalsa.domain.MmrSearchDataSheetView;
 import com.metalsa.model.SearchModel;
 import com.metalsa.repository.CustomRepository;
@@ -36,36 +38,27 @@ public class SearchNCompareServiceImpl implements SearchNCompareService {
 
 	@Override
 	public SearchModel getSearchdata(final SearchModel model) {
-		List<MmrSearchDataSheetView> results = repository.findAll();
-		final Map<String,Map<String, String>> materialMap = new LinkedHashMap<>();
+		List<MmrSearchDataSheetView> results = customRepository.getSearchDataSheetView(model);
+		final Map<String,List<MmrSearchDataSheetView>> materialMap = new LinkedHashMap<>();
 		for (MmrSearchDataSheetView viewObj : results) {
-			
 			if(0l!=viewObj.getDataSheetId()) {
+				List<MmrSearchDataSheetView> lst=null;
 				if(materialMap.keySet().contains(viewObj.getDataSheetId()+"")){
-					Map<String,String> material = materialMap.get(viewObj.getDataSheetId()+"");
-					if(null!=viewObj.getBaseAttributeName()) {
-						material.put(viewObj.getBaseAttributeName(), 
-								viewObj.getTestingInformation()!=null? viewObj.getTestingInformation():"");
-					}
+					 lst = materialMap.get(viewObj.getDataSheetId()+"");
 				}else {
-					Map<String,String> material = new HashMap<>();
-					if(null!=viewObj.getBaseAttributeName()) {
-
-						material.put(viewObj.getBaseAttributeName(), 
-								viewObj.getTestingInformation()!=null?viewObj.getTestingInformation():"");
-					}
-					if(null!=viewObj.getRevision()) {
-						material.put("Revision", viewObj.getRevision());
-					}
-					if(null!=viewObj.getSupplierInfo()) {
-						material.put("Supplier", viewObj.getSupplierInfo());
-					}
-					materialMap.put(viewObj.getDataSheetId()+"",material);
+					lst = new ArrayList<>();
 				}
+				lst.add(viewObj);
+				materialMap.put(viewObj.getDataSheetId()+"",lst);
 			}
 		}	
-		model.setSearchDataMap(materialMap);		
+		model.setSearchDatamp(materialMap);		
 		return model;
+	}
+
+	@Override
+	public List<MmrDataSheetUt> getDataSheetByIds(List<Long> datasheetIds) {
+		return customRepository.getDataSheetByIds(datasheetIds);
 	}
 
 }
