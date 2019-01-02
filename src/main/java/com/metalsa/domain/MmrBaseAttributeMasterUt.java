@@ -77,7 +77,6 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 
 	//bi-directional many-to-one association to MmrDataTypeMasterUt
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name="DATA_TYPE_ID", nullable=false)
 	private MmrDataTypeMasterUt mmrDataTypeMasterUt;
 
