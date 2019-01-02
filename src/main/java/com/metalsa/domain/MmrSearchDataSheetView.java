@@ -39,6 +39,21 @@ public class MmrSearchDataSheetView implements Serializable{
 
 	@Column(name ="SUPPLIER_INFO")
 	private String supplierInfo;
+	
+	@Column(name ="SOM1_UOM")
+	private String som1Uom;
+	
+	@Column(name ="USER_UOM1")
+	private String userUom1;
+	
+	@Column(name ="SOM2_UOM")
+	private String som2Uom;
+	
+	@Column(name ="USER_UOM2")
+	private String userUom2;
+	
+	@Column(name ="STATUS")
+	private long status;
 
 	public long getDataSheetId() {
 		return dataSheetId;
@@ -95,4 +110,53 @@ public class MmrSearchDataSheetView implements Serializable{
 	public void setSupplierInfo(String supplierInfo) {
 		this.supplierInfo = supplierInfo;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getSom1Uom() {
+		return som1Uom;
+	}
+
+	public void setSom1Uom(String som1Uom) {
+		this.som1Uom = som1Uom;
+	}
+
+	public String getUserUom1() {
+		return userUom1;
+	}
+
+	public void setUserUom1(String userUom1) {
+		this.userUom1 = userUom1;
+	}
+
+	public String getSom2Uom() {
+		return som2Uom;
+	}
+
+	public void setSom2Uom(String som2Uom) {
+		this.som2Uom = som2Uom;
+	}
+
+	public String getUserUom2() {
+		return userUom2;
+	}
+
+	public void setUserUom2(String userUom2) {
+		this.userUom2 = userUom2;
+	}
+
+	public long getStatus() {
+		return status;
+	}
+
+	public void setStatus(long status) {
+		this.status = status;
+	}
+	
 }
