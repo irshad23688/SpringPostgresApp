@@ -21,7 +21,7 @@ public class MmrBaseAttributeTableDataTypeUt implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Transient
-	private Long mmrHeaderAttributeMasterUtId;
+	private Long mmrParameterBaseAttributeId;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -54,7 +54,7 @@ public class MmrBaseAttributeTableDataTypeUt implements Serializable {
 	//@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="PARAMETER_BASE_ATTRIBUTE_ID", nullable=false)
-	private MmrHeaderAttributeMasterUt mmrHeaderAttributeMasterUt;
+	private MmrBaseAttributeMasterUt mmrParameterBaseAttributeMasterUt;
 
 	public MmrBaseAttributeTableDataTypeUt() {
 	}
@@ -115,21 +115,31 @@ public class MmrBaseAttributeTableDataTypeUt implements Serializable {
 		this.mmrBaseAttributeMasterUt = mmrBaseAttributeMasterUt;
 	}
 
-	@JsonIgnore
-	public MmrHeaderAttributeMasterUt getMmrHeaderAttributeMasterUt() {
+	
+	/*public MmrHeaderAttributeMasterUt getMmrHeaderAttributeMasterUt() {
 		return this.mmrHeaderAttributeMasterUt;
 	}
 
 	public void setMmrHeaderAttributeMasterUt(MmrHeaderAttributeMasterUt mmrHeaderAttributeMasterUt) {
 		this.mmrHeaderAttributeMasterUt = mmrHeaderAttributeMasterUt;
+	}*/
+	
+	
+	@JsonIgnore
+	public MmrBaseAttributeMasterUt getMmrParameterBaseAttributeMasterUt() {
+		return mmrParameterBaseAttributeMasterUt;
 	}
 
-	public Long getMmrHeaderAttributeMasterUtId() {
-		return mmrHeaderAttributeMasterUtId;
+	public void setMmrParameterBaseAttributeMasterUt(MmrBaseAttributeMasterUt mmrParameterBaseAttributeMasterUt) {
+		this.mmrParameterBaseAttributeMasterUt = mmrParameterBaseAttributeMasterUt;
 	}
 
-	public void setMmrHeaderAttributeMasterUtId(Long mmrHeaderAttributeMasterUtId) {
-		this.mmrHeaderAttributeMasterUtId = mmrHeaderAttributeMasterUtId;
+	public Long getMmrParameterBaseAttributeId() {
+		return mmrParameterBaseAttributeId;
+	}
+
+	public void setMmrParameterBaseAttributeId(Long mmrParameterBaseAttributeId) {
+		this.mmrParameterBaseAttributeId = mmrParameterBaseAttributeId;
 	}
 
 	

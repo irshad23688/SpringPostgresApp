@@ -3,6 +3,7 @@ package com.metalsa.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -245,20 +246,24 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 	}
 	
 	public List<MmrBaseAttributeTableDataTypeUt> getMmrBaseAttributeTableDataTypeUts() {
-		return mmrBaseAttributeTableDataTypeUts;
+		List<MmrBaseAttributeTableDataTypeUt> tableTypeDataList = new ArrayList<>();
+		for(MmrBaseAttributeTableDataTypeUt mmrBaseAttributeTableDataTypeUt : this.mmrBaseAttributeTableDataTypeUts) {
+			mmrBaseAttributeTableDataTypeUt.setMmrParameterBaseAttributeId(mmrBaseAttributeTableDataTypeUt.getMmrParameterBaseAttributeMasterUt().getId());
+			tableTypeDataList.add(mmrBaseAttributeTableDataTypeUt);
+		}
+		//setMmrParameterBaseAttributeId(getMmrParameterBaseAttributeMasterUt().getId());
+		return tableTypeDataList;
 	}
 
 	public void setMmrBaseAttributeTableDataTypeUts(
 			List<MmrBaseAttributeTableDataTypeUt> mmrBaseAttributeTableDataTypeUts) {
 		this.mmrBaseAttributeTableDataTypeUts = mmrBaseAttributeTableDataTypeUts;
 		for(MmrBaseAttributeTableDataTypeUt mmrBaseAttributeTableDataTypeUt : this.mmrBaseAttributeTableDataTypeUts) {
-			MmrHeaderAttributeMasterUt headerAttribute = new MmrHeaderAttributeMasterUt();
+			MmrBaseAttributeMasterUt parameterBaseAttribute = new MmrBaseAttributeMasterUt();
 			mmrBaseAttributeTableDataTypeUt.setMmrBaseAttributeMasterUt(this);
-			headerAttribute.setId(mmrBaseAttributeTableDataTypeUt.getMmrHeaderAttributeMasterUtId());
-			mmrBaseAttributeTableDataTypeUt.setMmrHeaderAttributeMasterUt(headerAttribute);
-			
+			parameterBaseAttribute.setId(mmrBaseAttributeTableDataTypeUt.getMmrParameterBaseAttributeId());
+			mmrBaseAttributeTableDataTypeUt.setMmrParameterBaseAttributeMasterUt(parameterBaseAttribute);
 		}
-		
 	}
 
 	public MmrBaseAttributeUomDetailsUt addMmrBaseAttributeUomDetailsUt(MmrBaseAttributeUomDetailsUt mmrBaseAttributeUomDetailsUt) {
