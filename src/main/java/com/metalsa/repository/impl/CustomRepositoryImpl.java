@@ -29,36 +29,36 @@ public class CustomRepositoryImpl implements CustomRepository {
 
 	@Autowired
 	private EntityManagerFactory entityManagerFactory;
-	
+
 	@Override
 	public List<MmrDataSheetUt> getDataSheetByClassNSubclass(Long classId, Long subClassId) {
 		CriteriaBuilder cb = entityManagerFactory.getCriteriaBuilder();
 		CriteriaQuery<MmrDataSheetUt> cr = cb.createQuery(MmrDataSheetUt.class);
 		Root<MmrDataSheetUt> root = cr.from(MmrDataSheetUt.class);
-		
+
 		Predicate[] predicates = new Predicate[2];
 		predicates[0] = cb.equal(root.get("classId"),classId);
 		predicates[1] = cb.equal(root.get("subclassId"), subClassId);
 		cr.select(root).where(predicates);
 		Session session = (Session)entityManagerFactory.createEntityManager().getDelegate();
-		
+
 		Query<MmrDataSheetUt> query = session.createQuery(cr);
 		return query.getResultList();
 	}
-	
+
 	@Override
 	public MmrTestSheetUt getTestSheetByClassNSubclass(Long classId, Long subClassId) {
 		CriteriaBuilder cb = entityManagerFactory.getCriteriaBuilder();
 		CriteriaQuery<MmrTestSheetUt> cr = cb.createQuery(MmrTestSheetUt.class);
 		Root<MmrTestSheetUt> root = cr.from(MmrTestSheetUt.class);
-		
+
 		Predicate[] predicates = new Predicate[3];
 		predicates[0] = cb.equal(root.get("mmrClassMasterUt"),classId);
 		predicates[1] = cb.equal(root.get("mmrSubclassMasterUt"), subClassId);
 		predicates[2] = cb.equal(root.get("status"), 1);
 		cr.select(root).where(predicates);
 		Session session = (Session)entityManagerFactory.createEntityManager().getDelegate();
-		
+
 		Query<MmrTestSheetUt> query = session.createQuery(cr);
 		//TODO: TO CHANGE ACCORDINGLY
 		// Considering only one active sheet
@@ -74,15 +74,25 @@ public class CustomRepositoryImpl implements CustomRepository {
 		CriteriaQuery<MmrSearchDataSheetView> cr = cb.createQuery(MmrSearchDataSheetView.class);
 		Root<MmrSearchDataSheetView> root = cr.from(MmrSearchDataSheetView.class);
 		List<Predicate> predicates = new ArrayList<>();
+		Predicate revisionPredicate = null;
+		if(!model.isShowRevision()) {
+			revisionPredicate =cb.equal(root.get("status"),MetalsaConstant.STATUS.PENDING);
+		}
 		populateTextBaseAttributePredicate(model, cb, root, predicates);
 		populateTextMasterAttributePredicate(model, cb, root, predicates);
 		populateRangeBaseAttributePredicate(model, cb, root, predicates);
-		if(!model.isShowRevision()) {
-			predicates.add(cb.equal(root.get("status"),MetalsaConstant.STATUS.PENDING));
+
+		if(!predicates.isEmpty()) {
+			Predicate predicate = cb.or((Predicate[]) predicates.toArray(new Predicate[0]));
+			if(null!=revisionPredicate) {
+				cr.select(root).where(cb.and(predicate,revisionPredicate));
+			}else {
+				cr.select(root).where(predicate);
+			}
+		}else {
+			cr.select(root);
 		}
-		for (Predicate predicate : predicates) {
-			cr.select(root).where(cb.and(predicate));
-		}
+
 		Session session = (Session)entityManagerFactory.createEntityManager().getDelegate();
 
 		Query<MmrSearchDataSheetView> query = session.createQuery(cr);
@@ -93,14 +103,16 @@ public class CustomRepositoryImpl implements CustomRepository {
 			Root<MmrSearchDataSheetView> root, List<Predicate> predicates) {
 		if(null!= model.getRangeBaseParameterList() && !model.getRangeBaseParameterList().isEmpty()) {
 			for (SearchBaseModel searchBaseModel  : model.getRangeBaseParameterList()) {
-				predicates.add(cb.equal(root.get("baseAttributeId"),Long.parseLong(searchBaseModel.getProperty())));
-				if(MetalsaConstant.UOM.PERCENT.equals(searchBaseModel.getUom())) {
-					predicates.add(cb.le(root.get("userUom1"),new BigDecimal(searchBaseModel.getMaxValue())));
-					predicates.add(cb.ge(root.get("userUom1"),new BigDecimal(searchBaseModel.getMinValue())));
-				}else if(MetalsaConstant.UOM.PPM.equals(searchBaseModel.getUom())){
-					predicates.add(cb.le(root.get("userUom2"),new BigDecimal(searchBaseModel.getMaxValue())));
-					predicates.add(cb.ge(root.get("userUom2"),new BigDecimal(searchBaseModel.getMinValue())));
-					
+				if(null!=searchBaseModel.getProperty() && !searchBaseModel.getProperty().isEmpty()) {
+					Predicate predicate1 = cb.equal(root.get("baseAttributeId"),Long.parseLong(searchBaseModel.getProperty()));
+					Predicate predicate2 = null;
+					if(MetalsaConstant.UOM.PERCENT.equals(searchBaseModel.getUom())) {
+						predicate2 =cb.between(root.get("userUom1"), new BigDecimal(searchBaseModel.getMinValue()), new BigDecimal(searchBaseModel.getMaxValue()));
+					}else if(MetalsaConstant.UOM.PPM.equals(searchBaseModel.getUom())){
+						predicate2 =cb.between(root.get("userUom2"), new BigDecimal(searchBaseModel.getMinValue()), new BigDecimal(searchBaseModel.getMaxValue()));
+					}
+					predicates.add(cb.and(predicate1,predicate2));
+
 				}
 			}
 		}
@@ -119,8 +131,9 @@ public class CustomRepositoryImpl implements CustomRepository {
 			Root<MmrSearchDataSheetView> root, List<Predicate> predicates) {
 		if(null!= model.getTextBaseAttributeList() && !model.getTextBaseAttributeList().isEmpty()) {
 			for (SearchBaseModel searchBaseModel  : model.getTextBaseAttributeList()) {
-				predicates.add(cb.equal(root.get("baseAttributeId"),Long.parseLong(searchBaseModel.getProperty())));
-				predicates.add(cb.like(root.get("testingInformation"), "%"+searchBaseModel.getValue()+"%"));
+				Predicate pred1 = cb.equal(root.get("baseAttributeId"),Long.parseLong(searchBaseModel.getProperty()));
+				Predicate pred2 = cb.like(root.get("testingInformation"), "%"+searchBaseModel.getValue()+"%");
+				predicates.add(cb.and(pred1,pred2));
 			}
 		}
 	}

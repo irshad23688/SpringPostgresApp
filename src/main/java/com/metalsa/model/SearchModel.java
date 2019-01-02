@@ -16,7 +16,6 @@ public class SearchModel {
 	private List<SearchBaseModel> rangeBaseParameterList = new ArrayList<>();
 	private List<SearchBaseModel> textBaseAttributeList = new ArrayList<>();
 	private List<SearchBaseModel> textMasterAttributeList = new ArrayList<>();
-	private Map<String, Map<String, String>> searchDataMap = new LinkedHashMap<>();
 	private Map<String, List<MmrSearchDataSheetView>> searchDatamp = new LinkedHashMap<>();
 		
 	public String getStaticBaseAttributeIds() {
@@ -54,12 +53,6 @@ public class SearchModel {
 	}
 	public void setRangeBaseParameterList(List<SearchBaseModel> rangeBaseParameterList) {
 		this.rangeBaseParameterList = rangeBaseParameterList;
-	}
-	public Map<String, Map<String, String>> getSearchDataMap() {
-		return searchDataMap;
-	}
-	public void setSearchDataMap(Map<String, Map<String, String>> searchDataMap) {
-		this.searchDataMap = searchDataMap;
 	}
 	public Map<String, List<MmrSearchDataSheetView>> getSearchDatamp() {
 		return searchDatamp;
