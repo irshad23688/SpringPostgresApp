@@ -37,18 +37,15 @@ public class MmrBaseAttributeUomDetailsUt implements Serializable {
 
 	@Column(name="SOM1_CONVERSION_FACTOR", nullable=false, length=50)
 	private String som1ConversionFactor;
-
-	@Column(name="SOM1_ISPRIMARY", nullable=false, length=50)
-	private String som1Isprimary;
-
+ 
 	@Column(name="SOM1_UOM", nullable=false, length=50)
 	private String som1Uom;
 
 	@Column(name="SOM2_CONVERSION_FACTOR", nullable=false, length=50)
 	private String som2ConversionFactor;
 
-	@Column(name="SOM2_ISPRIMARY", nullable=false, length=50)
-	private String som2Isprimary;
+	@Column(name="IS_PRIMARY", nullable=false, length=50)
+	private String isPrimary;
 
 	@Column(name="SOM2_UOM", nullable=false, length=50)
 	private String som2Uom;
@@ -112,15 +109,7 @@ public class MmrBaseAttributeUomDetailsUt implements Serializable {
 	public void setSom1ConversionFactor(String som1ConversionFactor) {
 		this.som1ConversionFactor = som1ConversionFactor;
 	}
-
-	public String getSom1Isprimary() {
-		return this.som1Isprimary;
-	}
-
-	public void setSom1Isprimary(String som1Isprimary) {
-		this.som1Isprimary = som1Isprimary;
-	}
-
+	 
 	public String getSom1Uom() {
 		return this.som1Uom;
 	}
@@ -135,14 +124,6 @@ public class MmrBaseAttributeUomDetailsUt implements Serializable {
 
 	public void setSom2ConversionFactor(String som2ConversionFactor) {
 		this.som2ConversionFactor = som2ConversionFactor;
-	}
-
-	public String getSom2Isprimary() {
-		return this.som2Isprimary;
-	}
-
-	public void setSom2Isprimary(String som2Isprimary) {
-		this.som2Isprimary = som2Isprimary;
 	}
 
 	public String getSom2Uom() {
@@ -170,4 +151,13 @@ public class MmrBaseAttributeUomDetailsUt implements Serializable {
 		this.mmrBaseAttributeMasterUt = mmrBaseAttributeMasterUt;
 	}
 
+	public String getIsPrimary() {
+		return isPrimary;
+	}
+
+	public void setIsPrimary(String isPrimary) {
+		this.isPrimary = isPrimary;
+	}
+
+	
 }
