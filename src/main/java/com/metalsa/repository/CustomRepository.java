@@ -12,6 +12,5 @@ public interface CustomRepository {
 	List<MmrDataSheetUt> getDataSheetByClassNSubclass(Long classId, Long subClassId);
 	MmrTestSheetUt getTestSheetByClassNSubclass(Long classId, Long subClassId);
 	List<MmrSearchDataSheetView> getSearchDataSheetView(SearchModel model);
-	List<MmrDataSheetUt> getDataSheetByIds(List<Long> datasheetIds);
 
 }

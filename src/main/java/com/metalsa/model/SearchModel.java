@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.metalsa.domain.MmrHeaderAttributeMasterUt;
-import com.metalsa.domain.MmrSearchDataSheetView;
 
 public class SearchModel {
 
@@ -17,7 +16,6 @@ public class SearchModel {
 	private List<SearchBaseModel> textBaseAttributeList = new ArrayList<>();
 	private List<SearchBaseModel> textMasterAttributeList = new ArrayList<>();
 	private Map<String, Map<String, String>> searchDataMap = new LinkedHashMap<>();
-	private Map<String, List<MmrSearchDataSheetView>> searchDatamp = new LinkedHashMap<>();
 		
 	public String getStaticBaseAttributeIds() {
 		return staticBaseAttributeIds;
@@ -61,11 +59,6 @@ public class SearchModel {
 	public void setSearchDataMap(Map<String, Map<String, String>> searchDataMap) {
 		this.searchDataMap = searchDataMap;
 	}
-	public Map<String, List<MmrSearchDataSheetView>> getSearchDatamp() {
-		return searchDatamp;
-	}
-	public void setSearchDatamp(Map<String, List<MmrSearchDataSheetView>> searchDatamp) {
-		this.searchDatamp = searchDatamp;
-	}
+	
 	
 }
