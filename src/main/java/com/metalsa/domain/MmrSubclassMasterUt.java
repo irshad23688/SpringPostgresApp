@@ -14,7 +14,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 /**
@@ -23,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 @Table(name="MMR_SUBCLASS_MASTER_UT")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class MmrSubclassMasterUt implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -135,7 +140,6 @@ public class MmrSubclassMasterUt implements Serializable {
 		this.status = status;
 	}
 
-	@JsonIgnore
 	public MmrClassMasterUt getMmrClassMasterUt() {
 		return this.mmrClassMasterUt;
 	}
