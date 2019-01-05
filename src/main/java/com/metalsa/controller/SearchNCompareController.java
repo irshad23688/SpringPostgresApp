@@ -42,9 +42,9 @@ public class SearchNCompareController {
     	return service.getSearchdata(new SearchModel());
     }
     
-    @GetMapping("/getdatasheets")
-    public List<MmrDataSheetUt> getDataSheetByIds(@Valid List<Long> datasheetIds) {
-    	return service.getDataSheetByIds(datasheetIds);
+    @PostMapping("/getdatasheets")
+    public List<MmrDataSheetUt> getDataSheetByIds(@RequestBody SearchModel model) {
+    	return service.getDataSheetByIds(model.getDatasheetIds());
     }
 /*    @GetMapping("/showfilterdata")
     public SearchModel getSearch(@RequestBody SearchModel model) {

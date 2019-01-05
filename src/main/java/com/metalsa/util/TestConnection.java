@@ -1,5 +1,5 @@
 package com.metalsa.util;
-import com.metalsa.domain.MmrSubclassMasterUt;
+import com.metalsa.domain.MmrSubClassMasterUt;
 
 
 public class TestConnection {
@@ -15,7 +15,7 @@ public class TestConnection {
 			System.out.println(con.isClosed());  
 
 		}catch(Exception e){ System.out.println(e);}  */
-		JsonCreator.createJson(new MmrSubclassMasterUt());
+		JsonCreator.createJson(new MmrSubClassMasterUt());
 
 
 	}

@@ -1,9 +1,4 @@
-package com.metalsa.domain;
-
-import java.io.Serializable;
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+package com.metalsa.model;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -13,49 +8,15 @@ import java.sql.Timestamp;
  * The persistent class for the MMR_TEST_SHEET_DETAIL_UT database table.
  * 
  */
-@Entity
-@Table(name="MMR_TEST_SHEET_DETAIL_UT")
-public class MmrTestSheetDetailUt implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class MmrTestSheetDetailUtModel extends MetalsaAbstractEntityModel {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(unique=true, nullable=false, precision=38)
 	private long id;
-
-	@Column(name="BASE_ATTRIBUTE_SEQUENCE_NO", nullable=false, precision=38)
 	private BigDecimal baseAttributeSequenceNo;
-
-	@Column(name="CREATED_BY", nullable=false, precision=38)
-	private BigDecimal createdBy;
-
-	@Column(name="CREATED_ON", nullable=false,insertable=false)
-	private Timestamp createdOn;
-
-	@Column(name="MODIFIED_BY", precision=38)
-	private BigDecimal modifiedBy;
-
-	@Column(name="MODIFIED_ON",insertable=false)
-	private Timestamp modifiedOn;
-
-	@Column(nullable=false, precision=38)
-	private BigDecimal status;
-
-	@Column(name="BASE_ATTRIBUTE_ID", nullable=false)
 	private Long mmrBaseAttributeMasterUt;
-
-	@Column(name="HEADER_ATTRIBUTE_ID", nullable=false)
 	private Long mmrHeaderAttributeMasterUt;
-	
-	 
-	@JsonIgnore
-	@ManyToOne
-	private MmrTestSheetUt mmrTestSheetUt;
-	
-	@Column(name="ISMANADATORY")
 	private Integer isMandatory;
 	
-	public MmrTestSheetDetailUt() {
+	public MmrTestSheetDetailUtModel() {
 	}
 
 	public long getId() {
@@ -138,11 +99,4 @@ public class MmrTestSheetDetailUt implements Serializable {
 		this.mmrHeaderAttributeMasterUt = mmrHeaderAttributeMasterUt;
 	}
 
-	public MmrTestSheetUt getMmrTestSheetUt() {
-		return mmrTestSheetUt;
-	}
-
-	public void setMmrTestSheetUt(MmrTestSheetUt mmrTestSheetUt) {
-		this.mmrTestSheetUt = mmrTestSheetUt;
-	}
 }

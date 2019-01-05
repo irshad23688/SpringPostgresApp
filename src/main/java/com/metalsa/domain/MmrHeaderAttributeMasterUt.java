@@ -7,15 +7,11 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
@@ -35,7 +31,7 @@ public class MmrHeaderAttributeMasterUt implements Serializable {
 	@Column(name="CREATED_BY", nullable=false, precision=38)
 	private BigDecimal createdBy;
 
-	@Column(name="CREATED_ON", nullable=false)
+	@Column(name="CREATED_ON", nullable=false,insertable=false)
 	private Timestamp createdOn;
 
 	@Column(nullable=false, length=500)
@@ -47,30 +43,19 @@ public class MmrHeaderAttributeMasterUt implements Serializable {
 	@Column(name="MODIFIED_BY", precision=38)
 	private BigDecimal modifiedBy;
 
-	@Column(name="MODIFIED_ON")
+	@Column(name="MODIFIED_ON",insertable=false)
 	private Timestamp modifiedOn;
 	
 	 
 	@Column(nullable=false, length=100)
 	private String name;
 
-	@Column(nullable=false, precision=38)
+	@Column(nullable=false, precision=38,insertable=false)
 	private BigDecimal status;
 	
-	/*@Column(name="IS_SEARCH",nullable=false, precision=38)
-	private BigDecimal isSearch;*/
-
 	//bi-directional many-to-one association to MmrBaseAttributeMasterUt
 	@OneToMany(mappedBy="mmrHeaderAttributeMasterUt")
 	private List<MmrBaseAttributeMasterUt> mmrBaseAttributeMasterUts;
-
-	/*//bi-directional many-to-one association to MmrBaseAttributeTableDataTypeUt
-	@OneToMany(mappedBy="mmrHeaderAttributeMasterUt")
-	private List<MmrBaseAttributeTableDataTypeUt> mmrBaseAttributeTableDataTypeUts;
-
-	//bi-directional many-to-one association to MmrTestSheetDetailUt
-	@OneToMany(mappedBy="mmrHeaderAttributeMasterUt")
-	private List<MmrTestSheetDetailUt> mmrTestSheetDetailUts;*/
 
 	public MmrHeaderAttributeMasterUt() {
 	}

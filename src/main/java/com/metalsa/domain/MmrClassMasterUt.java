@@ -13,7 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 /**
@@ -36,7 +36,7 @@ public class MmrClassMasterUt implements Serializable {
 	@Column(name="CREATED_BY", nullable=false, precision=38)
 	private BigDecimal createdBy;
 
-	@Column(name="CREATED_ON", nullable=false)
+	@Column(name="CREATED_ON", nullable=false,insertable=false)
 	private Timestamp createdOn;
 
 	@Column(nullable=false, length=500)
@@ -45,18 +45,18 @@ public class MmrClassMasterUt implements Serializable {
 	@Column(name="MODIFIED_BY", precision=38)
 	private BigDecimal modifiedBy;
 
-	@Column(name="MODIFIED_ON")
+	@Column(name="MODIFIED_ON",insertable=false)
 	private Timestamp modifiedOn;
 
 	@Column(nullable=false, length=100)
 	private String name;
 
-	@Column(nullable=false, precision=38)
+	@Column(nullable=false, precision=38,insertable=false)
 	private BigDecimal status;
 	
-	@JsonIgnoreProperties("mmrClassMasterUt")
 	@OneToMany(mappedBy="mmrClassMasterUt")
-	private List<MmrSubclassMasterUt> mmrSubclassMasterUt;
+	@JsonManagedReference
+	private List<MmrSubClassMasterUt> mmrSubclassMasterUt;
 
 
 	public MmrClassMasterUt() {
@@ -134,11 +134,11 @@ public class MmrClassMasterUt implements Serializable {
 		this.status = status;
 	}
 
-	public List<MmrSubclassMasterUt> getMmrSubclassMasterUt() {
+	public List<MmrSubClassMasterUt> getMmrSubclassMasterUt() {
 		return mmrSubclassMasterUt;
 	}
 
-	public void setMmrSubclassMasterUt(List<MmrSubclassMasterUt> mmrSubclassMasterUt) {
+	public void setMmrSubclassMasterUt(List<MmrSubClassMasterUt> mmrSubclassMasterUt) {
 		this.mmrSubclassMasterUt = mmrSubclassMasterUt;
 	}
 	

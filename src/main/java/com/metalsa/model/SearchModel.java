@@ -17,7 +17,7 @@ public class SearchModel {
 	private List<SearchBaseModel> textBaseAttributeList = new ArrayList<>();
 	private List<SearchBaseModel> textMasterAttributeList = new ArrayList<>();
 	private Map<String, List<MmrSearchDataSheetView>> searchDatamp = new LinkedHashMap<>();
-		
+	private List<Long> datasheetIds;	
 	public String getStaticBaseAttributeIds() {
 		return staticBaseAttributeIds;
 	}
@@ -59,6 +59,12 @@ public class SearchModel {
 	}
 	public void setSearchDatamp(Map<String, List<MmrSearchDataSheetView>> searchDatamp) {
 		this.searchDatamp = searchDatamp;
+	}
+	public List<Long> getDatasheetIds() {
+		return datasheetIds;
+	}
+	public void setDatasheetIds(List<Long> datasheetIds) {
+		this.datasheetIds = datasheetIds;
 	}
 	
 }

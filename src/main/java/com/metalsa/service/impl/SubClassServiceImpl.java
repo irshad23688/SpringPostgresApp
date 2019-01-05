@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.metalsa.domain.MmrSubclassMasterUt;
+import com.metalsa.domain.MmrSubClassMasterUt;
 import com.metalsa.model.SubClassModel;
 import com.metalsa.repository.ClassRepository;
 import com.metalsa.repository.SubClassRepository;
@@ -27,7 +27,7 @@ public class SubClassServiceImpl implements SubClassService {
 	@Override
 	public SubClassModel persistSubClass(SubClassModel subClassModel) {
 		
-		MmrSubclassMasterUt mmrSubclassMasterUt = subClassModel.getSubclassUts().get(0);
+		MmrSubClassMasterUt mmrSubclassMasterUt = subClassModel.getSubclassUts().get(0);
 		mmrSubclassMasterUt.setMmrClassMasterUt(subClassModel.getClassUts().get(0));
 		subClassRepository.save(mmrSubclassMasterUt);
 		

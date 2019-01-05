@@ -31,16 +31,16 @@ public class MmrBaseAttributeTableDataTypeUt implements Serializable {
 	@Column(name="CREATED_BY", nullable=false, precision=38)
 	private BigDecimal createdBy;
 
-	@Column(name="CREATED_ON", nullable=false)
+	@Column(name="CREATED_ON", nullable=false,insertable=false)
 	private Timestamp createdOn;
 
 	@Column(name="MODIFIED_BY", precision=38)
 	private BigDecimal modifiedBy;
 
-	@Column(name="MODIFIED_ON")
+	@Column(name="MODIFIED_ON",insertable=false)
 	private Timestamp modifiedOn;
 
-	@Column(nullable=false, precision=38)
+	@Column(nullable=false, precision=38,insertable=false)
 	private BigDecimal status;
 
 	//bi-directional many-to-one association to MmrBaseAttributeMasterUt

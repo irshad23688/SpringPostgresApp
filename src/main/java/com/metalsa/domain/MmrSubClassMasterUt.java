@@ -15,10 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 /**
@@ -27,8 +24,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  */
 @Entity
 @Table(name="MMR_SUBCLASS_MASTER_UT")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
-public class MmrSubclassMasterUt implements Serializable {
+public class MmrSubClassMasterUt implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -42,7 +38,7 @@ public class MmrSubclassMasterUt implements Serializable {
 	@Column(name="CREATED_BY", nullable=false, precision=38)
 	private BigDecimal createdBy;
 
-	@Column(name="CREATED_ON", nullable=false)
+	@Column(name="CREATED_ON", nullable=false,insertable=false)
 	private Timestamp createdOn;
 
 	@Column(nullable=false, length=500)
@@ -51,21 +47,42 @@ public class MmrSubclassMasterUt implements Serializable {
 	@Column(name="MODIFIED_BY", precision=38)
 	private BigDecimal modifiedBy;
 
-	@Column(name="MODIFIED_ON")
+	@Column(name="MODIFIED_ON",insertable=false)
 	private Timestamp modifiedOn;
 
 	@Column(nullable=false, length=100)
 	private String name;
 
-	@Column(nullable=false, precision=38)
+	@Column(nullable=false, precision=38,insertable=false)
 	private BigDecimal status;
 
 	//bi-directional many-to-one association to MmrClassMasterUt
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="CLASS_ID", nullable=false)
+	@JsonBackReference
 	private MmrClassMasterUt mmrClassMasterUt;
  
-	public MmrSubclassMasterUt() {
+	public MmrSubClassMasterUt() {
+	}
+
+	
+	public MmrSubClassMasterUt(long id, String abbreviation, BigDecimal createdBy, Timestamp createdOn,
+			String description, BigDecimal modifiedBy, Timestamp modifiedOn, String name, BigDecimal status) {
+		super();
+		this.id = id;
+		this.abbreviation = abbreviation;
+		this.createdBy = createdBy;
+		this.createdOn = createdOn;
+		this.description = description;
+		this.modifiedBy = modifiedBy;
+		this.modifiedOn = modifiedOn;
+		this.name = name;
+		this.status = status;
+	}
+
+
+	public MmrSubClassMasterUt(MmrClassMasterUt mmrClassMasterUt2) {
+		this.mmrClassMasterUt=mmrClassMasterUt2;
 	}
 
 	public long getId() {

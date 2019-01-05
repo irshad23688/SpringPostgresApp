@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.metalsa.domain.MmrClassMasterUt;
 import com.metalsa.exception.ExceptionHandler;
 import com.metalsa.repository.ClassRepository;
+import com.metalsa.repository.SubClassRepository;
 
 /**
  * Created by jayesh on 9/12/18.
@@ -29,11 +30,14 @@ public class ClassMasterController {
 	
     @Autowired
     private ClassRepository classRepository;
+    @Autowired
+    private SubClassRepository subClassRepository;
 
     @GetMapping("/class")
     public List<MmrClassMasterUt> getAllClass() {
-        return classRepository.findAll(new Sort(Sort.Direction.DESC,"modifiedOn"));
+    	  return classRepository.findAll(new Sort(Sort.Direction.DESC,"modifiedOn"));
     }
+    
 
     @PostMapping("/class")
     public List<MmrClassMasterUt> createClass(@Valid @RequestBody MmrClassMasterUt classMaster) {

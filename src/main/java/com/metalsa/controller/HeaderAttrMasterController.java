@@ -1,5 +1,6 @@
 package com.metalsa.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.metalsa.domain.MmrHeaderAttributeMasterUt;
 import com.metalsa.exception.ExceptionHandler;
+import com.metalsa.model.MmrHeaderAttributeMasterUtModel;
 import com.metalsa.repository.HeaderAttrRepository;
+import com.metalsa.service.HeaderAttributeService;
 
 /**
  * Created by jayesh on 9/12/18.
@@ -29,9 +32,17 @@ public class HeaderAttrMasterController {
     @Autowired
     private HeaderAttrRepository headerAttrRepository;
 
+    @Autowired
+    private HeaderAttributeService headerAttributeService;
+    
     @GetMapping("/headerattribute")
     public List<MmrHeaderAttributeMasterUt> getAllHeaderAttribute() {
         return headerAttrRepository.findAll();
+    }
+    @GetMapping("/headerattribute/{istableheaderFlag}/{status}")
+    public List<MmrHeaderAttributeMasterUtModel> getAllHeaderAttributeForUI(
+    		@PathVariable(value = "istableheaderFlag") Long istableheaderFlag,@PathVariable(value = "status") Long status) {
+    	return headerAttributeService.findByIstableheaderFlagAndStatus(new BigDecimal(istableheaderFlag),new BigDecimal(status));
     }
 
     @PostMapping("/headerattribute")

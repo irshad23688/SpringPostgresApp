@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.metalsa.domain.MmrBaseAttributeMasterUt;
 import com.metalsa.exception.ExceptionHandler;
+import com.metalsa.model.MmrBaseAttributeMasterUtModel;
 import com.metalsa.repository.BaseAttributeRepository;
+import com.metalsa.service.BaseAttributeService;
 
 /**
  * Created by jayesh on 9/12/18.
@@ -29,10 +31,13 @@ public class BaseAttributeMasterController {
     @Autowired
     private BaseAttributeRepository baseAttributeRepository;
     
-
+    @Autowired
+    private BaseAttributeService baseAttributeService;
+    
+    
     @GetMapping("/baseattribute")
-    public List<MmrBaseAttributeMasterUt> getAllBaseAttribute() {
-    	return baseAttributeRepository.findAll();
+    public List<MmrBaseAttributeMasterUtModel> getAllBaseAttribute() {
+    	return baseAttributeService.getAll();
     }
 
     @PostMapping("/baseattribute")
@@ -45,6 +50,12 @@ public class BaseAttributeMasterController {
     public MmrBaseAttributeMasterUt getBaseAttributeById(@PathVariable(value = "id") Long id) {
         return baseAttributeRepository.findById(id)
                 .orElseThrow(() -> new ExceptionHandler("BaseAttributeMasterUt", "id", id));
+    }
+    @GetMapping("/baseattribute/ui/{id}")
+    public MmrBaseAttributeMasterUtModel getBaseAttributeByIdForUI(@PathVariable(value = "id") Long id) {
+    	MmrBaseAttributeMasterUt mmrBaseAttributeMasterUt = baseAttributeRepository.findById(id)
+    			.orElseThrow(() -> new ExceptionHandler("BaseAttributeMasterUt", "id", id));
+    	return baseAttributeService.getOne(mmrBaseAttributeMasterUt);
     }
 
     @PutMapping("/baseattribute/{id}")

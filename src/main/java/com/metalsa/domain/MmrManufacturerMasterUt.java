@@ -23,7 +23,7 @@ public class MmrManufacturerMasterUt implements Serializable {
 	@Column(name="CREATED_BY", nullable=false, precision=38)
 	private BigDecimal createdBy;
 
-	@Column(name="CREATED_ON", nullable=false)
+	@Column(name="CREATED_ON", nullable=false,insertable=false)
 	private Timestamp createdOn;
 
 	@Column(nullable=false, length=500)
@@ -32,7 +32,7 @@ public class MmrManufacturerMasterUt implements Serializable {
 	@Column(name="MODIFIED_BY", precision=38)
 	private BigDecimal modifiedBy;
 
-	@Column(name="MODIFIED_ON")
+	@Column(name="MODIFIED_ON",insertable=false)
 	private Timestamp modifiedOn;
 
 	@Column(nullable=false, length=100)
