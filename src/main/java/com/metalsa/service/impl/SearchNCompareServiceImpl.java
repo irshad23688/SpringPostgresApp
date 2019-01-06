@@ -22,10 +22,8 @@ import com.metalsa.service.SearchNCompareService;
 public class SearchNCompareServiceImpl implements SearchNCompareService {
 
 	@Autowired
-	private SearchNCompareRepository repository;
-
-	@Autowired
 	private HeaderAttrRepository headerAttrRepository;
+	
 	@Autowired
 	private CustomRepository customRepository;
 

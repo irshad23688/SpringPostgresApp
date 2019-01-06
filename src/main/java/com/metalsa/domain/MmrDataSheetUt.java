@@ -63,6 +63,9 @@ public class MmrDataSheetUt implements Serializable {
 	//bi-directional many-to-one association to MmrDataSheetDetailUt
 	@OneToMany(mappedBy="mmrDataSheetUt", cascade = CascadeType.ALL)
 	private List<MmrDataSheetDetailUt> mmrDataSheetDetailUts;
+	
+	@Column(name="REV_PARENT_ID", precision=38)
+	private Long revParentId;
 
 	public MmrDataSheetUt() {
 	}
@@ -201,5 +204,15 @@ public class MmrDataSheetUt implements Serializable {
 		mmrDataSheetDetailUt.setMmrDataSheetUt(null);
 		return mmrDataSheetDetailUt;
 	}
+
+	public Long getRevParentId() {
+		return revParentId;
+	}
+
+	public void setRevParentId(Long revParentId) {
+		this.revParentId = revParentId;
+	}
+	
+	
 
 }

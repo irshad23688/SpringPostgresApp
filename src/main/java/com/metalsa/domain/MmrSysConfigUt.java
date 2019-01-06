@@ -27,8 +27,8 @@ public class MmrSysConfigUt implements Serializable {
 	@Column(name="param_name", length=100)
 	private String paramName;
 
-	@Column(name="param_value", length=100)
-	private String param_value;
+	@Column(name="param_value", length=500)
+	private String paramValue;
  
 	public MmrSysConfigUt() {
 	}
@@ -49,13 +49,12 @@ public class MmrSysConfigUt implements Serializable {
 		this.paramName = paramName;
 	}
 
-	public String getParam_value() {
-		return param_value;
+	public String getParamValue() {
+		return paramValue;
 	}
 
-	public void setParam_value(String param_value) {
-		this.param_value = param_value;
+	public void setParamValue(String paramValue) {
+		this.paramValue = paramValue;
 	}
 
- 
 }

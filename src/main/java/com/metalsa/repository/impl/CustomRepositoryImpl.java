@@ -19,16 +19,21 @@ import org.springframework.stereotype.Repository;
 import com.metalsa.constant.MetalsaConstant;
 import com.metalsa.domain.MmrDataSheetUt;
 import com.metalsa.domain.MmrSearchDataSheetView;
+import com.metalsa.domain.MmrSysConfigUt;
 import com.metalsa.domain.MmrTestSheetUt;
 import com.metalsa.model.SearchBaseModel;
 import com.metalsa.model.SearchModel;
 import com.metalsa.repository.CustomRepository;
+import com.metalsa.repository.SysConfigRepository;
 
 @Repository
 public class CustomRepositoryImpl implements CustomRepository {
 
 	@Autowired
 	private EntityManagerFactory entityManagerFactory;
+	
+	@Autowired
+	private SysConfigRepository sysConfigRepository;
 
 	@Override
 	public List<MmrDataSheetUt> getDataSheetByClassNSubclass(Long classId, Long subClassId) {
@@ -60,8 +65,6 @@ public class CustomRepositoryImpl implements CustomRepository {
 		Session session = (Session)entityManagerFactory.createEntityManager().getDelegate();
 
 		Query<MmrTestSheetUt> query = session.createQuery(cr);
-		//TODO: TO CHANGE ACCORDINGLY
-		// Considering only one active sheet
 		if(!query.getResultList().isEmpty()) {
 			return query.getResultList().get(0);
 		}
@@ -78,6 +81,15 @@ public class CustomRepositoryImpl implements CustomRepository {
 		if(!model.isShowRevision()) {
 			revisionPredicate =cb.equal(root.get("status"),MetalsaConstant.STATUS.PENDING);
 		}
+		
+		MmrSysConfigUt configUt =  sysConfigRepository.findByParamName("STATIC_SEARCH_BASE_ATTRIBUTE_IDS");
+		if(null!= configUt) {
+			String[] baseAttributeIds = configUt.getParamValue().split(",");
+			for (String id : baseAttributeIds) {
+				predicates.add(cb.equal(root.get("baseAttributeId"),id));
+			}
+		}
+		
 		populateTextBaseAttributePredicate(model, cb, root, predicates);
 		populateTextMasterAttributePredicate(model, cb, root, predicates);
 		populateRangeBaseAttributePredicate(model, cb, root, predicates);
@@ -112,7 +124,6 @@ public class CustomRepositoryImpl implements CustomRepository {
 						predicate2 =cb.between(root.get("userUom2"), new BigDecimal(searchBaseModel.getMinValue()), new BigDecimal(searchBaseModel.getMaxValue()));
 					}
 					predicates.add(cb.and(predicate1,predicate2));
-
 				}
 			}
 		}
