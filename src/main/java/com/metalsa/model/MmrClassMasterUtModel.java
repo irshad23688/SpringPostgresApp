@@ -2,7 +2,6 @@ package com.metalsa.model;
 
 public class MmrClassMasterUtModel extends MetalsaAbstractEntityModel {
 	
-	private long id;
 	private String abbreviation;
 	private String description;
 	private String name;
@@ -24,12 +23,6 @@ public class MmrClassMasterUtModel extends MetalsaAbstractEntityModel {
 	}
 	public void setAbbreviation(String abbreviation) {
 		this.abbreviation = abbreviation;
-	}
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
 	}
 	 
 	

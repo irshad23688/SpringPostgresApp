@@ -1,9 +1,6 @@
 package com.metalsa.model;
 
-import java.math.BigDecimal;
 import java.util.List;
-
-import org.springframework.beans.BeanUtils;
 
 import com.metalsa.domain.MmrDataTypeMasterUt;
 import com.metalsa.domain.MmrHeaderAttributeMasterUt;

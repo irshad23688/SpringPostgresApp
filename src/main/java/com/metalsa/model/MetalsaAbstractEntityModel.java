@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 
 public abstract class MetalsaAbstractEntityModel {
 
-	
+	protected Long id;
 	protected BigDecimal createdBy;
 	protected Timestamp createdOn;
 	protected BigDecimal modifiedBy;
@@ -42,6 +42,12 @@ public abstract class MetalsaAbstractEntityModel {
 	}
 	public void setStatus(BigDecimal status) {
 		this.status = status;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	

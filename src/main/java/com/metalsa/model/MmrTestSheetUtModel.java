@@ -11,7 +11,6 @@ import java.util.List;
  */
 public class MmrTestSheetUtModel extends MetalsaAbstractEntityModel {
 
-	private long id;
 
 	private BigDecimal approvedBy;
 	private Timestamp approvedOn;
@@ -24,13 +23,7 @@ public class MmrTestSheetUtModel extends MetalsaAbstractEntityModel {
 	public MmrTestSheetUtModel() {
 	}
 
-	public long getId() {
-		return this.id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
+	 
 
 	public BigDecimal getApprovedBy() {
 		return this.approvedBy;

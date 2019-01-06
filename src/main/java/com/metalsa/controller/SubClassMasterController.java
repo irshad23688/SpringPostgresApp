@@ -54,9 +54,9 @@ public class SubClassMasterController {
 
     
     @PostMapping("/subclass")
-    public List<MmrSubClassMasterUt> createSubClass(@Valid @RequestBody MmrSubClassMasterUt mmrSubclassMasterUt) {
+    public List<MmrSubClassMasterUtModel> createSubClass(@Valid @RequestBody MmrSubClassMasterUt mmrSubclassMasterUt) {
     	 subClassRepository.save(mmrSubclassMasterUt);
-    	return subClassRepository.findAll();
+    	return subClassService.getAll();
     }
 
     @GetMapping("/subclass/{id}")

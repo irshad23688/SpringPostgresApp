@@ -10,7 +10,6 @@ import java.util.List;
  */
 public class MmrHeaderAttributeMasterUtModel extends MetalsaAbstractEntityModel {
 
-	private long id;
 	private String description;
 	private BigDecimal istableheaderFlag;
 	private String name;
@@ -20,13 +19,7 @@ public class MmrHeaderAttributeMasterUtModel extends MetalsaAbstractEntityModel 
 	public MmrHeaderAttributeMasterUtModel() {
 	}
 
-	public long getId() {
-		return this.id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
+	 
 
 	public String getDescription() {
 		return description;

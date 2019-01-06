@@ -52,7 +52,7 @@ public class SubClassServiceImpl implements SubClassService {
 		MmrClassMasterUtModel modelClass= new MmrClassMasterUtModel();
 		BeanUtils.copyProperties(classMaster,modelClass );
 		model.setMmrClassMasterUt(modelClass);
-		return null;
+		return model;
 	}
  	
 	 	

@@ -7,7 +7,6 @@ package com.metalsa.model;
 
 public class MmrSubClassMasterUtModel extends MetalsaAbstractEntityModel{
 
-	private long id;
 	private String abbreviation;
 	private String description;
 	private String name;
@@ -49,14 +48,7 @@ public class MmrSubClassMasterUtModel extends MetalsaAbstractEntityModel{
 		this.name = name;
 	}
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-	
+	 
 	
 	 	
 }

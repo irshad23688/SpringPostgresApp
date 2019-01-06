@@ -9,7 +9,6 @@ import java.math.BigDecimal;
  */
 public class MmrTestSheetDetailUtModel extends MetalsaAbstractEntityModel {
 
-	private long id;
 	private BigDecimal baseAttributeSequenceNo;
 	private Long mmrBaseAttributeMasterUt;
 	private Long mmrHeaderAttributeMasterUt;
@@ -18,14 +17,6 @@ public class MmrTestSheetDetailUtModel extends MetalsaAbstractEntityModel {
 	public MmrTestSheetDetailUtModel() {
 	}
 
-	public long getId() {
-		return this.id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-	
 	public Integer getIsMandatory() {
 		return isMandatory;
 	}
