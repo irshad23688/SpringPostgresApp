@@ -1,5 +1,6 @@
 package com.metalsa.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import com.metalsa.model.MmrHeaderAttributeMasterUtModel;
 import com.metalsa.repository.BaseAttributeRepository;
 import com.metalsa.repository.HeaderAttrRepository;
 import com.metalsa.service.BaseAttributeService;
+import com.metalsa.service.HeaderAttributeService;
 
 @Service
 public class BaseAttributeServiceImpl implements BaseAttributeService {
@@ -26,6 +28,9 @@ public class BaseAttributeServiceImpl implements BaseAttributeService {
 
 	@Autowired
 	private BaseAttributeRepository baseAttributeRepository;
+	
+	@Autowired
+	private HeaderAttributeService headerAttributeService;
 
 	@Override
 	public List<MmrBaseAttributeMasterUtModel> getAll() {
@@ -87,6 +92,19 @@ public class BaseAttributeServiceImpl implements BaseAttributeService {
 			 
 				}
 			return model;
+	}
+
+	@Override
+	public List<MmrBaseAttributeMasterUtModel> getListByIstableheaderFlagAndStatus(BigDecimal istableheaderFlag,
+			BigDecimal status) {
+		List<MmrBaseAttributeMasterUtModel> list = new ArrayList<MmrBaseAttributeMasterUtModel>();
+		List<MmrHeaderAttributeMasterUtModel> findByIstableheaderFlagAndStatus =
+				headerAttributeService.findByIstableheaderFlagAndStatus(istableheaderFlag, status);
+		for (MmrHeaderAttributeMasterUtModel mmrHeaderAttributeMasterUtModel : findByIstableheaderFlagAndStatus) {
+			list.addAll(mmrHeaderAttributeMasterUtModel.getMmrBaseAttributeMasterUts());
+		}
+		
+		return list;
 	}
 
 	

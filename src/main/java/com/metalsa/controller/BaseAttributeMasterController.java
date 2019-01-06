@@ -1,5 +1,6 @@
 package com.metalsa.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -40,6 +41,11 @@ public class BaseAttributeMasterController {
     	return baseAttributeService.getAll();
     }
 
+    @GetMapping("/baseattribute/{istableheaderFlag}/{status}")
+    public List<MmrBaseAttributeMasterUtModel> getAllHeaderAttributeForUI(
+    		@PathVariable(value = "istableheaderFlag") Long istableheaderFlag,@PathVariable(value = "status") Long status) {
+    	return baseAttributeService.getListByIstableheaderFlagAndStatus(new BigDecimal(istableheaderFlag),new BigDecimal(status));
+    }
     @PostMapping("/baseattribute")
     public List<MmrBaseAttributeMasterUt> createBaseAttribute(@Valid @RequestBody MmrBaseAttributeMasterUt baseAttributeMaster) {
     	baseAttributeRepository.save(baseAttributeMaster);
