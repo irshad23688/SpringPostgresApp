@@ -1,0 +1,11 @@
+alter table mmr_header_attribute_master_ut add  is_search int default 1  not null;
+
+alter table mmr_base_attribute_master_ut add  is_search int default 1  not null;
+alter table mmr_base_attribute_master_ut add  search_type varchar2(10);
+
+
+create table mmr_sys_config_ut(
+	id int constraint sys_config_pk primary key,
+	param_name varchar2(100),
+	param_value  varchar2(500)
+);
