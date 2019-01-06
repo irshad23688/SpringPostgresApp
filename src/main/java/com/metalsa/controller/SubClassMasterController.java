@@ -1,13 +1,10 @@
 package com.metalsa.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,9 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.metalsa.domain.MmrClassMasterUt;
 import com.metalsa.domain.MmrSubClassMasterUt;
 import com.metalsa.exception.ExceptionHandler;
-import com.metalsa.model.MmrClassMasterUtModel;
 import com.metalsa.model.MmrSubClassMasterUtModel;
-import com.metalsa.model.SubClassModel;
 import com.metalsa.repository.ClassRepository;
 import com.metalsa.repository.SubClassRepository;
 import com.metalsa.service.SubClassService;
