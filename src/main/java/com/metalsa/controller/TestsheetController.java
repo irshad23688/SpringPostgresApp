@@ -1,11 +1,9 @@
 package com.metalsa.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,17 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.metalsa.domain.MmrClassMasterUt;
-import com.metalsa.domain.MmrManufacturerMasterUt;
-import com.metalsa.domain.MmrSubClassMasterUt;
 import com.metalsa.domain.MmrTestSheetUt;
 import com.metalsa.exception.ExceptionHandler;
-import com.metalsa.model.MmrClassMasterUtModel;
-import com.metalsa.model.MmrSubClassMasterUtModel;
 import com.metalsa.model.MmrTestSheetUtModel;
-import com.metalsa.repository.ClassRepository;
-import com.metalsa.repository.SubClassRepository;
 import com.metalsa.repository.TestSheetRepository;
+import com.metalsa.service.TestSheetService;
 
 /**
  * Created by jayesh on 9/12/18.
@@ -41,53 +33,28 @@ public class TestsheetController {
     
    
     @Autowired
-    private ClassRepository classRepository;
-    
-    @Autowired
-    private SubClassRepository subClassRepository;
-    
+    private TestSheetService testSheetService;
     
    /* @GetMapping("/testsheet")
     public List<MmrTestSheetUt> getAllTestsheet() {
     	return testSheetRepository.findAll();
     }*/
     @GetMapping("/testsheet")
-    public List<MmrTestSheetUtModel> getAllTestsheetForUI() {
-    	List<MmrTestSheetUtModel> modelList = new ArrayList<>();
-    	for(MmrTestSheetUt mmrTestSheetUt: testSheetRepository.findAll()) {
-    		MmrTestSheetUtModel modelTestSheet = get(mmrTestSheetUt);
-    		modelList.add(modelTestSheet);
-    	}
-    	return modelList;
+    public List<MmrTestSheetUtModel> getAllTestsheet() {
+    	return testSheetService.getAll();
     }
-
-	private MmrTestSheetUtModel get(MmrTestSheetUt mmrTestSheetUt) {
-		MmrTestSheetUtModel modelTestSheet= new MmrTestSheetUtModel();
-		BeanUtils.copyProperties(mmrTestSheetUt, modelTestSheet);
-		MmrClassMasterUt classMaster = classRepository.findById(mmrTestSheetUt.getMmrClassMasterUt())
-		            .orElseThrow(() -> new ExceptionHandler("MmrClassMasterUt", "id", mmrTestSheetUt.getMmrClassMasterUt()));
-		MmrClassMasterUtModel modelClass = new MmrClassMasterUtModel();
-		BeanUtils.copyProperties(classMaster, modelClass);
-		modelTestSheet.setMmrClassMasterUt(modelClass);
-		MmrSubClassMasterUt subClassMaster = subClassRepository.findById(mmrTestSheetUt.getMmrSubclassMasterUt())
-				.orElseThrow(() -> new ExceptionHandler("MmrSubclassMasterUt", "id", mmrTestSheetUt.getMmrClassMasterUt()));
-		MmrSubClassMasterUtModel modelSubClass = new MmrSubClassMasterUtModel();
-		BeanUtils.copyProperties(subClassMaster, modelSubClass);
-		modelTestSheet.setMmrSubclassMasterUt(modelSubClass);
-		return modelTestSheet;
-	}
     
     @PostMapping("/testsheet")
-    public List<MmrTestSheetUt> createTestsheet(@Valid @RequestBody MmrTestSheetUt testSheetUt) {
+    public List<MmrTestSheetUtModel> createTestsheet(@Valid @RequestBody MmrTestSheetUt testSheetUt) {
     	 testSheetRepository.save(testSheetUt);
-    	return testSheetRepository.findAll();
+    	return testSheetService.getAll();
     }
 
     @GetMapping("/testsheet/{id}")
-    public MmrTestSheetUtModel getBaseAttributeById(@PathVariable(value = "id") Long id) {
+    public MmrTestSheetUtModel getTestSheetById(@PathVariable(value = "id") Long id) {
     	MmrTestSheetUt mmrTestSheet = testSheetRepository.findById(id)
-                .orElseThrow(() -> new ExceptionHandler("BaseAttributeMasterUt", "id", id));
-    	MmrTestSheetUtModel mmrTestSheetModel = get(mmrTestSheet);
+                .orElseThrow(() -> new ExceptionHandler("TestSheetServiceUt", "id", id));
+    	MmrTestSheetUtModel mmrTestSheetModel = testSheetService.getOne(mmrTestSheet);
     	return mmrTestSheetModel;
     }
 

@@ -1,7 +1,6 @@
 package com.metalsa.model;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 
 
 /**
@@ -42,47 +41,7 @@ public class MmrTestSheetDetailUtModel extends MetalsaAbstractEntityModel {
 	public void setBaseAttributeSequenceNo(BigDecimal baseAttributeSequenceNo) {
 		this.baseAttributeSequenceNo = baseAttributeSequenceNo;
 	}
-
-	public BigDecimal getCreatedBy() {
-		return this.createdBy;
-	}
-
-	public void setCreatedBy(BigDecimal createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
-
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
-
-	public BigDecimal getModifiedBy() {
-		return this.modifiedBy;
-	}
-
-	public void setModifiedBy(BigDecimal modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	public Timestamp getModifiedOn() {
-		return this.modifiedOn;
-	}
-
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
-
-	public BigDecimal getStatus() {
-		return this.status;
-	}
-
-	public void setStatus(BigDecimal status) {
-		this.status = status;
-	}
-
+ 
 	public Long getMmrBaseAttributeMasterUt() {
 		return this.mmrBaseAttributeMasterUt;
 	}

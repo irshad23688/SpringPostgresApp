@@ -33,7 +33,7 @@ public class MmrDataSheetUt implements Serializable {
 	@Column(name="CREATED_BY", nullable=false, precision=38)
 	private BigDecimal createdBy;
 
-	@Column(name="CREATED_ON", nullable=false,insertable=false)
+	@Column(name="CREATED_ON", insertable=false,updatable=false)
 	private Timestamp createdOn;
 
 	@Column(name="DATA_SHEET_NAME", nullable=false, length=50)
@@ -45,7 +45,7 @@ public class MmrDataSheetUt implements Serializable {
 	@Column(name="MODIFIED_BY", precision=38)
 	private BigDecimal modifiedBy;
 
-	@Column(name="MODIFIED_ON",insertable=false)
+	@Column(name="MODIFIED_ON",insertable=false,updatable=true)
 	private Timestamp modifiedOn;
 
 	@Column(nullable=false, precision=38)

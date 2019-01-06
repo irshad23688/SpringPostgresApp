@@ -1,10 +1,13 @@
 package com.metalsa.service;
 
-import com.metalsa.model.SubClassModel;
+import java.util.List;
+
+import com.metalsa.domain.MmrSubClassMasterUt;
+import com.metalsa.model.MmrSubClassMasterUtModel;
 
 public interface SubClassService {
 	
-	SubClassModel getSubClassData();
-	
-	SubClassModel persistSubClass(SubClassModel subClassModel);
+	 List<MmrSubClassMasterUtModel> getAll();
+	 MmrSubClassMasterUtModel getOne(MmrSubClassMasterUt mmrSubClassMasterUt);
+
 }

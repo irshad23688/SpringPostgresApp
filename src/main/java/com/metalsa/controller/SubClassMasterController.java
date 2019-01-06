@@ -1,6 +1,5 @@
 package com.metalsa.controller;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,26 +47,17 @@ public class SubClassMasterController {
 
     @GetMapping("/subclass")
     public List<MmrSubClassMasterUtModel> getAllSubClass() {
-    	List<MmrSubClassMasterUtModel> modelList= new ArrayList<>();
-    	List<MmrSubClassMasterUt> list=subClassRepository.findAll();
-    	
-    	for (MmrSubClassMasterUt mmrSubclassMasterUt : list) {
-    		MmrSubClassMasterUtModel model= new MmrSubClassMasterUtModel();
-    		MmrClassMasterUt classMaster = classRepository.findById(mmrSubclassMasterUt.getMmrClassMasterUt().getId())
-    				.orElseThrow(() -> new ExceptionHandler("MmrClassMasterUt", "id", mmrSubclassMasterUt.getMmrClassMasterUt().getId()));
-    		BeanUtils.copyProperties(mmrSubclassMasterUt,model);
-    		MmrClassMasterUtModel modelClass= new MmrClassMasterUtModel();
-    		BeanUtils.copyProperties(classMaster,modelClass );
-    		model.setMmrClassMasterUt(modelClass);
-    		modelList.add(model);
-    	}
-    	return modelList;
+    	 
+    	return subClassService.getAll();
+    }
+    @GetMapping("/subclassbyclass/{classId}")
+    public List<MmrSubClassMasterUt> getAllSubClass(@PathVariable(value = "classId") Long classId) {
+    	MmrClassMasterUt masterUt= classRepository.findById(classId)
+        .orElseThrow(() -> new ExceptionHandler("MmrClassMasterUt", "id", classId));
+    	return subClassRepository.findByMmrClassMasterUt(masterUt);
     }
 
-    /*@PostMapping("/subclass")
-    public SubClassModel createSubClass(@Valid @RequestBody SubClassModel subClassModel) {
-    	return subClassService.persistSubClass(subClassModel);
-    }*/
+    
     @PostMapping("/subclass")
     public List<MmrSubClassMasterUt> createSubClass(@Valid @RequestBody MmrSubClassMasterUt mmrSubclassMasterUt) {
     	 subClassRepository.save(mmrSubclassMasterUt);
@@ -74,18 +65,18 @@ public class SubClassMasterController {
     }
 
     @GetMapping("/subclass/{id}")
-    public MmrSubClassMasterUt getSubClassById(@PathVariable(value = "id") Long id) {
-        return subClassRepository.findById(id)
-                .orElseThrow(() -> new ExceptionHandler("SubClassMasterUt", "id", id));
+    public MmrSubClassMasterUtModel getSubClassById(@PathVariable(value = "id") Long id) {
+        return subClassService.getOne(subClassRepository.findById(id)
+                .orElseThrow(() -> new ExceptionHandler("SubClassMasterUt", "id", id)));
     }
-
+    
     @PutMapping("/subclass/{id}")
-    public SubClassModel updateSubClass(@PathVariable(value = "id") Long id,
+    public List<MmrSubClassMasterUtModel> updateSubClass(@PathVariable(value = "id") Long id,
                                            @Valid @RequestBody MmrSubClassMasterUt subClassMasterDetails) {
-        subClassRepository.findById(id)
+    	subClassRepository.findById(id)
                 .orElseThrow(() -> new ExceptionHandler("SubClassMasterUt", "id", id));
-        subClassRepository.save(subClassMasterDetails);
-        return subClassService.getSubClassData();
+    	subClassRepository.save(subClassMasterDetails);
+        return subClassService.getAll();
     }
     
     @DeleteMapping("/subclass/{id}")

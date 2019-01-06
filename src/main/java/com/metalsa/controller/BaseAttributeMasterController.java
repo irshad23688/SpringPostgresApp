@@ -47,17 +47,18 @@ public class BaseAttributeMasterController {
     	return baseAttributeService.getListByIstableheaderFlagAndStatus(new BigDecimal(istableheaderFlag),new BigDecimal(status));
     }
     @PostMapping("/baseattribute")
-    public List<MmrBaseAttributeMasterUt> createBaseAttribute(@Valid @RequestBody MmrBaseAttributeMasterUt baseAttributeMaster) {
+    public List<MmrBaseAttributeMasterUtModel> createBaseAttribute(@Valid @RequestBody MmrBaseAttributeMasterUt baseAttributeMaster) {
     	baseAttributeRepository.save(baseAttributeMaster);
-    	return baseAttributeRepository.findAll();
+    	return baseAttributeService.getAll();
     }
 
-    @GetMapping("/baseattribute/{id}")
+   /* @GetMapping("/baseattribute/{id}")
     public MmrBaseAttributeMasterUt getBaseAttributeById(@PathVariable(value = "id") Long id) {
         return baseAttributeRepository.findById(id)
                 .orElseThrow(() -> new ExceptionHandler("BaseAttributeMasterUt", "id", id));
-    }
-    @GetMapping("/baseattribute/ui/{id}")
+    }*/
+    
+    @GetMapping("/baseattribute/{id}")
     public MmrBaseAttributeMasterUtModel getBaseAttributeByIdForUI(@PathVariable(value = "id") Long id) {
     	MmrBaseAttributeMasterUt mmrBaseAttributeMasterUt = baseAttributeRepository.findById(id)
     			.orElseThrow(() -> new ExceptionHandler("BaseAttributeMasterUt", "id", id));
@@ -65,12 +66,12 @@ public class BaseAttributeMasterController {
     }
 
     @PutMapping("/baseattribute/{id}")
-    public List<MmrBaseAttributeMasterUt> updateBaseAttribute(@PathVariable(value = "id") Long id,
+    public List<MmrBaseAttributeMasterUtModel> updateBaseAttribute(@PathVariable(value = "id") Long id,
                                            @Valid @RequestBody MmrBaseAttributeMasterUt baseAttributeMasterDetails) {
     	baseAttributeRepository.findById(id)
                 .orElseThrow(() -> new ExceptionHandler("BaseAttributeMasterUt", "id", id));
         baseAttributeRepository.save(baseAttributeMasterDetails);
-        return baseAttributeRepository.findAll();
+        return baseAttributeService.getAll();
     }
     
     @DeleteMapping("/baseattribute/{id}")

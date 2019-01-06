@@ -48,22 +48,6 @@ public class MmrTestSheetUtModel extends MetalsaAbstractEntityModel {
 		this.approvedOn = approvedOn;
 	}
 
-	public BigDecimal getCreatedBy() {
-		return this.createdBy;
-	}
-
-	public void setCreatedBy(BigDecimal createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
-
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
-
 	public String getDescription() {
 		return this.description;
 	}
@@ -72,36 +56,12 @@ public class MmrTestSheetUtModel extends MetalsaAbstractEntityModel {
 		this.description = description;
 	}
 
-	public BigDecimal getModifiedBy() {
-		return this.modifiedBy;
-	}
-
-	public void setModifiedBy(BigDecimal modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	public Timestamp getModifiedOn() {
-		return this.modifiedOn;
-	}
-
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
-
 	public String getName() {
 		return this.name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public BigDecimal getStatus() {
-		return this.status;
-	}
-
-	public void setStatus(BigDecimal status) {
-		this.status = status;
 	}
 
 	public List<MmrTestSheetDetailUtModel> getMmrTestSheetDetailUts() {

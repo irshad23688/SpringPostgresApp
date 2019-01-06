@@ -9,18 +9,13 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 /**
@@ -40,7 +35,7 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 	@Column(name="CREATED_BY", nullable=false, precision=38)
 	private BigDecimal createdBy;
 
-	@Column(name="CREATED_ON", nullable=false,insertable=false)
+	@Column(name="CREATED_ON", insertable=false,updatable=false)
 	private Timestamp createdOn;
 
 	@Column(name="DEFAULT_VALUE", length=50)
@@ -61,7 +56,7 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 	@Column(name="MODIFIED_BY", precision=38)
 	private BigDecimal modifiedBy;
 
-	@Column(name="MODIFIED_ON",insertable=false)
+	@Column(name="MODIFIED_ON",insertable=false,updatable=true)
 	private Timestamp modifiedOn;
 
 	@Column(nullable=false, length=100)

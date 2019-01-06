@@ -1,12 +1,19 @@
 package com.metalsa.domain;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
@@ -26,13 +33,13 @@ public class MmrDataSheetDetailUt implements Serializable {
 	@Column(name="CREATED_BY", nullable=false, precision=38)
 	private BigDecimal createdBy;
 
-	@Column(name="CREATED_ON", nullable=false,insertable=false)
+	@Column(name="CREATED_ON", insertable=false,updatable=false)
 	private Timestamp createdOn;
 
 	@Column(name="MODIFIED_BY", precision=38)
 	private BigDecimal modifiedBy;
 
-	@Column(name="MODIFIED_ON",insertable=false)
+	@Column(name="MODIFIED_ON",insertable=false,updatable=true)
 	private Timestamp modifiedOn;
 
 	@Column(nullable=false, precision=38)
