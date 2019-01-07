@@ -1,5 +1,6 @@
 package com.metalsa.controller;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.metalsa.domain.MmrTestSheetUt;
 import com.metalsa.exception.ExceptionHandler;
+import com.metalsa.model.MmrHeaderAttributeMasterUtModel;
+import com.metalsa.model.MmrTestSheetDetailUtViewModel;
 import com.metalsa.model.MmrTestSheetUtModel;
 import com.metalsa.repository.TestSheetRepository;
 import com.metalsa.service.TestSheetService;
@@ -50,10 +53,16 @@ public class TestsheetController {
     	return testSheetService.getAll();
     }
 
+    @GetMapping("/testsheetdetail/{id}")
+    public MmrTestSheetDetailUtViewModel getTestSheetById(@PathVariable(value = "id") Long id) {
+    	/*MmrTestSheetUt mmrTestSheet = testSheetRepository.findById(id)
+                .orElseThrow(() -> new ExceptionHandler("TestSheetServiceUt", "id", id));*/
+    	return testSheetService.getTestSheetDetail(id);
+    }
     @GetMapping("/testsheet/{id}")
-    public MmrTestSheetUtModel getTestSheetById(@PathVariable(value = "id") Long id) {
+    public MmrTestSheetUtModel getTestSheetDetail(@PathVariable(value = "id") Long id) {
     	MmrTestSheetUt mmrTestSheet = testSheetRepository.findById(id)
-                .orElseThrow(() -> new ExceptionHandler("TestSheetServiceUt", "id", id));
+    			.orElseThrow(() -> new ExceptionHandler("TestSheetServiceUt", "id", id));
     	MmrTestSheetUtModel mmrTestSheetModel = testSheetService.getOne(mmrTestSheet);
     	return mmrTestSheetModel;
     }

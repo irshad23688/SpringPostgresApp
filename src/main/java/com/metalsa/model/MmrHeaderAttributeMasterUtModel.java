@@ -1,7 +1,10 @@
 package com.metalsa.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+
+import com.metalsa.domain.MmrTestSheetDetailUtView;
 
 
 /**
@@ -15,6 +18,8 @@ public class MmrHeaderAttributeMasterUtModel extends MetalsaAbstractEntityModel 
 	private String name;
 	
 	private List<MmrBaseAttributeMasterUtModel> mmrBaseAttributeMasterUts;
+	
+	private List<MmrTestSheetDetailUtView> testSheetDetailUtView;
 
 	public MmrHeaderAttributeMasterUtModel() {
 	}
@@ -53,8 +58,20 @@ public class MmrHeaderAttributeMasterUtModel extends MetalsaAbstractEntityModel 
 		this.mmrBaseAttributeMasterUts = mmrBaseAttributeMasterUts;
 	}
 
-	
- 	
+	public List<MmrTestSheetDetailUtView> getTestSheetDetailUtView() {
+		return testSheetDetailUtView;
+	}
+
+	public void setTestSheetDetailUtView(List<MmrTestSheetDetailUtView> testSheetDetailUtView) {
+		this.testSheetDetailUtView = testSheetDetailUtView;
+	}
+	public void addTestSheetDetailUtView(MmrTestSheetDetailUtView testSheetDetailUtView) {
+		if(getTestSheetDetailUtView()==null) {
+			this.testSheetDetailUtView= new ArrayList<MmrTestSheetDetailUtView>();
+		}
+		getTestSheetDetailUtView().add(testSheetDetailUtView);
+	}
+
 
  
 }

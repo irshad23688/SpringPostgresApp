@@ -1,7 +1,9 @@
 package com.metalsa.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +11,17 @@ import org.springframework.stereotype.Service;
 
 import com.metalsa.domain.MmrClassMasterUt;
 import com.metalsa.domain.MmrSubClassMasterUt;
+import com.metalsa.domain.MmrTestSheetDetailUtView;
 import com.metalsa.domain.MmrTestSheetUt;
 import com.metalsa.exception.ExceptionHandler;
 import com.metalsa.model.MmrClassMasterUtModel;
+import com.metalsa.model.MmrHeaderAttributeMasterUtModel;
 import com.metalsa.model.MmrSubClassMasterUtModel;
+import com.metalsa.model.MmrTestSheetDetailUtViewModel;
 import com.metalsa.model.MmrTestSheetUtModel;
 import com.metalsa.repository.ClassRepository;
 import com.metalsa.repository.SubClassRepository;
+import com.metalsa.repository.TestSheetDetailUtViewRepository;
 import com.metalsa.repository.TestSheetRepository;
 import com.metalsa.service.TestSheetService;
 
@@ -30,6 +36,9 @@ public class TestSheetServiceImpl implements TestSheetService {
     
     @Autowired
     private SubClassRepository subClassRepository;
+    
+    @Autowired
+    private TestSheetDetailUtViewRepository detailUtViewRepository;
     
 	@Override
 	public List<MmrTestSheetUtModel> getAll() {
@@ -60,6 +69,29 @@ public class TestSheetServiceImpl implements TestSheetService {
 		BeanUtils.copyProperties(subClassMaster, modelSubClass);
 		modelTestSheet.setMmrSubclassMasterUt(modelSubClass);
 		return modelTestSheet;
+	}
+
+	@Override
+	public MmrTestSheetDetailUtViewModel getTestSheetDetail(Long testSheetId) {
+		MmrTestSheetDetailUtViewModel modelView = new MmrTestSheetDetailUtViewModel();
+		Map<Long,List<MmrHeaderAttributeMasterUtModel>> mapHeaderToDetail = new HashMap<Long,List<MmrHeaderAttributeMasterUtModel>>();
+		for(MmrTestSheetDetailUtView detailView : detailUtViewRepository.findByTestSheetDetail(testSheetId)) {
+			List<MmrHeaderAttributeMasterUtModel> modelList=null;
+			if(mapHeaderToDetail.containsKey(detailView.getHeaderAttributeId())){
+				mapHeaderToDetail.get(detailView.getHeaderAttributeId()).get(0).addTestSheetDetailUtView(detailView);
+			}else {
+				MmrHeaderAttributeMasterUtModel headerModel= new MmrHeaderAttributeMasterUtModel();
+				headerModel.setId(detailView.getHeaderAttributeId());
+				headerModel.setName(detailView.getHeaderAttributeName());
+				headerModel.addTestSheetDetailUtView(detailView);
+				modelList = new ArrayList<>();
+				modelList.add(headerModel);
+				mapHeaderToDetail.put(detailView.getHeaderAttributeId(),modelList);
+			}
+		}
+		List<MmrHeaderAttributeMasterUtModel> result=new ArrayList(mapHeaderToDetail.values());
+		modelView.setHeaderAttributeDetail(result);
+		return modelView;
 	}
 
 	 
