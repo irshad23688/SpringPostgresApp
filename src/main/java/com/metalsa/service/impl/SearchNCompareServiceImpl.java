@@ -1,20 +1,22 @@
 package com.metalsa.service.impl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.assertj.core.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.metalsa.domain.MmrBaseAttributeMasterUt;
 import com.metalsa.domain.MmrDataSheetUt;
+import com.metalsa.domain.MmrHeaderAttributeMasterUt;
+import com.metalsa.domain.MmrManufacturerMasterUt;
 import com.metalsa.domain.MmrSearchDataSheetView;
 import com.metalsa.model.SearchModel;
 import com.metalsa.repository.CustomRepository;
 import com.metalsa.repository.HeaderAttrRepository;
-import com.metalsa.repository.SearchNCompareRepository;
 import com.metalsa.service.SearchNCompareService;
 
 
@@ -29,8 +31,39 @@ public class SearchNCompareServiceImpl implements SearchNCompareService {
 
 	@Override
 	public SearchModel getConfigParameters() {
+		List<Long> textIds= new ArrayList<>();
+		textIds.add(1l);
+		textIds.add(2l);
+		List<Long> rangeIds= new ArrayList<>();
+		textIds.add(3l);
+		textIds.add(4l);
 		SearchModel model = new SearchModel();
-		model.setDropDownList(headerAttrRepository.findAll());
+		List<MmrHeaderAttributeMasterUt> textBasedHeader= new ArrayList<>();
+		List<MmrHeaderAttributeMasterUt> rangeBaseHeader= new ArrayList<>();
+//		model.setDropDownList(headerAttrRepository.findAll());
+		for (MmrHeaderAttributeMasterUt header : headerAttrRepository.findAll()) {
+			List<MmrBaseAttributeMasterUt> textBaseAttribute= new ArrayList<>();
+			for (MmrBaseAttributeMasterUt baseAttribute : header.getMmrBaseAttributeMasterUts()) {
+				if(textIds.contains(baseAttribute.getMmrDataTypeMasterUt().getId())){
+					textBaseAttribute.add(baseAttribute);
+				}
+				if(rangeIds.contains(baseAttribute.getMmrDataTypeMasterUt().getId())){
+					textBaseAttribute.add(baseAttribute);
+				}
+			}
+			MmrHeaderAttributeMasterUt modelHeader=header;
+			if(textBaseAttribute.size()>0){
+				modelHeader.setMmrBaseAttributeMasterUts(new ArrayList<>());
+				modelHeader.setMmrBaseAttributeMasterUts(textBaseAttribute);
+				textBasedHeader.add(modelHeader);
+			}
+			if(textBaseAttribute.size()>0){
+				modelHeader.setMmrBaseAttributeMasterUts(new ArrayList<>());
+				modelHeader.setMmrBaseAttributeMasterUts(textBaseAttribute);
+				rangeBaseHeader.add(modelHeader);
+			}
+			
+		}
 		return model;
 	}
 
