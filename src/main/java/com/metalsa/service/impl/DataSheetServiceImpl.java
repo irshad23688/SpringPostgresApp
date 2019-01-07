@@ -70,7 +70,7 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 	public void createRevision(MmrDataSheetUt datasheetUt) {
 		if(MetalsaConstant.STATUS.APPROVED.equals(datasheetUt.getStatus().toString())){
 			MmrDataSheetUt revisedDataSheet = new MmrDataSheetUt();
-			BeanUtils.copyProperties(datasheetUt, revisedDataSheet);
+			BeanUtils.copyProperties(datasheetUt, revisedDataSheet,new String[]{"id"});
 			revisedDataSheet.setStatus(new BigDecimal(MetalsaConstant.STATUS.PENDING));
 			revisedDataSheet.setRevParentId(datasheetUt.getId());
 			dataSheetRepository.save(revisedDataSheet);

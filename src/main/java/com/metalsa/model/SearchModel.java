@@ -12,7 +12,8 @@ public class SearchModel {
 
 	private String staticBaseAttributeIds;
 	private boolean isShowRevision;
-	private List<MmrHeaderAttributeMasterUt> dropDownList = new ArrayList<>();
+	private List<MmrHeaderAttributeMasterUt> textBasedHeader = new ArrayList<>();
+	private List<MmrHeaderAttributeMasterUt> rangeBaseHeader = new ArrayList<>();
 	private List<SearchBaseModel> rangeBaseParameterList = new ArrayList<>();
 	private List<SearchBaseModel> textBaseAttributeList = new ArrayList<>();
 	private List<SearchBaseModel> textMasterAttributeList = new ArrayList<>();
@@ -30,12 +31,20 @@ public class SearchModel {
 	public void setShowRevision(boolean isShowRevision) {
 		this.isShowRevision = isShowRevision;
 	}
-	public List<MmrHeaderAttributeMasterUt> getDropDownList() {
-		return dropDownList;
+	
+	public List<MmrHeaderAttributeMasterUt> getTextBasedHeader() {
+		return textBasedHeader;
 	}
-	public void setDropDownList(List<MmrHeaderAttributeMasterUt> dropDownList) {
-		this.dropDownList = dropDownList;
+	public void setTextBasedHeader(List<MmrHeaderAttributeMasterUt> textBasedHeader) {
+		this.textBasedHeader = textBasedHeader;
 	}
+	public List<MmrHeaderAttributeMasterUt> getRangeBaseHeader() {
+		return rangeBaseHeader;
+	}
+	public void setRangeBaseHeader(List<MmrHeaderAttributeMasterUt> rangeBaseHeader) {
+		this.rangeBaseHeader = rangeBaseHeader;
+	}
+	
 	public List<SearchBaseModel> getTextBaseAttributeList() {
 		return textBaseAttributeList;
 	}

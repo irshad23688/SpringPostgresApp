@@ -14,9 +14,11 @@ import com.metalsa.domain.MmrDataSheetUt;
 import com.metalsa.domain.MmrHeaderAttributeMasterUt;
 import com.metalsa.domain.MmrManufacturerMasterUt;
 import com.metalsa.domain.MmrSearchDataSheetView;
+import com.metalsa.domain.MmrSysConfigUt;
 import com.metalsa.model.SearchModel;
 import com.metalsa.repository.CustomRepository;
 import com.metalsa.repository.HeaderAttrRepository;
+import com.metalsa.repository.SysConfigRepository;
 import com.metalsa.service.SearchNCompareService;
 
 
@@ -25,45 +27,57 @@ public class SearchNCompareServiceImpl implements SearchNCompareService {
 
 	@Autowired
 	private HeaderAttrRepository headerAttrRepository;
-	
+
 	@Autowired
 	private CustomRepository customRepository;
 
+	@Autowired
+	private SysConfigRepository sysConfigRepository;
+
+
 	@Override
 	public SearchModel getConfigParameters() {
-		List<Long> textIds= new ArrayList<>();
-		textIds.add(1l);
-		textIds.add(2l);
-		List<Long> rangeIds= new ArrayList<>();
-		textIds.add(3l);
-		textIds.add(4l);
+		List textIds= new ArrayList<>();
+		MmrSysConfigUt textBasedAtriIds =  sysConfigRepository.findByParamName("TEXT_BASED_BASE_ATTRIBUTE_IDS");
+		if(null!= textBasedAtriIds) {
+			textIds = Arrays.asList(textBasedAtriIds.getParamValue().split(","));
+		}
+		List rangeIds= new ArrayList<>();
+		MmrSysConfigUt rangeBasedAtriIds =  sysConfigRepository.findByParamName("RANGE_BASED_BASE_ATTRIBUTE_IDS");
+		if(null!= rangeBasedAtriIds) {
+			rangeIds = Arrays.asList(rangeBasedAtriIds.getParamValue().split(","));
+		}
 		SearchModel model = new SearchModel();
-		List<MmrHeaderAttributeMasterUt> textBasedHeader= new ArrayList<>();
-		List<MmrHeaderAttributeMasterUt> rangeBaseHeader= new ArrayList<>();
-//		model.setDropDownList(headerAttrRepository.findAll());
+		List<MmrHeaderAttributeMasterUt> textBasedHeader = new ArrayList<>();
+		List<MmrHeaderAttributeMasterUt> rangeBaseHeader = new ArrayList<>();
 		for (MmrHeaderAttributeMasterUt header : headerAttrRepository.findAll()) {
-			List<MmrBaseAttributeMasterUt> textBaseAttribute= new ArrayList<>();
+			List<MmrBaseAttributeMasterUt> textBaseAttribute = new ArrayList<>();
+			List<MmrBaseAttributeMasterUt> rangeBaseAttribute = new ArrayList<>();
 			for (MmrBaseAttributeMasterUt baseAttribute : header.getMmrBaseAttributeMasterUts()) {
-				if(textIds.contains(baseAttribute.getMmrDataTypeMasterUt().getId())){
+				if(textIds.contains(baseAttribute.getMmrDataTypeMasterUt().getId()+"")){
 					textBaseAttribute.add(baseAttribute);
 				}
-				if(rangeIds.contains(baseAttribute.getMmrDataTypeMasterUt().getId())){
-					textBaseAttribute.add(baseAttribute);
+				if(rangeIds.contains(baseAttribute.getMmrDataTypeMasterUt().getId()+"")){
+					rangeBaseAttribute.add(baseAttribute);
 				}
 			}
 			MmrHeaderAttributeMasterUt modelHeader=header;
 			if(textBaseAttribute.size()>0){
-				modelHeader.setMmrBaseAttributeMasterUts(new ArrayList<>());
 				modelHeader.setMmrBaseAttributeMasterUts(textBaseAttribute);
-				textBasedHeader.add(modelHeader);
-			}
-			if(textBaseAttribute.size()>0){
+			}else{
 				modelHeader.setMmrBaseAttributeMasterUts(new ArrayList<>());
-				modelHeader.setMmrBaseAttributeMasterUts(textBaseAttribute);
-				rangeBaseHeader.add(modelHeader);
 			}
-			
+			textBasedHeader.add(modelHeader);
+
+			if(rangeBaseAttribute.size()>0){
+				modelHeader.setMmrBaseAttributeMasterUts(rangeBaseAttribute);
+			}else {
+				modelHeader.setMmrBaseAttributeMasterUts(new ArrayList<>());
+			}
+			rangeBaseHeader.add(modelHeader);
 		}
+		model.setRangeBaseHeader(rangeBaseHeader);
+		model.setTextBasedHeader(textBasedHeader);
 		return model;
 	}
 
@@ -75,7 +89,7 @@ public class SearchNCompareServiceImpl implements SearchNCompareService {
 			if(0l!=viewObj.getDataSheetId()) {
 				List<MmrSearchDataSheetView> lst=null;
 				if(materialMap.keySet().contains(viewObj.getDataSheetId()+"")){
-					 lst = materialMap.get(viewObj.getDataSheetId()+"");
+					lst = materialMap.get(viewObj.getDataSheetId()+"");
 				}else {
 					lst = new ArrayList<>();
 				}
