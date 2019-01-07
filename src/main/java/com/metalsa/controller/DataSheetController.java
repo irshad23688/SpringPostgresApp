@@ -55,6 +55,11 @@ public class DataSheetController {
     		@PathVariable(value = "subClassId") Long subClassId) {
         return customRepository.getDataSheetByClassNSubclass(classId,subClassId);
     }
+    @GetMapping("/datasheet/{id}")
+    public MmrDataSheetUt getDataSheetById(@PathVariable(value = "id") Long id) {
+    	return dataSheetRepository.findById(id)
+                .orElseThrow(() -> new ExceptionHandler("MmrDataSheetUt", "id", id));
+    }
     
     @GetMapping("/datasheet/new/{classId}/{subClassId}")
     public MmrTestSheetUt createNewDataSheet(@PathVariable(value = "classId") Long classId,
@@ -66,6 +71,11 @@ public class DataSheetController {
     @PostMapping("/datasheet/revision")
     public List<MmrDataSheetUt> createRevision(@Valid @RequestBody MmrDataSheetUt datasheetUt) {
     	dataSheetService.createRevision(datasheetUt);
+    	return dataSheetRepository.findAll();
+    }
+    @PostMapping("/datasheet")
+    public List<MmrDataSheetUt> createDataSheet(@Valid @RequestBody MmrDataSheetUt datasheetUt) {
+    	dataSheetRepository.save(datasheetUt);
     	return dataSheetRepository.findAll();
     }
     
