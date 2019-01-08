@@ -25,10 +25,23 @@ import org.springframework.web.multipart.support.MissingServletRequestPartExcept
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
+
 @ControllerAdvice
 public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 
-    // 400
+
+	@ExceptionHandler({ UnrecognizedPropertyException.class })
+    public ResponseEntity<Object> handleMethodUnrecognizedPropertyException(final UnrecognizedPropertyException ex, final WebRequest request) {
+        logger.info(ex.getClass().getName());
+        //
+        final String error =String.format("Unknow property %s of object %s" ,ex.getPropertyName() , ex.getReferringClass().getSimpleName());
+
+        final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), error);
+        return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+    }
+	
+	// 400
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(final MethodArgumentNotValidException ex, final HttpHeaders headers, final HttpStatus status, final WebRequest request) {
