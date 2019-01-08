@@ -74,19 +74,16 @@ public class TestSheetServiceImpl implements TestSheetService {
 	@Override
 	public MmrTestSheetDetailUtViewModel getTestSheetDetail(Long testSheetId) {
 		MmrTestSheetDetailUtViewModel modelView = new MmrTestSheetDetailUtViewModel();
-		Map<Long,List<MmrHeaderAttributeMasterUtModel>> mapHeaderToDetail = new HashMap<Long,List<MmrHeaderAttributeMasterUtModel>>();
+		Map<Long,MmrHeaderAttributeMasterUtModel> mapHeaderToDetail = new HashMap<Long,MmrHeaderAttributeMasterUtModel>();
 		for(MmrTestSheetDetailUtView detailView : detailUtViewRepository.findByTestSheetDetail(testSheetId)) {
-			List<MmrHeaderAttributeMasterUtModel> modelList=null;
 			if(mapHeaderToDetail.containsKey(detailView.getHeaderAttributeId())){
-				mapHeaderToDetail.get(detailView.getHeaderAttributeId()).get(0).addTestSheetDetailUtView(detailView);
+				mapHeaderToDetail.get(detailView.getHeaderAttributeId()).addTestSheetDetailUtView(detailView);
 			}else {
 				MmrHeaderAttributeMasterUtModel headerModel= new MmrHeaderAttributeMasterUtModel();
 				headerModel.setId(detailView.getHeaderAttributeId());
 				headerModel.setName(detailView.getHeaderAttributeName());
 				headerModel.addTestSheetDetailUtView(detailView);
-				modelList = new ArrayList<>();
-				modelList.add(headerModel);
-				mapHeaderToDetail.put(detailView.getHeaderAttributeId(),modelList);
+				mapHeaderToDetail.put(detailView.getHeaderAttributeId(),headerModel);
 			}
 		}
 		List<MmrHeaderAttributeMasterUtModel> result=new ArrayList(mapHeaderToDetail.values());
