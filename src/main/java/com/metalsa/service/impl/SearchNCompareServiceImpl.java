@@ -95,6 +95,7 @@ public class SearchNCompareServiceImpl implements SearchNCompareService {
 				}
 				lst.add(viewObj);
 				materialMap.put(viewObj.getDataSheetId()+"",lst);
+				model.getHeaderSet().add(viewObj.getBaseAttributeName());
 			}
 		}	
 		model.setSearchDatamp(materialMap);		

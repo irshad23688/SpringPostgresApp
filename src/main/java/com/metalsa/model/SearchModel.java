@@ -2,8 +2,10 @@ package com.metalsa.model;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.metalsa.domain.MmrHeaderAttributeMasterUt;
 import com.metalsa.domain.MmrSearchDataSheetView;
@@ -19,6 +21,7 @@ public class SearchModel {
 	private List<SearchBaseModel> textMasterAttributeList = new ArrayList<>();
 	private Map<String, List<MmrSearchDataSheetView>> searchDatamp = new LinkedHashMap<>();
 	private List<Long> datasheetIds;	
+	private Set<String> headerSet = new LinkedHashSet<String>();	
 	public String getStaticBaseAttributeIds() {
 		return staticBaseAttributeIds;
 	}
@@ -74,6 +77,12 @@ public class SearchModel {
 	}
 	public void setDatasheetIds(List<Long> datasheetIds) {
 		this.datasheetIds = datasheetIds;
+	}
+	public Set<String> getHeaderSet() {
+		return headerSet;
+	}
+	public void setHeaderSet(Set<String> headerSet) {
+		this.headerSet = headerSet;
 	}
 	
 }
