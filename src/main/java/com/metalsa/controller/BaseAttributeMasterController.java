@@ -64,6 +64,13 @@ public class BaseAttributeMasterController {
     			.orElseThrow(() -> new ExceptionHandler("BaseAttributeMasterUt", "id", id));
     	return baseAttributeService.getOne(mmrBaseAttributeMasterUt);
     }
+    
+    @GetMapping("/baseattribute1/{id}")
+    public MmrBaseAttributeMasterUt getBaseAttributeByIdForUI1(@PathVariable(value = "id") Long id) {
+    	MmrBaseAttributeMasterUt mmrBaseAttributeMasterUt = baseAttributeRepository.findById(id)
+    			.orElseThrow(() -> new ExceptionHandler("BaseAttributeMasterUt", "id", id));
+    	return mmrBaseAttributeMasterUt;
+    }
 
     @PutMapping("/baseattribute/{id}")
     public List<MmrBaseAttributeMasterUtModel> updateBaseAttribute(@PathVariable(value = "id") Long id,

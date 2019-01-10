@@ -1,18 +1,17 @@
 package com.metalsa.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.assertj.core.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.metalsa.domain.MmrBaseAttributeMasterUt;
 import com.metalsa.domain.MmrDataSheetUt;
 import com.metalsa.domain.MmrHeaderAttributeMasterUt;
-import com.metalsa.domain.MmrManufacturerMasterUt;
 import com.metalsa.domain.MmrSearchDataSheetView;
 import com.metalsa.domain.MmrSysConfigUt;
 import com.metalsa.model.SearchModel;
