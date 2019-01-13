@@ -15,6 +15,7 @@ import com.metalsa.domain.MmrDataSheetUt;
 import com.metalsa.domain.MmrHeaderAttributeMasterUt;
 import com.metalsa.domain.MmrSearchDataSheetView;
 import com.metalsa.domain.MmrSysConfigUt;
+import com.metalsa.model.ResultDataSheetModel;
 import com.metalsa.model.SearchModel;
 import com.metalsa.repository.CustomRepository;
 import com.metalsa.repository.HeaderAttrRepository;
@@ -88,21 +89,30 @@ public class SearchNCompareServiceImpl implements SearchNCompareService {
 	@Override
 	public SearchModel getSearchdata(final SearchModel model) {
 		List<MmrSearchDataSheetView> results = customRepository.getSearchDataSheetView(model);
-		final Map<String,List<MmrSearchDataSheetView>> materialMap = new LinkedHashMap<>();
+		final Map<Long,List<MmrSearchDataSheetView>> materialMap = new LinkedHashMap<>();
+		
 		for (MmrSearchDataSheetView viewObj : results) {
 			if(0l!=viewObj.getDataSheetId()) {
 				List<MmrSearchDataSheetView> lst=null;
-				if(materialMap.keySet().contains(viewObj.getDataSheetId()+"")){
-					lst = materialMap.get(viewObj.getDataSheetId()+"");
+				if(materialMap.keySet().contains(viewObj.getDataSheetId())){
+					lst = materialMap.get(viewObj.getDataSheetId());
 				}else {
 					lst = new ArrayList<>();
 				}
 				lst.add(viewObj);
-				materialMap.put(viewObj.getDataSheetId()+"",lst);
+				materialMap.put(viewObj.getDataSheetId(),lst);
 				model.getHeaderSet().add(viewObj.getBaseAttributeName());
 			}
 		}	
-		model.setSearchDatamp(materialMap);		
+        List<ResultDataSheetModel> resultDataSheet= new ArrayList<>();
+		for (Long dataSheetId : materialMap.keySet()) {
+			
+			ResultDataSheetModel modelResult = new ResultDataSheetModel();
+			modelResult.setDataSheetId(dataSheetId);
+			modelResult.setDataSheetIdList(materialMap.get(dataSheetId));
+			resultDataSheet.add(modelResult);
+		}
+		model.setSearchDatamp(resultDataSheet);
 		return model;
 	}
 

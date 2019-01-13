@@ -19,7 +19,8 @@ public class SearchModel {
 	private List<SearchBaseModel> rangeBaseParameterList = new ArrayList<>();
 	private List<SearchBaseModel> textBaseAttributeList = new ArrayList<>();
 	private List<SearchBaseModel> textMasterAttributeList = new ArrayList<>();
-	private Map<String, List<MmrSearchDataSheetView>> searchDatamp = new LinkedHashMap<>();
+//	private Map<String, List<MmrSearchDataSheetView>> searchDatamp = new LinkedHashMap<>();
+	private List<ResultDataSheetModel> searchDatamp = new ArrayList<>(); 
 	private List<Long> datasheetIds;	
 	private Set<String> headerSet = new LinkedHashSet<String>();	
 	public String getStaticBaseAttributeIds() {
@@ -66,12 +67,7 @@ public class SearchModel {
 	public void setRangeBaseParameterList(List<SearchBaseModel> rangeBaseParameterList) {
 		this.rangeBaseParameterList = rangeBaseParameterList;
 	}
-	public Map<String, List<MmrSearchDataSheetView>> getSearchDatamp() {
-		return searchDatamp;
-	}
-	public void setSearchDatamp(Map<String, List<MmrSearchDataSheetView>> searchDatamp) {
-		this.searchDatamp = searchDatamp;
-	}
+	 
 	public List<Long> getDatasheetIds() {
 		return datasheetIds;
 	}
@@ -84,5 +80,14 @@ public class SearchModel {
 	public void setHeaderSet(Set<String> headerSet) {
 		this.headerSet = headerSet;
 	}
+	public List<ResultDataSheetModel> getSearchDatamp() {
+		return searchDatamp;
+	}
+	public void setSearchDatamp(List<ResultDataSheetModel> searchDatamp) {
+		this.searchDatamp = searchDatamp;
+	}
+	 
+
+
 	
 }
