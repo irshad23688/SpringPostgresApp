@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,20 +61,24 @@ public class SearchNCompareServiceImpl implements SearchNCompareService {
 					rangeBaseAttribute.add(baseAttribute);
 				}
 			}
-			MmrHeaderAttributeMasterUt modelHeader=header;
+			MmrHeaderAttributeMasterUt textBase= new MmrHeaderAttributeMasterUt();
+			BeanUtils.copyProperties(header, textBase);
+			
 			if(textBaseAttribute.size()>0){
-				modelHeader.setMmrBaseAttributeMasterUts(textBaseAttribute);
+				textBase.setMmrBaseAttributeMasterUts(textBaseAttribute);
 			}else{
-				modelHeader.setMmrBaseAttributeMasterUts(new ArrayList<>());
+				textBase.setMmrBaseAttributeMasterUts(new ArrayList<>());
 			}
-			textBasedHeader.add(modelHeader);
+			textBasedHeader.add(textBase);
 
+			MmrHeaderAttributeMasterUt rangeBase=new MmrHeaderAttributeMasterUt();
+			BeanUtils.copyProperties(header, rangeBase);
 			if(rangeBaseAttribute.size()>0){
-				modelHeader.setMmrBaseAttributeMasterUts(rangeBaseAttribute);
+				rangeBase.setMmrBaseAttributeMasterUts(rangeBaseAttribute);
 			}else {
-				modelHeader.setMmrBaseAttributeMasterUts(new ArrayList<>());
+				rangeBase.setMmrBaseAttributeMasterUts(new ArrayList<>());
 			}
-			rangeBaseHeader.add(modelHeader);
+			rangeBaseHeader.add(rangeBase);
 		}
 		model.setRangeBaseHeader(rangeBaseHeader);
 		model.setTextBasedHeader(textBasedHeader);
