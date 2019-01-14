@@ -64,8 +64,8 @@ public class BaseAttributeServiceImpl implements BaseAttributeService {
 				MmrBaseAttributeTableDataTypeUtModel attributeTableDataTypeUtModel = new MmrBaseAttributeTableDataTypeUtModel();
 				BeanUtils.copyProperties(typeUt, attributeTableDataTypeUtModel);
 				
-				MmrBaseAttributeMasterUt parameterBaseAttributeMaster = baseAttributeRepository.findById(typeUt.getMmrParameterBaseAttributeId())
-		                .orElseThrow(() -> new ExceptionHandler("ParamterBaseAttributeMasterUt", "id", typeUt.getMmrParameterBaseAttributeId()));
+				MmrBaseAttributeMasterUt parameterBaseAttributeMaster = baseAttributeRepository.findById(typeUt.getMmrParameterBaseAttributeUt())
+		                .orElseThrow(() -> new ExceptionHandler("ParamterBaseAttributeMasterUt", "id", typeUt.getMmrParameterBaseAttributeUt()));
 				MmrBaseAttributeMasterUtModel modelParameterBaseAttribute= new MmrBaseAttributeMasterUtModel();
 				BeanUtils.copyProperties(parameterBaseAttributeMaster, modelParameterBaseAttribute);
 				
@@ -75,8 +75,8 @@ public class BaseAttributeServiceImpl implements BaseAttributeService {
 				MmrHeaderAttributeMasterUtModel modelParameterHeader= new MmrHeaderAttributeMasterUtModel();
 				BeanUtils.copyProperties(parameterHeader, modelParameterHeader);
 				modelParameterBaseAttribute.setMmrHeaderAttributeMasterUt(modelParameterHeader);
-				
-				MmrBaseAttributeMasterUt baseAttributeMaster = baseAttributeRepository.findById(typeUt.getMmrBaseAttributeMasterUt().getId())
+				attributeTableDataTypeUtModel.setMmrBaseAttributeMasterUt(typeUt.getMmrParameterBaseAttributeUt());
+				/*MmrBaseAttributeMasterUt baseAttributeMaster = baseAttributeRepository.findById(typeUt.getMmrBaseAttributeMasterUt().getId())
 						.orElseThrow(() -> new ExceptionHandler("BaseAttributeMasterUt", "id", typeUt.getMmrBaseAttributeMasterUt().getId()));
 				MmrBaseAttributeMasterUtModel modelBaseAttribute= new MmrBaseAttributeMasterUtModel();
 				BeanUtils.copyProperties(baseAttributeMaster, modelBaseAttribute);
@@ -85,9 +85,9 @@ public class BaseAttributeServiceImpl implements BaseAttributeService {
 				MmrHeaderAttributeMasterUtModel modelBaseAttributeHeader= new MmrHeaderAttributeMasterUtModel();
 				BeanUtils.copyProperties(baseAttributeHeader, modelBaseAttributeHeader);
 				modelBaseAttribute.setMmrHeaderAttributeMasterUt(modelBaseAttributeHeader);
+				attributeTableDataTypeUtModel.setMmrBaseAttributeMasterUt(modelBaseAttribute);*/
 				
 				attributeTableDataTypeUtModel.setMmrParameterBaseAttributeUt(modelParameterBaseAttribute);
-				attributeTableDataTypeUtModel.setMmrBaseAttributeMasterUt(modelBaseAttribute);
 				model.getMmrBaseAttributeTableDataTypeUts().add(attributeTableDataTypeUtModel);
 			 
 				}

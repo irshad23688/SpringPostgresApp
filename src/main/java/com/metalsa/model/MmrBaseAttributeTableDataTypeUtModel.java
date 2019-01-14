@@ -7,30 +7,26 @@ package com.metalsa.model;
 public class MmrBaseAttributeTableDataTypeUtModel extends MetalsaAbstractEntityModel {
 
 	private MmrBaseAttributeMasterUtModel mmrParameterBaseAttributeUt;
-	private MmrBaseAttributeMasterUtModel mmrBaseAttributeMasterUt;
+	private Long mmrBaseAttributeMasterUt;
  
 	public MmrBaseAttributeTableDataTypeUtModel() {
 	}
-
 	 
 	public MmrBaseAttributeMasterUtModel getMmrParameterBaseAttributeUt() {
 		return mmrParameterBaseAttributeUt;
 	}
 
-
 	public void setMmrParameterBaseAttributeUt(MmrBaseAttributeMasterUtModel mmrParameterBaseAttributeUt) {
 		this.mmrParameterBaseAttributeUt = mmrParameterBaseAttributeUt;
 	}
 
-
-	public MmrBaseAttributeMasterUtModel getMmrBaseAttributeMasterUt() {
+	public Long getMmrBaseAttributeMasterUt() {
 		return mmrBaseAttributeMasterUt;
 	}
 
-	public void setMmrBaseAttributeMasterUt(MmrBaseAttributeMasterUtModel mmrBaseAttributeMasterUt) {
+	public void setMmrBaseAttributeMasterUt(Long mmrBaseAttributeMasterUt) {
 		this.mmrBaseAttributeMasterUt = mmrBaseAttributeMasterUt;
 	}
 
- 	
-
+	 
 }

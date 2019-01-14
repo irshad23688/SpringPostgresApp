@@ -1,20 +1,21 @@
 package com.metalsa.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.assertj.core.util.Arrays;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.metalsa.domain.MmrBaseAttributeMasterUt;
 import com.metalsa.domain.MmrDataSheetUt;
 import com.metalsa.domain.MmrHeaderAttributeMasterUt;
-import com.metalsa.domain.MmrManufacturerMasterUt;
 import com.metalsa.domain.MmrSearchDataSheetView;
 import com.metalsa.domain.MmrSysConfigUt;
+import com.metalsa.model.ResultDataSheetModel;
 import com.metalsa.model.SearchModel;
 import com.metalsa.repository.CustomRepository;
 import com.metalsa.repository.HeaderAttrRepository;
@@ -61,20 +62,24 @@ public class SearchNCompareServiceImpl implements SearchNCompareService {
 					rangeBaseAttribute.add(baseAttribute);
 				}
 			}
-			MmrHeaderAttributeMasterUt modelHeader=header;
+			MmrHeaderAttributeMasterUt textBase= new MmrHeaderAttributeMasterUt();
+			BeanUtils.copyProperties(header, textBase);
+			
 			if(textBaseAttribute.size()>0){
-				modelHeader.setMmrBaseAttributeMasterUts(textBaseAttribute);
+				textBase.setMmrBaseAttributeMasterUts(textBaseAttribute);
 			}else{
-				modelHeader.setMmrBaseAttributeMasterUts(new ArrayList<>());
+				textBase.setMmrBaseAttributeMasterUts(new ArrayList<>());
 			}
-			textBasedHeader.add(modelHeader);
+			textBasedHeader.add(textBase);
 
+			MmrHeaderAttributeMasterUt rangeBase=new MmrHeaderAttributeMasterUt();
+			BeanUtils.copyProperties(header, rangeBase);
 			if(rangeBaseAttribute.size()>0){
-				modelHeader.setMmrBaseAttributeMasterUts(rangeBaseAttribute);
+				rangeBase.setMmrBaseAttributeMasterUts(rangeBaseAttribute);
 			}else {
-				modelHeader.setMmrBaseAttributeMasterUts(new ArrayList<>());
+				rangeBase.setMmrBaseAttributeMasterUts(new ArrayList<>());
 			}
-			rangeBaseHeader.add(modelHeader);
+			rangeBaseHeader.add(rangeBase);
 		}
 		model.setRangeBaseHeader(rangeBaseHeader);
 		model.setTextBasedHeader(textBasedHeader);
@@ -84,20 +89,30 @@ public class SearchNCompareServiceImpl implements SearchNCompareService {
 	@Override
 	public SearchModel getSearchdata(final SearchModel model) {
 		List<MmrSearchDataSheetView> results = customRepository.getSearchDataSheetView(model);
-		final Map<String,List<MmrSearchDataSheetView>> materialMap = new LinkedHashMap<>();
+		final Map<Long,List<MmrSearchDataSheetView>> materialMap = new LinkedHashMap<>();
+		
 		for (MmrSearchDataSheetView viewObj : results) {
 			if(0l!=viewObj.getDataSheetId()) {
 				List<MmrSearchDataSheetView> lst=null;
-				if(materialMap.keySet().contains(viewObj.getDataSheetId()+"")){
-					lst = materialMap.get(viewObj.getDataSheetId()+"");
+				if(materialMap.keySet().contains(viewObj.getDataSheetId())){
+					lst = materialMap.get(viewObj.getDataSheetId());
 				}else {
 					lst = new ArrayList<>();
 				}
 				lst.add(viewObj);
-				materialMap.put(viewObj.getDataSheetId()+"",lst);
+				materialMap.put(viewObj.getDataSheetId(),lst);
+				model.getHeaderSet().add(viewObj.getBaseAttributeName());
 			}
 		}	
-		model.setSearchDatamp(materialMap);		
+        List<ResultDataSheetModel> resultDataSheet= new ArrayList<>();
+		for (Long dataSheetId : materialMap.keySet()) {
+			
+			ResultDataSheetModel modelResult = new ResultDataSheetModel();
+			modelResult.setDataSheetId(dataSheetId);
+			modelResult.setDataSheetIdList(materialMap.get(dataSheetId));
+			resultDataSheet.add(modelResult);
+		}
+		model.setSearchDatamp(resultDataSheet);
 		return model;
 	}
 

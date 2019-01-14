@@ -18,7 +18,7 @@ case when testsheetdtl.base_attribute_id is null then base.id else testsheetdtl.
 base.name as BASE_ATTRIBUTE_NAME,
 case when testsheetdtl.base_attribute_sequence_no is null then 0 else testsheetdtl.base_attribute_sequence_no end as base_attribute_sequence_no,
 case when testsheetdtl.ismanadatory is null then 0 else testsheetdtl.ismanadatory end as ismanadatory,
-case when testsheetdtl.status is null then 0 else testsheetdtl.status end as status
+case when testsheetdtl.status is null then base.status else testsheetdtl.status end as status
 FROM
     mmr_base_attribute_master_ut base
         LEFT JOIN mmr_header_attribute_master_ut header ON base.header_attribute_id = header.id
@@ -28,3 +28,5 @@ FROM
        --AND testSheetDtl.mmr_test_sheet_ut_id in( 82)
         ORDER BY testsheetdtl.base_attribute_sequence_no,testsheetdtl.header_attribute_id;
         
+        
+  alter table mmr_data_sheet_ut add status_id  int default 1  not null;      

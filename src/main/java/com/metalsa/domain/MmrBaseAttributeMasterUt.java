@@ -243,7 +243,7 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 	public List<MmrBaseAttributeTableDataTypeUt> getMmrBaseAttributeTableDataTypeUts() {
 		List<MmrBaseAttributeTableDataTypeUt> tableTypeDataList = new ArrayList<>();
 		for(MmrBaseAttributeTableDataTypeUt mmrBaseAttributeTableDataTypeUt : this.mmrBaseAttributeTableDataTypeUts) {
-			mmrBaseAttributeTableDataTypeUt.setMmrParameterBaseAttributeId(mmrBaseAttributeTableDataTypeUt.getMmrParameterBaseAttributeMasterUt().getId());
+			mmrBaseAttributeTableDataTypeUt.setMmrParameterBaseAttributeUt(mmrBaseAttributeTableDataTypeUt.getMmrParameterBaseAttributeUt());
 			tableTypeDataList.add(mmrBaseAttributeTableDataTypeUt);
 		}
 		//setMmrParameterBaseAttributeId(getMmrParameterBaseAttributeMasterUt().getId());
@@ -255,9 +255,9 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 		this.mmrBaseAttributeTableDataTypeUts = mmrBaseAttributeTableDataTypeUts;
 		for(MmrBaseAttributeTableDataTypeUt mmrBaseAttributeTableDataTypeUt : this.mmrBaseAttributeTableDataTypeUts) {
 			MmrBaseAttributeMasterUt parameterBaseAttribute = new MmrBaseAttributeMasterUt();
-			mmrBaseAttributeTableDataTypeUt.setMmrBaseAttributeMasterUt(this);
-			parameterBaseAttribute.setId(mmrBaseAttributeTableDataTypeUt.getMmrParameterBaseAttributeId());
-			mmrBaseAttributeTableDataTypeUt.setMmrParameterBaseAttributeMasterUt(parameterBaseAttribute);
+			mmrBaseAttributeTableDataTypeUt.setMmrBaseAttributeMasterUt(this.id);
+			parameterBaseAttribute.setId(mmrBaseAttributeTableDataTypeUt.getMmrParameterBaseAttributeUt());
+			mmrBaseAttributeTableDataTypeUt.setMmrParameterBaseAttributeUt(parameterBaseAttribute.getId());
 		}
 	}
 

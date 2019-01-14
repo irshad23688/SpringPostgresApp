@@ -23,7 +23,7 @@ public interface TestSheetDetailUtViewRepository extends JpaRepository<MmrTestSh
 	 		"base.name as BASE_ATTRIBUTE_NAME,\r\n" + 
 	 		"case when testsheetdtl.base_attribute_sequence_no is null then 0 else testsheetdtl.base_attribute_sequence_no end as base_attribute_sequence_no,\r\n" + 
 	 		"case when testsheetdtl.ismanadatory is null then 0 else testsheetdtl.ismanadatory end as ismanadatory,\r\n" + 
-	 		"case when testsheetdtl.status is null then 0 else testsheetdtl.status end as status\r\n" + 
+	 		"case when testsheetdtl.status is null then base.status else testsheetdtl.status end as status\r\n" + 
 	 		"FROM\r\n" + 
 	 		"    mmr_base_attribute_master_ut base\r\n" + 
 	 		"        LEFT JOIN mmr_header_attribute_master_ut header ON base.header_attribute_id = header.id\r\n" + 
