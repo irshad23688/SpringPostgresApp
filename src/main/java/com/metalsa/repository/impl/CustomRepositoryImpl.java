@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.metalsa.constant.MetalsaConstant;
+import com.metalsa.domain.MmrCompareDataSheetView;
 import com.metalsa.domain.MmrDataSheetUt;
 import com.metalsa.domain.MmrSearchDataSheetView;
 import com.metalsa.domain.MmrSysConfigUt;
@@ -150,9 +151,18 @@ public class CustomRepositoryImpl implements CustomRepository {
 	}
 
 	@Override
-	public List<MmrDataSheetUt> getDataSheetByIds(List<Long> datasheetIds) {
+	public List<MmrCompareDataSheetView> compareDataSheetByIds(List<Long> datasheetIds) {
+		CriteriaBuilder cb = entityManagerFactory.getCriteriaBuilder();
+		CriteriaQuery<MmrCompareDataSheetView> cr = cb.createQuery(MmrCompareDataSheetView.class);
+		Root<MmrCompareDataSheetView> root = cr.from(MmrCompareDataSheetView.class);
+		List<Predicate> predicates = new ArrayList<>();
+		for (Long id : datasheetIds) {
+			predicates.add(cb.equal(root.get("dataSheetId"),id));
+		}
+		Predicate predicate = cb.or((Predicate[]) predicates.toArray(new Predicate[0]));
+		cr.select(root).where(predicate);
 		Session session = (Session)entityManagerFactory.createEntityManager().getDelegate();
-		MultiIdentifierLoadAccess <MmrDataSheetUt> multiLoadAccess = session.byMultipleIds(MmrDataSheetUt.class);
-		return multiLoadAccess.multiLoad(datasheetIds);
+		Query<MmrCompareDataSheetView> query = session.createQuery(cr);
+		return query.getResultList();
 	}
 }

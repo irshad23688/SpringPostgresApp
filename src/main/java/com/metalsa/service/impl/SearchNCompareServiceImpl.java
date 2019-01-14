@@ -2,19 +2,23 @@ package com.metalsa.service.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.metalsa.domain.MmrBaseAttributeMasterUt;
-import com.metalsa.domain.MmrDataSheetUt;
+import com.metalsa.domain.MmrCompareDataSheetView;
 import com.metalsa.domain.MmrHeaderAttributeMasterUt;
 import com.metalsa.domain.MmrSearchDataSheetView;
 import com.metalsa.domain.MmrSysConfigUt;
+import com.metalsa.model.MmrCompareDataSheetModel;
 import com.metalsa.model.ResultDataSheetModel;
 import com.metalsa.model.SearchModel;
 import com.metalsa.repository.CustomRepository;
@@ -64,7 +68,7 @@ public class SearchNCompareServiceImpl implements SearchNCompareService {
 			}
 			MmrHeaderAttributeMasterUt textBase= new MmrHeaderAttributeMasterUt();
 			BeanUtils.copyProperties(header, textBase);
-			
+
 			if(textBaseAttribute.size()>0){
 				textBase.setMmrBaseAttributeMasterUts(textBaseAttribute);
 			}else{
@@ -90,7 +94,7 @@ public class SearchNCompareServiceImpl implements SearchNCompareService {
 	public SearchModel getSearchdata(final SearchModel model) {
 		List<MmrSearchDataSheetView> results = customRepository.getSearchDataSheetView(model);
 		final Map<Long,List<MmrSearchDataSheetView>> materialMap = new LinkedHashMap<>();
-		
+
 		for (MmrSearchDataSheetView viewObj : results) {
 			if(0l!=viewObj.getDataSheetId()) {
 				List<MmrSearchDataSheetView> lst=null;
@@ -104,9 +108,9 @@ public class SearchNCompareServiceImpl implements SearchNCompareService {
 				model.getHeaderSet().add(viewObj.getBaseAttributeName());
 			}
 		}	
-        List<ResultDataSheetModel> resultDataSheet= new ArrayList<>();
+		List<ResultDataSheetModel> resultDataSheet= new ArrayList<>();
 		for (Long dataSheetId : materialMap.keySet()) {
-			
+
 			ResultDataSheetModel modelResult = new ResultDataSheetModel();
 			modelResult.setDataSheetId(dataSheetId);
 			modelResult.setDataSheetIdList(materialMap.get(dataSheetId));
@@ -115,10 +119,34 @@ public class SearchNCompareServiceImpl implements SearchNCompareService {
 		model.setSearchDatamp(resultDataSheet);
 		return model;
 	}
-
 	@Override
-	public List<MmrDataSheetUt> getDataSheetByIds(List<Long> datasheetIds) {
-		return customRepository.getDataSheetByIds(datasheetIds);
+	public List<MmrCompareDataSheetModel> compareDataSheetByIds(List<Long> datasheetIds) {
+		List<MmrCompareDataSheetView> list = customRepository.compareDataSheetByIds(datasheetIds);
+
+		final Map<Long,List<MmrCompareDataSheetView>> materialMap = new LinkedHashMap<>();
+
+		for (MmrCompareDataSheetView viewObj : list) {
+			if(0l!=viewObj.getDataSheetId()) {
+				List<MmrCompareDataSheetView> lst=null;
+				if(materialMap.keySet().contains(viewObj.getDataSheetId())){
+					lst = materialMap.get(viewObj.getDataSheetId());
+				}else {
+					lst = new ArrayList<>();
+				}
+				lst.add(viewObj);
+				materialMap.put(viewObj.getDataSheetId(),lst);
+			}
+		}	
+		List<MmrCompareDataSheetModel> resultDataSheet= new ArrayList<>();
+		for (Long dataSheetId : materialMap.keySet()) {
+			MmrCompareDataSheetModel modelResult = new MmrCompareDataSheetModel();
+			modelResult.setDataSheetId(dataSheetId);
+			modelResult.setCompareDataSheets(materialMap.get(dataSheetId));
+			resultDataSheet.add(modelResult);
+		}
+
+		return resultDataSheet;
 	}
+	 
 
 }

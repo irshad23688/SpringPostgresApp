@@ -24,11 +24,11 @@ public class MetalsaConstant {
 		String PPM = "ppm";
 	}
 	public interface STATUS{
+		String INACTIVE = "0";
 		String PENDING = "1";
 		String SENT_FOR_APPROVAL = "2";
 		String APPROVED = "3";
 		String REJECT = "4";
-		String INACTIVE = "5";
 	}
 
 }
