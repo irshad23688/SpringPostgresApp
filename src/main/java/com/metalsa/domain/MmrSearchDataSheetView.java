@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="MMR_COMPARE_DATA_SHEET_VIEW")
+@Table(name="SEARCH_DATASHEET_VIEW")
 public class MmrSearchDataSheetView implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -16,18 +16,14 @@ public class MmrSearchDataSheetView implements Serializable{
     @Column(name = "ID")
     private Long id; 
 	
-	@Column(name ="TEST_SHEET_ID")
-	private long testSheetId;
-	
 	@Column(name ="DATA_SHEET_ID")
 	private long dataSheetId;
 
 	@Column(name ="BASE_ATTRIBUTE_ID")
 	private long baseAttributeId;
-	
-	@Column(name ="HEADER_ATTRIBUTE_ID")
-	private long headerAttributeId;
 
+	@Column(name ="TEST_SHEET_ID")
+	private long testSheetId;
 
 	@Column(name ="BASE_ATTRIBUTE_NAME")
 	private String baseAttributeName;
@@ -158,14 +154,6 @@ public class MmrSearchDataSheetView implements Serializable{
 
 	public void setStatus(long status) {
 		this.status = status;
-	}
-
-	public long getHeaderAttributeId() {
-		return headerAttributeId;
-	}
-
-	public void setHeaderAttributeId(long headerAttributeId) {
-		this.headerAttributeId = headerAttributeId;
 	}
 	
 }

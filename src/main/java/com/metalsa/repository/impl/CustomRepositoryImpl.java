@@ -80,7 +80,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 		List<Predicate> predicates = new ArrayList<>();
 		Predicate revisionPredicate = null;
 		if(!model.isShowRevision()) {
-			revisionPredicate =cb.equal(root.get("status"),MetalsaConstant.STATUS.PENDING);
+			revisionPredicate = cb.equal(root.get("status"),MetalsaConstant.STATUS.APPROVED);
 		}
 		
 		MmrSysConfigUt configUt =  sysConfigRepository.findByParamName("STATIC_SEARCH_BASE_ATTRIBUTE_IDS");

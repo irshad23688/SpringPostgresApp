@@ -3,22 +3,21 @@ package com.metalsa.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.metalsa.domain.MmrCompareDataSheetView;
-
 public class MmrCompareDataSheetModel {
 	
 	private Long dataSheetId;
-	List<MmrCompareDataSheetView> compareDataSheets = new ArrayList<>();
+	List<CompareModel> headerDetails = new ArrayList<>();
 	public Long getDataSheetId() {
 		return dataSheetId;
 	}
 	public void setDataSheetId(Long dataSheetId) {
 		this.dataSheetId = dataSheetId;
 	}
-	public List<MmrCompareDataSheetView> getCompareDataSheets() {
-		return compareDataSheets;
+	public List<CompareModel> getHeaderDetails() {
+		return headerDetails;
 	}
-	public void setCompareDataSheets(List<MmrCompareDataSheetView> compareDataSheets) {
-		this.compareDataSheets = compareDataSheets;
+	public void setHeaderDetails(List<CompareModel> headerDetails) {
+		this.headerDetails = headerDetails;
 	}
+	
 }

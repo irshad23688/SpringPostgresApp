@@ -18,6 +18,7 @@ import com.metalsa.domain.MmrCompareDataSheetView;
 import com.metalsa.domain.MmrHeaderAttributeMasterUt;
 import com.metalsa.domain.MmrSearchDataSheetView;
 import com.metalsa.domain.MmrSysConfigUt;
+import com.metalsa.model.CompareModel;
 import com.metalsa.model.MmrCompareDataSheetModel;
 import com.metalsa.model.ResultDataSheetModel;
 import com.metalsa.model.SearchModel;
@@ -122,26 +123,46 @@ public class SearchNCompareServiceImpl implements SearchNCompareService {
 	@Override
 	public List<MmrCompareDataSheetModel> compareDataSheetByIds(List<Long> datasheetIds) {
 		List<MmrCompareDataSheetView> list = customRepository.compareDataSheetByIds(datasheetIds);
-
-		final Map<Long,List<MmrCompareDataSheetView>> materialMap = new LinkedHashMap<>();
+		
+		final Map<Long,Map<String, List<MmrCompareDataSheetView>>> mainDataMap = new LinkedHashMap<>();
 
 		for (MmrCompareDataSheetView viewObj : list) {
 			if(0l!=viewObj.getDataSheetId()) {
-				List<MmrCompareDataSheetView> lst=null;
-				if(materialMap.keySet().contains(viewObj.getDataSheetId())){
-					lst = materialMap.get(viewObj.getDataSheetId());
+				Map<String, List<MmrCompareDataSheetView>> map = null;
+				if(mainDataMap.keySet().contains(viewObj.getDataSheetId())){
+					map = mainDataMap.get(viewObj.getDataSheetId());
+					List< MmrCompareDataSheetView> lst = null;
+					if(map.keySet().contains(viewObj.getHeaderName())) {
+						lst = map.get(viewObj.getHeaderName());
+					}else {
+						lst = new ArrayList<>();
+					}
+					lst.add(viewObj);
+					map.put(viewObj.getHeaderName(), lst);
 				}else {
-					lst = new ArrayList<>();
+					List <MmrCompareDataSheetView>lst = new ArrayList<>();
+					map = new LinkedHashMap<>();
+					lst.add(viewObj);
+					map .put(viewObj.getHeaderName(), lst);
+					
 				}
-				lst.add(viewObj);
-				materialMap.put(viewObj.getDataSheetId(),lst);
+				mainDataMap.put(viewObj.getDataSheetId(), map);
 			}
 		}	
+		
 		List<MmrCompareDataSheetModel> resultDataSheet= new ArrayList<>();
-		for (Long dataSheetId : materialMap.keySet()) {
+		for (Long dataSheetId : mainDataMap.keySet()) {
 			MmrCompareDataSheetModel modelResult = new MmrCompareDataSheetModel();
 			modelResult.setDataSheetId(dataSheetId);
-			modelResult.setCompareDataSheets(materialMap.get(dataSheetId));
+			List<CompareModel> compareModels = new ArrayList<>();
+			for (String headerName : mainDataMap.get(dataSheetId).keySet()) {
+				CompareModel compareModel = new CompareModel();
+				compareModel.setHeaderName(headerName);
+				compareModel.setCompareDataSheets(mainDataMap.get(dataSheetId).get(headerName));
+				compareModels.add(compareModel);
+			}
+			
+			modelResult.setHeaderDetails(compareModels);
 			resultDataSheet.add(modelResult);
 		}
 
