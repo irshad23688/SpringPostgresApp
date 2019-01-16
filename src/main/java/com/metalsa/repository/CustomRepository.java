@@ -1,5 +1,6 @@
 package com.metalsa.repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.metalsa.domain.MmrCompareDataSheetView;
@@ -14,5 +15,7 @@ public interface CustomRepository {
 	MmrTestSheetUt getTestSheetByClassNSubclass(Long classId, Long subClassId);
 	List<MmrSearchDataSheetView> getSearchDataSheetView(SearchModel model);
 	List<MmrCompareDataSheetView> compareDataSheetByIds(List<Long> datasheetIds);
+	List<Object[]> getDatasheetForDashboard(BigDecimal user);
+	List<Object[]> findDatasheetByStatus(BigDecimal status);
 
 }

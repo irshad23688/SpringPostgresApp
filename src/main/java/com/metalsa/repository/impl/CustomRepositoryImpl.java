@@ -165,4 +165,28 @@ public class CustomRepositoryImpl implements CustomRepository {
 		Query<MmrCompareDataSheetView> query = session.createQuery(cr);
 		return query.getResultList();
 	}
+	
+	@Override
+	public List<Object[]> getDatasheetForDashboard(BigDecimal user) {
+		String sql;
+		sql = String.format(" Select datasheet.id as datasheet_id, datasheet.DATA_SHEET_NAME, (Select USERNAME from MMR_USER_UT where id = datasheet.modified_by) as username," + 
+				" to_char(datasheet.created_on, 'DD-MM-YYYY') as created_on, to_char(datasheet.approved_on, 'DD-MM-YYYY') as apprived_on, " + 
+				" (Select USERNAME from MMR_USER_UT where id = datasheet.approved_by) as approved_by  " + 
+				" FROM MMR_DATA_SHEET_UT datasheet WHERE datasheet.modified_by = %s and datasheet.status =1 ",user);
+		
+		Query query = (Query) entityManagerFactory.createEntityManager().createNativeQuery(sql);
+		return query.getResultList();
+	}
+
+	@Override
+	public List<Object[]> findDatasheetByStatus(BigDecimal status) {
+		String sql;
+		sql = String.format(" Select datasheet.id as datasheet_id, datasheet.DATA_SHEET_NAME, (Select USERNAME from MMR_USER_UT where id = datasheet.created_by) as added_by, " + 
+				" to_char(datasheet.created_on, 'DD-MM-YYYY') as created_on " + 
+				" FROM MMR_DATA_SHEET_UT datasheet WHERE datasheet.status = %s ",status);
+		
+		Query query = (Query) entityManagerFactory.createEntityManager().createNativeQuery(sql);
+		return query.getResultList();
+	}
+	
 }
