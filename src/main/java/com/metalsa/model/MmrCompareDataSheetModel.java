@@ -5,19 +5,27 @@ import java.util.List;
 
 public class MmrCompareDataSheetModel {
 	
-	private Long dataSheetId;
-	List<CompareModel> headerDetails = new ArrayList<>();
-	public Long getDataSheetId() {
-		return dataSheetId;
+	private Long headerAttributeId;
+	private String headerAttributeName;
+	List<CompareBaseModel> baseAttribute = new ArrayList<>();
+	
+	public Long getHeaderAttributeId() {
+		return headerAttributeId;
 	}
-	public void setDataSheetId(Long dataSheetId) {
-		this.dataSheetId = dataSheetId;
+	public void setHeaderAttributeId(Long headerAttributeId) {
+		this.headerAttributeId = headerAttributeId;
 	}
-	public List<CompareModel> getHeaderDetails() {
-		return headerDetails;
+	public String getHeaderAttributeName() {
+		return headerAttributeName;
 	}
-	public void setHeaderDetails(List<CompareModel> headerDetails) {
-		this.headerDetails = headerDetails;
+	public void setHeaderAttributeName(String headerAttributeName) {
+		this.headerAttributeName = headerAttributeName;
+	}
+	public List<CompareBaseModel> getBaseAttribute() {
+		return baseAttribute;
+	}
+	public void setBaseAttribute(List<CompareBaseModel> baseAttribute) {
+		this.baseAttribute = baseAttribute;
 	}
 	
 }

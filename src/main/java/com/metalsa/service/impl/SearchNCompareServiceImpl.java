@@ -2,8 +2,10 @@ package com.metalsa.service.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -18,7 +20,8 @@ import com.metalsa.domain.MmrCompareDataSheetView;
 import com.metalsa.domain.MmrHeaderAttributeMasterUt;
 import com.metalsa.domain.MmrSearchDataSheetView;
 import com.metalsa.domain.MmrSysConfigUt;
-import com.metalsa.model.CompareModel;
+import com.metalsa.model.CompareBaseModel;
+import com.metalsa.model.CompareMaterialModel;
 import com.metalsa.model.MmrCompareDataSheetModel;
 import com.metalsa.model.ResultDataSheetModel;
 import com.metalsa.model.SearchModel;
@@ -120,7 +123,7 @@ public class SearchNCompareServiceImpl implements SearchNCompareService {
 		model.setSearchDatamp(resultDataSheet);
 		return model;
 	}
-	@Override
+	/*@Override
 	public List<MmrCompareDataSheetModel> compareDataSheetByIds(List<Long> datasheetIds) {
 		List<MmrCompareDataSheetView> list = customRepository.compareDataSheetByIds(datasheetIds);
 		
@@ -144,7 +147,6 @@ public class SearchNCompareServiceImpl implements SearchNCompareService {
 					map = new LinkedHashMap<>();
 					lst.add(viewObj);
 					map .put(viewObj.getHeaderName(), lst);
-					
 				}
 				mainDataMap.put(viewObj.getDataSheetId(), map);
 			}
@@ -167,6 +169,72 @@ public class SearchNCompareServiceImpl implements SearchNCompareService {
 		}
 
 		return resultDataSheet;
+	}*/
+	
+	public List<MmrCompareDataSheetModel> compareDataSheetByIds(List<Long> datasheetIds) {
+		List<MmrCompareDataSheetView> list = customRepository.compareDataSheetByIds(datasheetIds);
+		
+		Map <Long, String> headerMap = new LinkedHashMap<>(); 
+		Map <Long, String> baseMap = new LinkedHashMap<>(); 
+		Map<Long, List<String>> testingInfo = new LinkedHashMap<>();
+		Map<Long, Set<Long>> headerBaseMap = new LinkedHashMap<>();
+
+		for (MmrCompareDataSheetView viewObj : list) {
+			if(0l!=viewObj.getDataSheetId()) {
+				headerMap.put(viewObj.getHeaderAttributeId(), viewObj.getHeaderName());
+				baseMap.put(viewObj.getBaseAttributeId(), viewObj.getBaseAttributeName());
+				List< String> testinfoLst;
+				if(testingInfo.keySet().contains(viewObj.getBaseAttributeId())) {
+					testinfoLst = testingInfo.get(viewObj.getBaseAttributeId());
+					testinfoLst.add(viewObj.getTestingInformation()+"|"+viewObj.getDataSheetId());
+				}else {
+					testinfoLst = new ArrayList<>();
+					testinfoLst.add(viewObj.getTestingInformation()+"|"+viewObj.getDataSheetId());
+				}
+				testingInfo.put(viewObj.getBaseAttributeId(), testinfoLst);
+				
+				Set< Long> headerBaselst;
+				if(headerBaseMap.keySet().contains(viewObj.getHeaderAttributeId())) {
+					headerBaselst = headerBaseMap.get(viewObj.getHeaderAttributeId());
+					headerBaselst.add(viewObj.getBaseAttributeId());
+				}else {
+					headerBaselst = new LinkedHashSet<>();
+					headerBaselst.add(viewObj.getBaseAttributeId());
+				}
+				headerBaseMap.put(viewObj.getHeaderAttributeId(), headerBaselst);
+				
+			}
+		}	
+		
+		List<MmrCompareDataSheetModel> mainLst = new ArrayList<>();
+		
+		for (Long headreId : headerBaseMap.keySet()) {
+			MmrCompareDataSheetModel compareDataSheetModel = new MmrCompareDataSheetModel();
+			compareDataSheetModel.setHeaderAttributeId(headreId);
+			compareDataSheetModel.setHeaderAttributeName(headerMap.get(headreId));
+			List baseModelLst = new ArrayList<CompareBaseModel>();
+			for (Long baseId : headerBaseMap.get(headreId)) {
+				CompareBaseModel baseModel = new CompareBaseModel();
+				baseModel.setBaseAttributeId(baseId);
+				baseModel.setBaseAttributeDefaultDisplayName(baseMap.get(baseId));
+				List materialModelLst = new ArrayList<CompareMaterialModel>();
+				for (String str : testingInfo.get(baseId)) {
+					CompareMaterialModel compareMaterialModel = new CompareMaterialModel();
+					List lt = Arrays.asList(str.split("\\|"));
+					if(null!=lt.get(0)) {
+						compareMaterialModel.setTestingInformation(lt.get(0)+"");
+					}
+					materialModelLst.add(compareMaterialModel);
+				}
+				baseModel.setMaterialValue(materialModelLst);
+				baseModelLst.add(baseModel);
+			}
+			compareDataSheetModel.setBaseAttribute(baseModelLst);
+			mainLst.add(compareDataSheetModel);
+		}
+		
+		return mainLst;
+		
 	}
 	 
 
