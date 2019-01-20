@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.metalsa.constant.MetalsaConstant;
+import com.metalsa.domain.MmrDataSheetDetailUt;
 import com.metalsa.domain.MmrDataSheetUt;
 import com.metalsa.domain.MmrNewDataSheetDetailView;
 import com.metalsa.model.MmrDataSheetDetailUtModel;
@@ -38,16 +39,16 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 
 	@Autowired
 	private Environment env; 
-	
-    @Autowired
-    private DataSheetRepository dataSheetRepository ; 
 
-    @Autowired
-    private MmrEditDataSheetDetailViewRepository editDataSheetDetailViewRepository ; 
-    
-    @Autowired
-    private MmrNewDataSheetDetailViewRepository newDataSheetDetailViewRepository ; 
-    
+	@Autowired
+	private DataSheetRepository dataSheetRepository ; 
+
+	@Autowired
+	private MmrEditDataSheetDetailViewRepository editDataSheetDetailViewRepository ; 
+
+	@Autowired
+	private MmrNewDataSheetDetailViewRepository newDataSheetDetailViewRepository ; 
+
 	@Override
 	public String saveFileOnserver(MultipartFile file, String dataSheetId) {
 		String rootLocation = env.getProperty("datasheet.server.filepath");
@@ -56,7 +57,7 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 			path = Paths.get(rootLocation+File.separator+dataSheetId);
 			try {
 				Files.copy(file.getInputStream(), path.resolve(file.getOriginalFilename()));
-				
+
 			} catch(Exception e) {
 				return null;
 			}
@@ -71,7 +72,7 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 		try {
 			Path file = path.resolve(fileName);
 			Resource resource = new UrlResource(file.toUri());
-			
+
 			if (resource.exists() || resource.isReadable()) {
 				return resource;
 			} else {
@@ -111,9 +112,9 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 	public MmrDataSheetUtModel getNewDataTestSheetDetailByClassSubClass(Long classId, Long subClassId) {
 		return getHeaderWiseBaseAttributeList(newDataSheetDetailViewRepository.findByClassIdAndSubClassId(classId, subClassId));
 	}
-	
+
 	private MmrDataSheetUtModel getHeaderWiseBaseAttributeList(List<MmrNewDataSheetDetailView> list) {
-//		MmrDataTestSheetDetailUtViewModel modelView = new MmrDataTestSheetDetailUtViewModel();
+		//		MmrDataTestSheetDetailUtViewModel modelView = new MmrDataTestSheetDetailUtViewModel();
 		Map<Long,MmrDataSheetHeaderModel> mapHeaderToDetail = new LinkedHashMap<Long,MmrDataSheetHeaderModel>();
 		MmrDataSheetUtModel  dataSheetUtModel =null;
 		for(MmrNewDataSheetDetailView detailView : list) {
@@ -130,7 +131,7 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 				MmrDataSheetHeaderModel headerModel= new MmrDataSheetHeaderModel();
 				headerModel.setHeaderAttributeId(detailView.getHeaderAttributeId());
 				headerModel.setHeaderAttributeName(detailView.getHeaderAttributeName());
-				
+
 				MmrDataSheetDetailUtModel dataSheetDetailUtModel = new MmrDataSheetDetailUtModel(detailView);
 				headerModel.addDataSheetDetails(dataSheetDetailUtModel);
 				mapHeaderToDetail.put(headerModel.getHeaderAttributeId(),headerModel);
@@ -139,6 +140,76 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 		List<MmrDataSheetHeaderModel> result=new ArrayList(mapHeaderToDetail.values());
 		dataSheetUtModel.setDataSheetHeaderDetails(result);
 		return dataSheetUtModel;
+	}
+
+	@Override
+	public MmrDataSheetUtModel persistDataSheet(MmrDataSheetUtModel model) {
+		MmrDataSheetUt dataSheetUt ;
+		if(0l!=model.getDataSheetId()) {
+			dataSheetUt = dataSheetRepository.findById(model.getDataSheetId()).get();
+		}else {
+			dataSheetUt = new MmrDataSheetUt();
+		}
+		dataSheetUt.setClassId(model.getClassId());
+		dataSheetUt.setSubclassId(model.getSubclassId());
+		
+		dataSheetUt.setDataSheetName(model.getDataSheetName());
+		dataSheetUt.setCreatedBy(model.getCreatedBy());
+		dataSheetUt.setModifiedBy(model.getModifiedBy());
+		dataSheetUt.setRevision(model.getRevision());
+		dataSheetUt.setStatus(model.getStatus());
+		dataSheetUt.setTestSheetId(model.getTestSheetId());
+		dataSheetUt.setIssubmitted("sub");
+		List<MmrDataSheetDetailUt> dataSheetDetailUts = new ArrayList<>();
+		for (MmrDataSheetHeaderModel dataSheetHeaderModel : model.getDataSheetHeaderDetails()) {
+
+			for (MmrDataSheetDetailUtModel sheetDetailUtModel : dataSheetHeaderModel.getDataSheetDetails()) {
+				
+				
+				MmrDataSheetDetailUt dataSheetDetailUt = null;
+				if(0l!= sheetDetailUtModel.getDataSheetDetailId()) {
+					dataSheetDetailUt = getDataSheetDetailById(dataSheetUt.getMmrDataSheetDetailUts(), sheetDetailUtModel.getDataSheetDetailId());
+					if (null==dataSheetDetailUt){
+						dataSheetDetailUt = new MmrDataSheetDetailUt();
+					}
+				}else {
+					dataSheetDetailUt = new MmrDataSheetDetailUt();
+				}
+				//BeanUtils.copyProperties(sheetDetailUtModel, dataSheetDetailUt,new String[]{"id"});
+				dataSheetDetailUt.setCreatedBy(sheetDetailUtModel.getCreatedBy());
+				dataSheetDetailUt.setModifiedBy(sheetDetailUtModel.getModifiedBy());
+				dataSheetDetailUt.setStatus(model.getStatus());
+				dataSheetDetailUt.setSupplierInformationLhs(sheetDetailUtModel.getSupplierInformationLhs());
+				dataSheetDetailUt.setSupplierInformationRhs(sheetDetailUtModel.getSupplierInformationRhs());
+				dataSheetDetailUt.setSupplierInformationOperator(sheetDetailUtModel.getSupplierInformationOperator());
+				//dataSheetDetailUt.setSupplierInformationTableType(sheetDetailUtModel.getSupplierInformationTableType());
+				dataSheetDetailUt.setTestingInformation(sheetDetailUtModel.getTestingInformation());
+				//dataSheetDetailUt.setTestingInformationTableType(sheetDetailUtModel.getTestingInformationTableType());
+				dataSheetDetailUt.setTestSheetDetailId(sheetDetailUtModel.getTestSheetDetailId());
+				dataSheetDetailUt.setUserSelectUom(sheetDetailUtModel.getUserSelectUom());
+				//TODO
+				dataSheetDetailUt.setUserUom1("");
+				dataSheetDetailUt.setUserUom2("");
+				
+				
+				dataSheetDetailUts.add(dataSheetDetailUt);
+			}
+
+		}
+		dataSheetUt.setMmrDataSheetDetailUts(dataSheetDetailUts);
+		dataSheetRepository.save(dataSheetUt);
+
+		return model;
+	}
+
+	private MmrDataSheetDetailUt getDataSheetDetailById(List<MmrDataSheetDetailUt> mmrDataSheetDetailUts, long dataSheetDetailId) {
+		for (MmrDataSheetDetailUt mmrDataSheetDetailUt : mmrDataSheetDetailUts) {
+			if(dataSheetDetailId==mmrDataSheetDetailUt.getId()) {
+				return mmrDataSheetDetailUt;
+			}
+
+		}
+		return null;
 	}
 
 

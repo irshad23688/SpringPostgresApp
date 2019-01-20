@@ -2,7 +2,6 @@ package com.metalsa.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,12 +14,10 @@ public class MmrDataSheetUtModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private long dataSheetId;
-	private BigDecimal approvedBy;
 	private Long classId;
 	private BigDecimal createdBy;
 	private String dataSheetName;
 	private BigDecimal modifiedBy;
-	private Timestamp modifiedOn;
 	private BigDecimal revision;
 	private BigDecimal status;
 	private Long subclassId;
@@ -48,14 +45,6 @@ public class MmrDataSheetUtModel implements Serializable {
 
 	public void setDataSheetId(long dataSheetId) {
 		this.dataSheetId = dataSheetId;
-	}
-
-	public BigDecimal getApprovedBy() {
-		return approvedBy;
-	}
-
-	public void setApprovedBy(BigDecimal approvedBy) {
-		this.approvedBy = approvedBy;
 	}
 
 	public Long getClassId() {
@@ -88,14 +77,6 @@ public class MmrDataSheetUtModel implements Serializable {
 
 	public void setModifiedBy(BigDecimal modifiedBy) {
 		this.modifiedBy = modifiedBy;
-	}
-
-	public Timestamp getModifiedOn() {
-		return modifiedOn;
-	}
-
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
 	}
 
 	public BigDecimal getRevision() {

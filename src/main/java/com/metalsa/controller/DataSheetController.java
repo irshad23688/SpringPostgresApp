@@ -22,11 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.metalsa.domain.MmrDataSheetUt;
-import com.metalsa.domain.MmrTestSheetUt;
 import com.metalsa.exception.ExceptionHandler;
 import com.metalsa.model.MmrDataSheetUtModel;
-import com.metalsa.model.MmrDataTestSheetDetailUtViewModel;
-import com.metalsa.model.MmrTestSheetDetailUtViewModel;
 import com.metalsa.repository.ClassRepository;
 import com.metalsa.repository.CustomRepository;
 import com.metalsa.repository.DataSheetRepository;
@@ -80,17 +77,23 @@ public class DataSheetController {
     	return new MmrDataSheetUtModel();
     }
     
+    @PostMapping("/datasheet")
+    public MmrDataSheetUtModel persistDataSheetModel(@Valid @RequestBody MmrDataSheetUtModel model) {
+    	model = dataSheetService.persistDataSheet(model);
+    	return model;
+    }
+    
     
     @PostMapping("/datasheet/revision")
     public List<MmrDataSheetUt> createRevision(@Valid @RequestBody MmrDataSheetUt datasheetUt) {
     	dataSheetService.createRevision(datasheetUt);
     	return dataSheetRepository.findAll();
     }
-    @PostMapping("/datasheet")
+   /* @PostMapping("/datasheet")
     public List<MmrDataSheetUt> createDataSheet(@Valid @RequestBody MmrDataSheetUt datasheetUt) {
     	dataSheetRepository.save(datasheetUt);
     	return dataSheetRepository.findAll();
-    }
+    }*/
     
     @PutMapping("/datasheet/{id}")
     public List<MmrDataSheetUt> updateDataSheet(@PathVariable(value = "id") Long id,

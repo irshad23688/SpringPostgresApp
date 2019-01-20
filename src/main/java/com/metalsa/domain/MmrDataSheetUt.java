@@ -39,7 +39,7 @@ public class MmrDataSheetUt implements Serializable {
 	@Column(name="DATA_SHEET_NAME", nullable=false, length=50)
 	private String dataSheetName;
 
-	@Column(nullable=false, length=5)
+	@Column(length=5)
 	private String issubmitted;
 
 	@Column(name="MODIFIED_BY", precision=38)

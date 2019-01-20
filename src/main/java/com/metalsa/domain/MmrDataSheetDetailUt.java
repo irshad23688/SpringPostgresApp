@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 @Table(name="MMR_DATA_SHEET_DETAIL_UT")
+
 public class MmrDataSheetDetailUt implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -80,7 +81,6 @@ public class MmrDataSheetDetailUt implements Serializable {
 	@Column(name="USER_UOM2", length=50)
 	private String userUom2;
 
-	@JsonIgnore
 	@ManyToOne
 	private MmrDataSheetUt mmrDataSheetUt;
 

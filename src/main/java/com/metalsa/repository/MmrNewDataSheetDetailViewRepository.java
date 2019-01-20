@@ -9,7 +9,6 @@ import com.metalsa.domain.MmrNewDataSheetDetailView;
 
 @Repository
 public interface MmrNewDataSheetDetailViewRepository extends JpaRepository<MmrNewDataSheetDetailView, Long> {
-	
 	 
 	 List<MmrNewDataSheetDetailView> findByClassIdAndSubClassId(Long classId,Long subClassId);
 }
