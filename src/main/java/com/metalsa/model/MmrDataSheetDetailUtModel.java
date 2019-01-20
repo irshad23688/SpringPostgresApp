@@ -2,7 +2,8 @@ package com.metalsa.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+
+import com.metalsa.domain.MmrNewDataSheetDetailView;
 
  
 public class MmrDataSheetDetailUtModel implements Serializable {
@@ -10,7 +11,6 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 	private long dataSheetDetailId;
 	private BigDecimal createdBy;
 	private BigDecimal modifiedBy;
-	private Timestamp modifiedOn;
 	private String headerAttributeName;
 	private String baseAttributeName;
 	private BigDecimal baseAttributeSequenceNo;
@@ -23,11 +23,18 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 	private String testingInformation;
 	private String testingInformationTableType;
 	private String userSelectUom;
-	private String userUom1;
-	private String userUom2;
 
 	public MmrDataSheetDetailUtModel() {
 	}
+
+	
+	public MmrDataSheetDetailUtModel(MmrNewDataSheetDetailView detailView) {
+		this.headerAttributeName = detailView.getHeaderAttributeName();
+		this.baseAttributeName = detailView.getBaseAttributeName();
+		this.baseAttributeSequenceNo = detailView.getBaseAttributeSequenceNo();
+		this.isMandatory = detailView.getIsMandatory();
+	}
+
 
 	public long getDataSheetDetailId() {
 		return dataSheetDetailId;
@@ -51,14 +58,6 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 
 	public void setModifiedBy(BigDecimal modifiedBy) {
 		this.modifiedBy = modifiedBy;
-	}
-
-	public Timestamp getModifiedOn() {
-		return modifiedOn;
-	}
-
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
 	}
 
 	public String getHeaderAttributeName() {
@@ -156,23 +155,6 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 	public void setUserSelectUom(String userSelectUom) {
 		this.userSelectUom = userSelectUom;
 	}
-
-	public String getUserUom1() {
-		return userUom1;
-	}
-
-	public void setUserUom1(String userUom1) {
-		this.userUom1 = userUom1;
-	}
-
-	public String getUserUom2() {
-		return userUom2;
-	}
-
-	public void setUserUom2(String userUom2) {
-		this.userUom2 = userUom2;
-	}
-	
 	
  
 }

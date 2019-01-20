@@ -24,10 +24,14 @@ import org.springframework.web.multipart.MultipartFile;
 import com.metalsa.domain.MmrDataSheetUt;
 import com.metalsa.domain.MmrTestSheetUt;
 import com.metalsa.exception.ExceptionHandler;
+import com.metalsa.model.MmrDataSheetUtModel;
+import com.metalsa.model.MmrDataTestSheetDetailUtViewModel;
+import com.metalsa.model.MmrTestSheetDetailUtViewModel;
 import com.metalsa.repository.ClassRepository;
 import com.metalsa.repository.CustomRepository;
 import com.metalsa.repository.DataSheetRepository;
 import com.metalsa.service.DataSheetSevice;
+import com.metalsa.service.TestSheetService;
 
 
 @RestController
@@ -46,6 +50,9 @@ public class DataSheetController {
     @Autowired
     private DataSheetSevice dataSheetService;
     
+    @Autowired
+    private TestSheetService testSheetService;
+    
     @GetMapping("/datasheet")
     public List<MmrDataSheetUt> getAllClass() {
     	return dataSheetRepository.findAll();
@@ -63,9 +70,14 @@ public class DataSheetController {
     }
     
     @GetMapping("/datasheet/new/{classId}/{subClassId}")
-    public MmrTestSheetUt createNewDataSheet(@PathVariable(value = "classId") Long classId,
+    public MmrDataSheetUtModel createNewDataSheet(@PathVariable(value = "classId") Long classId,
     		@PathVariable(value = "subClassId") Long subClassId) {
-    	return customRepository.getTestSheetByClassNSubclass(classId,subClassId);
+    	return dataSheetService.getNewDataTestSheetDetailByClassSubClass(classId,subClassId);
+    }
+    @GetMapping("/datasheet/new1/{classId}/{subClassId}")
+    public MmrDataSheetUtModel createNewDataSheet1(@PathVariable(value = "classId") Long classId,
+    		@PathVariable(value = "subClassId") Long subClassId) {
+    	return new MmrDataSheetUtModel();
     }
     
     

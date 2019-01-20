@@ -7,6 +7,7 @@ import java.util.List;
  
 public class MmrDataSheetHeaderModel implements Serializable {
 	private static final long serialVersionUID = 1L;
+	private Long headerAttributeId;
 	private String headerAttributeName;
  
 	private List<MmrDataSheetDetailUtModel> dataSheetDetails= new ArrayList<>();
@@ -34,6 +35,15 @@ public class MmrDataSheetHeaderModel implements Serializable {
 	public void addDataSheetDetails(MmrDataSheetDetailUtModel dataSheetDetail) {
 		this.dataSheetDetails.add(dataSheetDetail);
 	}
+
+	public Long getHeaderAttributeId() {
+		return headerAttributeId;
+	}
+
+	public void setHeaderAttributeId(Long headerAttributeId) {
+		this.headerAttributeId = headerAttributeId;
+	}
+	
 	
 
  }

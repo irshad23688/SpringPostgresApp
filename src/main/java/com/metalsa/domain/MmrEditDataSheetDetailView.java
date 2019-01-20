@@ -16,6 +16,15 @@ public class MmrEditDataSheetDetailView implements Serializable{
 	@Column(name = "ID")
 	private Long id; 
 
+	@Column(name ="class_id")
+	private long classId;
+	
+	@Column(name ="subclass_id")
+	private long subClassId;
+	
+	@Column(name ="data_type_name")
+	private String dataTypeName;
+	
 	@Column(name ="BASE_ATTRIBUTE_ID")
 	private long baseAttributeId;
 
@@ -222,4 +231,29 @@ public class MmrEditDataSheetDetailView implements Serializable{
 		this.baseAttribSequence = baseAttribSequence;
 	}
 
+	public long getClassId() {
+		return classId;
+	}
+
+	public void setClassId(long classId) {
+		this.classId = classId;
+	}
+
+	public long getSubClassId() {
+		return subClassId;
+	}
+
+	public void setSubClassId(long subClassId) {
+		this.subClassId = subClassId;
+	}
+
+	public String getDataTypeName() {
+		return dataTypeName;
+	}
+
+	public void setDataTypeName(String dataTypeName) {
+		this.dataTypeName = dataTypeName;
+	}
+
+	
 }

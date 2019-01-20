@@ -4,6 +4,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.metalsa.domain.MmrDataSheetUt;
+import com.metalsa.model.MmrDataSheetUtModel;
 
 public interface DataSheetSevice {
 	
@@ -11,4 +12,5 @@ public interface DataSheetSevice {
 	Resource loadFile(String fileName, String dataSheetId);
 	void createRevision(MmrDataSheetUt datasheetUt);
 	void updateDataSheet(MmrDataSheetUt datasheetUt);
+	MmrDataSheetUtModel getNewDataTestSheetDetailByClassSubClass(Long classId,Long subClassId);
 }

@@ -6,6 +6,11 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +23,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.metalsa.constant.MetalsaConstant;
 import com.metalsa.domain.MmrDataSheetUt;
-import com.metalsa.repository.CustomRepository;
+import com.metalsa.domain.MmrNewDataSheetDetailView;
+import com.metalsa.model.MmrDataSheetDetailUtModel;
+import com.metalsa.model.MmrDataSheetHeaderModel;
+import com.metalsa.model.MmrDataSheetUtModel;
 import com.metalsa.repository.DataSheetRepository;
+import com.metalsa.repository.MmrEditDataSheetDetailViewRepository;
+import com.metalsa.repository.MmrNewDataSheetDetailViewRepository;
 import com.metalsa.service.DataSheetSevice;
 
 @Service
@@ -32,6 +42,12 @@ public class DataSheetServiceImpl implements DataSheetSevice {
     @Autowired
     private DataSheetRepository dataSheetRepository ; 
 
+    @Autowired
+    private MmrEditDataSheetDetailViewRepository editDataSheetDetailViewRepository ; 
+    
+    @Autowired
+    private MmrNewDataSheetDetailViewRepository newDataSheetDetailViewRepository ; 
+    
 	@Override
 	public String saveFileOnserver(MultipartFile file, String dataSheetId) {
 		String rootLocation = env.getProperty("datasheet.server.filepath");
@@ -90,5 +106,40 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 		}
 		dataSheetRepository.save(datasheetUt);	
 	}
+
+	@Override
+	public MmrDataSheetUtModel getNewDataTestSheetDetailByClassSubClass(Long classId, Long subClassId) {
+		return getHeaderWiseBaseAttributeList(newDataSheetDetailViewRepository.findByClassIdAndSubClassId(classId, subClassId));
+	}
+	
+	private MmrDataSheetUtModel getHeaderWiseBaseAttributeList(List<MmrNewDataSheetDetailView> list) {
+//		MmrDataTestSheetDetailUtViewModel modelView = new MmrDataTestSheetDetailUtViewModel();
+		Map<Long,MmrDataSheetHeaderModel> mapHeaderToDetail = new LinkedHashMap<Long,MmrDataSheetHeaderModel>();
+		MmrDataSheetUtModel  dataSheetUtModel =null;
+		for(MmrNewDataSheetDetailView detailView : list) {
+			if(mapHeaderToDetail.containsKey(detailView.getHeaderAttributeId())){
+				MmrDataSheetDetailUtModel dataSheetDetailUtModel = new MmrDataSheetDetailUtModel(detailView);
+				mapHeaderToDetail.get(detailView.getHeaderAttributeId()).addDataSheetDetails(dataSheetDetailUtModel);
+			}else {
+				if(dataSheetUtModel==null) {
+					dataSheetUtModel = new MmrDataSheetUtModel();
+					dataSheetUtModel.setClassId(detailView.getClassId());
+					dataSheetUtModel.setSubclassId(detailView.getSubClassId());
+					dataSheetUtModel.setTestSheetId(detailView.getTestSheetId());
+				}
+				MmrDataSheetHeaderModel headerModel= new MmrDataSheetHeaderModel();
+				headerModel.setHeaderAttributeId(detailView.getHeaderAttributeId());
+				headerModel.setHeaderAttributeName(detailView.getHeaderAttributeName());
+				
+				MmrDataSheetDetailUtModel dataSheetDetailUtModel = new MmrDataSheetDetailUtModel(detailView);
+				headerModel.addDataSheetDetails(dataSheetDetailUtModel);
+				mapHeaderToDetail.put(headerModel.getHeaderAttributeId(),headerModel);
+			}
+		}
+		List<MmrDataSheetHeaderModel> result=new ArrayList(mapHeaderToDetail.values());
+		dataSheetUtModel.setDataSheetHeaderDetails(result);
+		return dataSheetUtModel;
+	}
+
 
 }
