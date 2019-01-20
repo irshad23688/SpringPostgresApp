@@ -9,7 +9,7 @@ public class MmrDataSheetHeaderModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String headerAttributeName;
  
-	private List<MmrDataSheetHeaderModel> dataSheetDetails= new ArrayList<>();
+	private List<MmrDataSheetDetailUtModel> dataSheetDetails= new ArrayList<>();
 	
 	public MmrDataSheetHeaderModel() {
 	}
@@ -22,15 +22,16 @@ public class MmrDataSheetHeaderModel implements Serializable {
 		this.headerAttributeName = headerAttributeName;
 	}
 
-	public List<MmrDataSheetHeaderModel> getDataSheetDetails() {
+	 
+	public List<MmrDataSheetDetailUtModel> getDataSheetDetails() {
 		return dataSheetDetails;
 	}
 
-	public void setDataSheetDetails(List<MmrDataSheetHeaderModel> dataSheetDetails) {
+	public void setDataSheetDetails(List<MmrDataSheetDetailUtModel> dataSheetDetails) {
 		this.dataSheetDetails = dataSheetDetails;
 	}
-	
-	public void addDataSheetDetails(MmrDataSheetHeaderModel dataSheetDetail) {
+
+	public void addDataSheetDetails(MmrDataSheetDetailUtModel dataSheetDetail) {
 		this.dataSheetDetails.add(dataSheetDetail);
 	}
 	
