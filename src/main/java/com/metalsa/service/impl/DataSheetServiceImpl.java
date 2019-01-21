@@ -11,6 +11,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManagerFactory;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -42,6 +47,10 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 
 	@Autowired
 	private DataSheetRepository dataSheetRepository ; 
+	
+	@Autowired
+	private EntityManagerFactory entityManagerFactory;
+	
 
 	@Autowired
 	private MmrEditDataSheetDetailViewRepository editDataSheetDetailViewRepository ; 
@@ -196,7 +205,12 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 
 		}
 		dataSheetUt.setMmrDataSheetDetailUts(dataSheetDetailUts);
-		dataSheetRepository.save(dataSheetUt);
+		
+		Session session = (Session)entityManagerFactory.createEntityManager().getDelegate();
+		Transaction tx = session.beginTransaction();
+		session.persist(dataSheetUt);
+		tx.commit();
+//		dataSheetRepository.save(dataSheetUt);
 
 		return model;
 	}

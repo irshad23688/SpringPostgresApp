@@ -2,16 +2,7 @@ package com.metalsa.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-
-import com.metalsa.domain.MmrDataSheetUt;
 import com.metalsa.domain.MmrEditDataSheetDetailView;
 import com.metalsa.domain.MmrNewDataSheetDetailView;
 
@@ -33,6 +24,7 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 	private String testingInformation;
 	private String testingInformationTableType;
 	private String userSelectUom;
+	private String inputDataTypeName;
      
 
 
@@ -46,6 +38,7 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 		this.baseAttributeSequenceNo = detailView.getBaseAttributeSequenceNo();
 		this.isMandatory = detailView.getIsMandatory();
 		this.testSheetDetailId = detailView.getTestSheetDtlId();
+		this.inputDataTypeName=detailView.getInputDataTypeName();
 	}
 
 
@@ -63,6 +56,7 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 		this.testingInformation = detailView.getTestingInfo();
 		this.testingInformationTableType = detailView.getTestingInfoTableType();
 		this.userSelectUom = detailView.getUserSelectUom();
+		this.inputDataTypeName=detailView.getInputDataTypeName();
 
 	}
  
@@ -186,6 +180,18 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 	public void setUserSelectUom(String userSelectUom) {
 		this.userSelectUom = userSelectUom;
 	}
+
+
+	public String getInputDataTypeName() {
+		return inputDataTypeName;
+	}
+
+
+	public void setInputDataTypeName(String inputDataTypeName) {
+		this.inputDataTypeName = inputDataTypeName;
+	}
+
+ 
 	
  
 }
