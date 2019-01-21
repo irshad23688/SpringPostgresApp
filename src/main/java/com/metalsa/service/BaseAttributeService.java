@@ -8,7 +8,7 @@ import com.metalsa.model.MmrBaseAttributeMasterUtModel;
 
 public interface BaseAttributeService {
 	
-	 List<MmrBaseAttributeMasterUtModel> getAll();
+	 List<MmrBaseAttributeMasterUtModel> getAll(boolean isAll);
 	 MmrBaseAttributeMasterUtModel getOne(MmrBaseAttributeMasterUt mmrBaseAttributeMasterUt);
 	 
 	 List<MmrBaseAttributeMasterUtModel> getListByIstableheaderFlagAndStatus(BigDecimal istableheaderFlag,BigDecimal status);

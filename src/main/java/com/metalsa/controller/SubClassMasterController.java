@@ -1,5 +1,6 @@
 package com.metalsa.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -42,21 +43,24 @@ public class SubClassMasterController {
 
     @GetMapping("/subclass")
     public List<MmrSubClassMasterUtModel> getAllSubClass() {
-    	 
-    	return subClassService.getAll();
+    	return subClassService.getAll(true);
     }
+    @GetMapping("/subclass/active")
+    public List<MmrSubClassMasterUtModel> getActiveAllClass() {
+    	return subClassService.getAll(false);
+    }
+    
     @GetMapping("/subclassbyclass/{classId}")
     public List<MmrSubClassMasterUt> getAllSubClass(@PathVariable(value = "classId") Long classId) {
     	MmrClassMasterUt masterUt= classRepository.findById(classId)
         .orElseThrow(() -> new ExceptionHandler("MmrClassMasterUt", "id", classId));
-    	return subClassRepository.findByMmrClassMasterUt(masterUt);
+    	return subClassRepository.findByMmrClassMasterUtAndStatus(masterUt, BigDecimal.ONE);
     }
-
     
     @PostMapping("/subclass")
     public List<MmrSubClassMasterUtModel> createSubClass(@Valid @RequestBody MmrSubClassMasterUt mmrSubclassMasterUt) {
     	 subClassRepository.save(mmrSubclassMasterUt);
-    	return subClassService.getAll();
+    	return subClassService.getAll(true);
     }
 
     @GetMapping("/subclass/{id}")
@@ -71,7 +75,7 @@ public class SubClassMasterController {
     	subClassRepository.findById(id)
                 .orElseThrow(() -> new ExceptionHandler("SubClassMasterUt", "id", id));
     	subClassRepository.save(subClassMasterDetails);
-        return subClassService.getAll();
+        return subClassService.getAll(true);
     }
     
     @DeleteMapping("/subclass/{id}")

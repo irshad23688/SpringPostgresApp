@@ -39,6 +39,10 @@ public class HeaderAttrMasterController {
     public List<MmrHeaderAttributeMasterUt> getAllHeaderAttribute() {
         return headerAttrRepository.findAll();
     }
+    @GetMapping("/headerattribute/active")
+    public List<MmrHeaderAttributeMasterUt> getAllActiveHeaderAttribute() {
+    	return headerAttrRepository.getHeaderByStatus(BigDecimal.ONE);
+    }
     @GetMapping("/headerattribute/{istableheaderFlag}/{status}")
     public List<MmrHeaderAttributeMasterUtModel> getAllHeaderAttributeForUI(
     		@PathVariable(value = "istableheaderFlag") Long istableheaderFlag,@PathVariable(value = "status") Long status) {

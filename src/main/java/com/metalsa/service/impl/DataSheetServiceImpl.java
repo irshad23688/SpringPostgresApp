@@ -206,11 +206,11 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 		}
 		dataSheetUt.setMmrDataSheetDetailUts(dataSheetDetailUts);
 		
-		Session session = (Session)entityManagerFactory.createEntityManager().getDelegate();
+		/*Session session = (Session)entityManagerFactory.createEntityManager().getDelegate();
 		Transaction tx = session.beginTransaction();
 		session.persist(dataSheetUt);
-		tx.commit();
-//		dataSheetRepository.save(dataSheetUt);
+		tx.commit();*/
+		dataSheetRepository.save(dataSheetUt);
 
 		return model;
 	}

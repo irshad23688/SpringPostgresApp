@@ -38,7 +38,11 @@ public class BaseAttributeMasterController {
     
     @GetMapping("/baseattribute")
     public List<MmrBaseAttributeMasterUtModel> getAllBaseAttribute() {
-    	return baseAttributeService.getAll();
+    	return baseAttributeService.getAll(true);
+    }
+    @GetMapping("/baseattribute/active")
+    public List<MmrBaseAttributeMasterUtModel> getAllActiveBaseAttribute() {
+    	return baseAttributeService.getAll(false);
     }
 
     @GetMapping("/baseattribute/{istableheaderFlag}/{status}")
@@ -49,7 +53,7 @@ public class BaseAttributeMasterController {
     @PostMapping("/baseattribute")
     public List<MmrBaseAttributeMasterUtModel> createBaseAttribute(@Valid @RequestBody MmrBaseAttributeMasterUt baseAttributeMaster) {
     	baseAttributeRepository.save(baseAttributeMaster);
-    	return baseAttributeService.getAll();
+    	return baseAttributeService.getAll(true);
     }
 
    /* @GetMapping("/baseattribute/{id}")
@@ -78,7 +82,7 @@ public class BaseAttributeMasterController {
     	baseAttributeRepository.findById(id)
                 .orElseThrow(() -> new ExceptionHandler("BaseAttributeMasterUt", "id", id));
         baseAttributeRepository.save(baseAttributeMasterDetails);
-        return baseAttributeService.getAll();
+        return baseAttributeService.getAll(true);
     }
     
     @DeleteMapping("/baseattribute/{id}")
