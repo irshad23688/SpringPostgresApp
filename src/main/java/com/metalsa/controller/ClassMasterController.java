@@ -1,5 +1,6 @@
 package com.metalsa.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -33,6 +34,10 @@ public class ClassMasterController {
     @GetMapping("/class")
     public List<MmrClassMasterUt> getAllClass() {
     	  return classRepository.findAll(new Sort(Sort.Direction.DESC,"modifiedOn"));
+    }
+    @GetMapping("/class/active")
+    public List<MmrClassMasterUt> getActiveAllClass() {
+    	return classRepository.getClassByStatus(BigDecimal.ONE);
     }
     
 

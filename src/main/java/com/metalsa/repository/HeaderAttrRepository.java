@@ -12,4 +12,7 @@ import com.metalsa.domain.MmrHeaderAttributeMasterUt;
 public interface HeaderAttrRepository extends JpaRepository<MmrHeaderAttributeMasterUt, Long> {
 	
 	List<MmrHeaderAttributeMasterUt> findByIstableheaderFlagAndStatus(BigDecimal istableheaderFlag,BigDecimal status);
+	List<MmrHeaderAttributeMasterUt> getHeaderByStatus(BigDecimal status);
+
+
 }

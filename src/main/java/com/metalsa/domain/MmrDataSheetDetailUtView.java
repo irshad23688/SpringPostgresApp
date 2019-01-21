@@ -22,10 +22,10 @@ public class MmrDataSheetDetailUtView extends MmrDataSheetDetailUt implements Se
 	@Column(name="ID")
 	private long id;
 	
-	@Column(name="TEST_SHEET_DTL_ID")
+	@Column(name="TEST_SHEET_DTL_ID", insertable=false,updatable=false)
 	private Long testSheetDtlId;
 	
-	@Column(name="mmr_test_sheet_ut_id")
+	@Column(name="mmr_test_sheet_ut_id", insertable=false,updatable=false)
 	private Long mmrTestSheetUtId;
 	
 	@Column(name="HEADER_ATTRIBUTE_ID")

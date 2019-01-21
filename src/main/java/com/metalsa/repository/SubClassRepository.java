@@ -1,5 +1,6 @@
 package com.metalsa.repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +12,7 @@ import com.metalsa.domain.MmrSubClassMasterUt;
 @Repository
 public interface SubClassRepository extends JpaRepository<MmrSubClassMasterUt, Long> {
 	
-	List<MmrSubClassMasterUt> findByMmrClassMasterUt(MmrClassMasterUt masterUt);
+	List<MmrSubClassMasterUt> findByMmrClassMasterUtAndStatus(MmrClassMasterUt masterUt, BigDecimal status);
+	List<MmrSubClassMasterUt> findSubClassByStatus(BigDecimal status);
 	
 }

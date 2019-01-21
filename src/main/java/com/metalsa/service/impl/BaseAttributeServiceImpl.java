@@ -33,9 +33,15 @@ public class BaseAttributeServiceImpl implements BaseAttributeService {
 	private HeaderAttributeService headerAttributeService;
 
 	@Override
-	public List<MmrBaseAttributeMasterUtModel> getAll() {
-		List<MmrBaseAttributeMasterUtModel> list= new ArrayList<>();
-		for (MmrBaseAttributeMasterUt mmrBaseAttributeMasterUt : baseAttributeRepository.findAll()) {
+	public List<MmrBaseAttributeMasterUtModel> getAll(boolean isAll) {
+		List<MmrBaseAttributeMasterUt> entityList;
+		List<MmrBaseAttributeMasterUtModel> list = new ArrayList<>();
+		if(isAll) {
+			entityList= baseAttributeRepository.findAll();
+		}else {
+			entityList = baseAttributeRepository.getBaseAttribByStatus(BigDecimal.ONE);
+		}
+		for (MmrBaseAttributeMasterUt mmrBaseAttributeMasterUt : entityList) {
 			list.add( setBaseAttributeDataForUI(mmrBaseAttributeMasterUt));
 		}
 

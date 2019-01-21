@@ -1,5 +1,6 @@
 package com.metalsa.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +27,15 @@ public class SubClassServiceImpl implements SubClassService {
     private SubClassRepository subClassRepository;
 
 	@Override
-	public List<MmrSubClassMasterUtModel> getAll() {
-		List<MmrSubClassMasterUtModel> modelList= new ArrayList<>();
-    	List<MmrSubClassMasterUt> list=subClassRepository.findAll();
+	public List<MmrSubClassMasterUtModel> getAll(boolean allSubclass) {
+		List<MmrSubClassMasterUt> list= null;
+		if(allSubclass) {
+			 list=subClassRepository.findAll();
+		} else {
+			 list=subClassRepository.findSubClassByStatus(BigDecimal.ONE);
+		}
     	
+    	List<MmrSubClassMasterUtModel> modelList= new ArrayList<>();
     	for (MmrSubClassMasterUt mmrSubclassMasterUt : list) {
     		MmrSubClassMasterUtModel model= new MmrSubClassMasterUtModel();
     		MmrClassMasterUt classMaster = classRepository.findById(mmrSubclassMasterUt.getMmrClassMasterUt().getId())

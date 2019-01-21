@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -187,6 +188,16 @@ public class CustomRepositoryImpl implements CustomRepository {
 		
 		Query query = (Query) entityManagerFactory.createEntityManager().createNativeQuery(sql);
 		return query.getResultList();
+	}
+	
+	public void saveDataSheet(MmrDataSheetUt mmrDataSheetUt) {
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+		Session session = (Session)entityManager.getDelegate();
+
+		long id = (long) session.save(mmrDataSheetUt);
+		entityManager.getTransaction().commit();
+		System.out.println(id);
 	}
 	
 }

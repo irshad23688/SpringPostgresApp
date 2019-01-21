@@ -7,7 +7,7 @@ import com.metalsa.model.MmrSubClassMasterUtModel;
 
 public interface SubClassService {
 	
-	 List<MmrSubClassMasterUtModel> getAll();
+	 List<MmrSubClassMasterUtModel> getAll(boolean active);
 	 MmrSubClassMasterUtModel getOne(MmrSubClassMasterUt mmrSubClassMasterUt);
 
 }
