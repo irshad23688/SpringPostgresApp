@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.metalsa.domain.MmrDataSheetUt;
+
 
 /**
  * The persistent class for the MMR_DATA_SHEET_UT database table.
@@ -25,6 +27,18 @@ public class MmrDataSheetUtModel implements Serializable {
 	private List<MmrDataSheetHeaderModel> dataSheetHeaderDetails= new ArrayList<>();
 
 	public MmrDataSheetUtModel() {
+	}
+	
+	public MmrDataSheetUtModel(MmrDataSheetUt mmrDataSheetUt) {
+		this.dataSheetId = mmrDataSheetUt.getId();
+		this.classId = mmrDataSheetUt.getClassId();
+		this.createdBy = mmrDataSheetUt.getCreatedBy();
+		this.dataSheetName = mmrDataSheetUt.getDataSheetName();
+		this.modifiedBy = mmrDataSheetUt.getModifiedBy();
+		this.revision = mmrDataSheetUt.getRevision();
+		this.status = mmrDataSheetUt.getStatus();
+		this.subclassId = mmrDataSheetUt.getSubclassId();
+		this.testSheetId = mmrDataSheetUt.getTestSheetId();
 	}
 
 	public List<MmrDataSheetHeaderModel> getDataSheetHeaderDetails() {

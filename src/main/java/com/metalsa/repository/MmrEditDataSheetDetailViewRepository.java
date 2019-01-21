@@ -11,5 +11,5 @@ import com.metalsa.domain.MmrEditDataSheetDetailView;
 public interface MmrEditDataSheetDetailViewRepository extends JpaRepository<MmrEditDataSheetDetailView, Long> {
 	
 	 
-	 List<MmrEditDataSheetDetailView> findByClassIdAndSubClassId(Long classId,Long subClassId);
+	 List<MmrEditDataSheetDetailView> findByDataSheetUtId(Long dataSheetId);
 }

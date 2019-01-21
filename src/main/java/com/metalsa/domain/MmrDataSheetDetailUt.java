@@ -13,8 +13,6 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 
 /**
  * The persistent class for the MMR_DATA_SHEET_DETAIL_UT database table.
@@ -22,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 @Table(name="MMR_DATA_SHEET_DETAIL_UT")
-
 public class MmrDataSheetDetailUt implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -43,11 +40,11 @@ public class MmrDataSheetDetailUt implements Serializable {
 	@Column(name="MODIFIED_ON",insertable=false,updatable=true)
 	private Timestamp modifiedOn;
 
-	@Column(nullable=false, precision=38)
+	@Column(precision=38)
 	private BigDecimal status;
 
-	@Column(name="STATUS_ID", nullable=false, precision=38)
-	private BigDecimal statusId;
+	/*@Column(name="STATUS_ID", nullable=false, precision=38)
+	private BigDecimal statusId;*/
 
 	@Column(name="SUPPLIER_INFORMATION_LHS",  length=50)
 	private String supplierInformationLhs;
@@ -135,13 +132,6 @@ public class MmrDataSheetDetailUt implements Serializable {
 		this.status = status;
 	}
 
-	public BigDecimal getStatusId() {
-		return this.statusId;
-	}
-
-	public void setStatusId(BigDecimal statusId) {
-		this.statusId = statusId;
-	}
 
 	public String getSupplierInformationLhs() {
 		return this.supplierInformationLhs;

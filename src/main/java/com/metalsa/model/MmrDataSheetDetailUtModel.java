@@ -2,7 +2,17 @@ package com.metalsa.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+
+import com.metalsa.domain.MmrDataSheetUt;
+import com.metalsa.domain.MmrEditDataSheetDetailView;
 import com.metalsa.domain.MmrNewDataSheetDetailView;
 
  
@@ -23,6 +33,8 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 	private String testingInformation;
 	private String testingInformationTableType;
 	private String userSelectUom;
+     
+
 
 	public MmrDataSheetDetailUtModel() {
 	}
@@ -33,8 +45,27 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 		this.baseAttributeName = detailView.getBaseAttributeName();
 		this.baseAttributeSequenceNo = detailView.getBaseAttributeSequenceNo();
 		this.isMandatory = detailView.getIsMandatory();
+		this.testSheetDetailId = detailView.getTestSheetDtlId();
 	}
 
+
+	public MmrDataSheetDetailUtModel(MmrEditDataSheetDetailView detailView) {
+		this.dataSheetDetailId = detailView.getDatasheetDtlId();
+		this.headerAttributeName = detailView.getHeaderAttributeName();
+		this.baseAttributeName = detailView.getBaseAttributeName();
+		this.baseAttributeSequenceNo = detailView.getBaseAttributeSequenceNo();
+		this.isMandatory = detailView.getIsMandatory();
+		this.supplierInformationLhs = detailView.getSupplierInfoLHS();
+		this.supplierInformationOperator = detailView.getSupplierInfoOperator();
+		this.supplierInformationRhs = detailView.getSupplierInfoRHS();
+		this.supplierInformationTableType = detailView.getSupplierInfoTableType();
+		this.testSheetDetailId = detailView.getTestSheetDtlId();
+		this.testingInformation = detailView.getTestingInfo();
+		this.testingInformationTableType = detailView.getTestingInfoTableType();
+		this.userSelectUom = detailView.getUserSelectUom();
+
+	}
+ 
 
 	public long getDataSheetDetailId() {
 		return dataSheetDetailId;

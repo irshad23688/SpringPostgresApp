@@ -60,10 +60,16 @@ public class DataSheetController {
     		@PathVariable(value = "subClassId") Long subClassId) {
         return customRepository.getDataSheetByClassNSubclass(classId,subClassId);
     }
-    @GetMapping("/datasheet/{id}")
+    /*@GetMapping("/datasheet/{id}")
     public MmrDataSheetUt getDataSheetById(@PathVariable(value = "id") Long id) {
     	return dataSheetRepository.findById(id)
                 .orElseThrow(() -> new ExceptionHandler("MmrDataSheetUt", "id", id));
+    }*/
+    @GetMapping("/datasheet/{id}")
+    public MmrDataSheetUtModel getDataSheetById(@PathVariable(value = "id") Long id) {
+    	MmrDataSheetUt dataSheetUt= dataSheetRepository.findById(id)
+        .orElseThrow(() -> new ExceptionHandler("MmrDataSheetUt", "id", id));
+    	return dataSheetService.getDataSheetById(dataSheetUt);
     }
     
     @GetMapping("/datasheet/new/{classId}/{subClassId}")

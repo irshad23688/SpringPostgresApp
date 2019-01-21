@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.metalsa.constant.MetalsaConstant;
 import com.metalsa.domain.MmrDataSheetDetailUt;
 import com.metalsa.domain.MmrDataSheetUt;
+import com.metalsa.domain.MmrEditDataSheetDetailView;
 import com.metalsa.domain.MmrNewDataSheetDetailView;
 import com.metalsa.model.MmrDataSheetDetailUtModel;
 import com.metalsa.model.MmrDataSheetHeaderModel;
@@ -191,7 +191,6 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 				dataSheetDetailUt.setUserUom1("");
 				dataSheetDetailUt.setUserUom2("");
 				
-				
 				dataSheetDetailUts.add(dataSheetDetailUt);
 			}
 
@@ -210,6 +209,36 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 
 		}
 		return null;
+	}
+
+	@Override
+	public MmrDataSheetUtModel getDataSheetById(MmrDataSheetUt dataSheetUt) {
+		return getEditHeaderWiseBaseAttributeList(dataSheetUt);
+	}
+
+	private MmrDataSheetUtModel getEditHeaderWiseBaseAttributeList(MmrDataSheetUt dataSheetUt) {
+		Map<Long,MmrDataSheetHeaderModel> mapHeaderToDetail = new LinkedHashMap<Long,MmrDataSheetHeaderModel>();
+		MmrDataSheetUtModel  dataSheetUtModel =null;
+		for(MmrEditDataSheetDetailView detailView : editDataSheetDetailViewRepository.findByDataSheetUtId(dataSheetUt.getId())) {
+			if(mapHeaderToDetail.containsKey(detailView.getHeaderAttributeId())){
+				MmrDataSheetDetailUtModel dataSheetDetailUtModel = new MmrDataSheetDetailUtModel(detailView);
+				mapHeaderToDetail.get(detailView.getHeaderAttributeId()).addDataSheetDetails(dataSheetDetailUtModel);
+			}else {
+				if(dataSheetUtModel==null) {
+					dataSheetUtModel = new MmrDataSheetUtModel(dataSheetUt);
+				}
+				MmrDataSheetHeaderModel headerModel= new MmrDataSheetHeaderModel();
+				headerModel.setHeaderAttributeId(detailView.getHeaderAttributeId());
+				headerModel.setHeaderAttributeName(detailView.getHeaderAttributeName());
+				
+				MmrDataSheetDetailUtModel dataSheetDetailUtModel = new MmrDataSheetDetailUtModel(detailView);
+				headerModel.addDataSheetDetails(dataSheetDetailUtModel);
+				mapHeaderToDetail.put(headerModel.getHeaderAttributeId(),headerModel);
+			}
+		}
+		List<MmrDataSheetHeaderModel> result=new ArrayList(mapHeaderToDetail.values());
+		dataSheetUtModel.setDataSheetHeaderDetails(result);
+		return dataSheetUtModel;
 	}
 
 

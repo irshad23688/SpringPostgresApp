@@ -45,16 +45,4 @@ and baud.base_attribute_id = bam.id and ham.id = tsd.header_attribute_id
 order by tsd.base_attribute_sequence_no;
   
   
-  CREATE OR REPLACE FORCE NONEDITIONABLE VIEW "DEVMMR"."MMR_COMPARE_DATA_SHEET_VIEW" as
-select rownum as id,ds.test_sheet_id,ds.id as data_sheet_id,bam.id as base_attribute_id,tsd.header_attribute_id,
-  ham.name as headername,bam.name as base_attribute_name, dsd.testing_information, ds.revision,
-(dsd.supplier_information_lhs ||' '||dsd.supplier_information_operator ||' '|| dsd.supplier_information_rhs) as supplier_info 
-,baud.som1_uom,dsd.user_uom1,baud.som2_uom, dsd.user_uom2,ds.status  
-from 
-mmr_data_sheet_detail_ut dsd 
-INNER JOIN mmr_data_sheet_ut ds ON( ds.id = dsd.mmr_data_sheet_ut_id)
-INNER JOIN mmr_test_sheet_detail_ut tsd ON (dsd.test_sheet_detail_id = tsd.id )
-INNER JOIN mmr_base_attribute_master_ut bam ON (tsd.base_attribute_id = bam.id )
-INNER JOIN mmr_base_attribute_uom_details_ut baud ON(baud.base_attribute_id = bam.id)
-INNER JOIN mmr_header_attribute_master_ut ham ON (tsd.header_attribute_id = ham.id)
-order by tsd.base_attribute_sequence_no;
+ Data Revision Number

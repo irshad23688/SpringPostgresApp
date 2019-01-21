@@ -1,7 +1,5 @@
 package com.metalsa.service;
 
-import javax.validation.Valid;
-
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,4 +14,5 @@ public interface DataSheetSevice {
 	void updateDataSheet(MmrDataSheetUt datasheetUt);
 	MmrDataSheetUtModel getNewDataTestSheetDetailByClassSubClass(Long classId,Long subClassId);
 	MmrDataSheetUtModel persistDataSheet(MmrDataSheetUtModel model);
+	MmrDataSheetUtModel getDataSheetById(MmrDataSheetUt dataSheetUt);
 }

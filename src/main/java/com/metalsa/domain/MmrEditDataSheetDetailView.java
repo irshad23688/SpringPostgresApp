@@ -1,6 +1,7 @@
 package com.metalsa.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,9 @@ public class MmrEditDataSheetDetailView implements Serializable{
 	@Column(name = "ID")
 	private Long id; 
 
+	@Column(name ="mmr_data_sheet_ut_id")
+	private long dataSheetUtId;
+	
 	@Column(name ="class_id")
 	private long classId;
 	
@@ -74,10 +78,10 @@ public class MmrEditDataSheetDetailView implements Serializable{
 	private String userSelectUom;
 	
 	@Column(name ="ISMANADATORY")
-	private boolean isMandatory;
-	
+	private Integer isMandatory;
+
 	@Column(name ="BASE_ATTRIBUTE_SEQUENCE_NO")
-	private long baseAttribSequence;
+	private BigDecimal baseAttributeSequenceNo;
 
 	public Long getId() {
 		return id;
@@ -215,20 +219,20 @@ public class MmrEditDataSheetDetailView implements Serializable{
 		this.userSelectUom = userSelectUom;
 	}
 
-	public boolean isMandatory() {
+	public Integer getIsMandatory() {
 		return isMandatory;
 	}
 
-	public void setMandatory(boolean isMandatory) {
+	public void setIsMandatory(Integer isMandatory) {
 		this.isMandatory = isMandatory;
 	}
 
-	public long getBaseAttribSequence() {
-		return baseAttribSequence;
+	public BigDecimal getBaseAttributeSequenceNo() {
+		return baseAttributeSequenceNo;
 	}
 
-	public void setBaseAttribSequence(long baseAttribSequence) {
-		this.baseAttribSequence = baseAttribSequence;
+	public void setBaseAttributeSequenceNo(BigDecimal baseAttributeSequenceNo) {
+		this.baseAttributeSequenceNo = baseAttributeSequenceNo;
 	}
 
 	public long getClassId() {
@@ -255,5 +259,14 @@ public class MmrEditDataSheetDetailView implements Serializable{
 		this.dataTypeName = dataTypeName;
 	}
 
+	public long getDataSheetUtId() {
+		return dataSheetUtId;
+	}
+
+	public void setDataSheetUtId(long dataSheetUtId) {
+		this.dataSheetUtId = dataSheetUtId;
+	}
+
+	
 	
 }
