@@ -23,6 +23,7 @@ import com.metalsa.domain.MmrDataSheetUt;
 import com.metalsa.domain.MmrSearchDataSheetView;
 import com.metalsa.domain.MmrSysConfigUt;
 import com.metalsa.domain.MmrTestSheetUt;
+import com.metalsa.model.DataSheetDashboardModel;
 import com.metalsa.model.SearchBaseModel;
 import com.metalsa.model.SearchModel;
 import com.metalsa.repository.CustomRepository;
@@ -168,26 +169,54 @@ public class CustomRepositoryImpl implements CustomRepository {
 	}
 	
 	@Override
-	public List<Object[]> getDatasheetForDashboard(BigDecimal user) {
+	public List<DataSheetDashboardModel> getDatasheetForDashboard(BigDecimal user) {
+
+		List<DataSheetDashboardModel> lstResultModel = new ArrayList();
 		String sql;
-		sql = String.format(" Select datasheet.id as datasheet_id, datasheet.DATA_SHEET_NAME, (Select USERNAME from MMR_USER_UT where id = datasheet.modified_by) as username," + 
-				" to_char(datasheet.created_on, 'DD-MM-YYYY') as created_on, to_char(datasheet.approved_on, 'DD-MM-YYYY') as apprived_on, " + 
-				" (Select USERNAME from MMR_USER_UT where id = datasheet.approved_by) as approved_by  " + 
+		sql = String.format(" Select datasheet.id as datasheetId, datasheet.DATA_SHEET_NAME as datasheetName, (Select USERNAME from MMR_USER_UT where id = datasheet.modified_by) as userName," + 
+				" to_char(datasheet.created_on, 'DD-MM-YYYY') as createdOn, to_char(datasheet.approved_on, 'DD-MM-YYYY') as apprivedOn, " + 
+				" (Select USERNAME from MMR_USER_UT where id = datasheet.approved_by) as approvedBy  " + 
 				" FROM MMR_DATA_SHEET_UT datasheet WHERE datasheet.modified_by = %s and datasheet.status =1 ",user);
 		
 		Query query = (Query) entityManagerFactory.createEntityManager().createNativeQuery(sql);
-		return query.getResultList();
+		List<Object[]> result = query.getResultList(); 
+		for (Object[] objects : result) {
+			DataSheetDashboardModel model = new DataSheetDashboardModel();
+			model.setDatasheetId(objects[0].toString());
+			model.setDatasheetName(objects[1].toString());
+			model.setUserName((objects[2] == null )? null : objects[2].toString());
+			model.setCreatedOn((objects[3] == null )? null : objects[3].toString());
+			model.setApprovedOn((objects[4] == null )? null : objects[4].toString());
+			model.setApprovedBy((objects[5] == null )? null : objects[5].toString());
+		
+			lstResultModel.add(model);
+		}
+		
+		return lstResultModel;
 	}
 
 	@Override
-	public List<Object[]> findDatasheetByStatus(BigDecimal status) {
+	public List<DataSheetDashboardModel> findDatasheetByStatus(BigDecimal status) {
+		List<DataSheetDashboardModel> lstResultModel = new ArrayList();
 		String sql;
-		sql = String.format(" Select datasheet.id as datasheet_id, datasheet.DATA_SHEET_NAME, (Select USERNAME from MMR_USER_UT where id = datasheet.created_by) as added_by, " + 
-				" to_char(datasheet.created_on, 'DD-MM-YYYY') as created_on " + 
+		sql = String.format(" Select datasheet.id as datasheetId, datasheet.DATA_SHEET_NAME as datasheetName, (Select USERNAME from MMR_USER_UT where id = datasheet.created_by) as addedBy, " + 
+				" to_char(datasheet.created_on, 'DD-MM-YYYY') as createdOn " + 
 				" FROM MMR_DATA_SHEET_UT datasheet WHERE datasheet.status = %s ",status);
 		
 		Query query = (Query) entityManagerFactory.createEntityManager().createNativeQuery(sql);
-		return query.getResultList();
+		List<Object[]> result = query.getResultList(); 
+		for (Object[] objects : result) {
+			DataSheetDashboardModel model = new DataSheetDashboardModel();
+			model.setDatasheetId((objects[1] == null )? null : objects[0].toString());
+			model.setDatasheetName((objects[1] == null )? null : objects[1].toString());
+			model.setAddedBy((objects[2] == null )? null : objects[2].toString());
+			model.setCreatedOn((objects[3] == null )? null : objects[3].toString());
+		
+			lstResultModel.add(model);
+		}
+		
+		return lstResultModel;
+
 	}
 	
 	public void saveDataSheet(MmrDataSheetUt mmrDataSheetUt) {
