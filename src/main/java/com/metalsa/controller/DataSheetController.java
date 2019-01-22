@@ -131,15 +131,4 @@ public class DataSheetController {
 				.body(file);
 	}
 
-    @GetMapping("/datasheet/status/{status}")
-    public List<Object[]> getDataSheetById(@PathVariable(value = "status") BigDecimal status) {
-    	return customRepository.findDatasheetByStatus(status);
-    }
-    
-    @GetMapping("/datasheet/user/{user}")
-    public List<Object[]> getDataSheetByUserId(@PathVariable(value = "user") BigDecimal user) {
-    	return customRepository.getDatasheetForDashboard(user);
-    }
-    
-
 }
