@@ -27,6 +27,7 @@ import com.metalsa.model.DataSheetDashboardModel;
 import com.metalsa.model.SearchBaseModel;
 import com.metalsa.model.SearchModel;
 import com.metalsa.repository.CustomRepository;
+import com.metalsa.repository.MMRSearchDataSheetviewRepository;
 import com.metalsa.repository.SysConfigRepository;
 
 @Repository
@@ -34,9 +35,11 @@ public class CustomRepositoryImpl implements CustomRepository {
 
 	@Autowired
 	private EntityManagerFactory entityManagerFactory;
-	
+
 	@Autowired
 	private SysConfigRepository sysConfigRepository;
+	@Autowired
+	private MMRSearchDataSheetviewRepository dataSheetviewRepository;
 
 	@Override
 	public List<MmrDataSheetUt> getDataSheetByClassNSubclass(Long classId, Long subClassId) {
@@ -84,15 +87,18 @@ public class CustomRepositoryImpl implements CustomRepository {
 		if(!model.isShowRevision()) {
 			revisionPredicate = cb.equal(root.get("status"),MetalsaConstant.STATUS.APPROVED);
 		}
-		
+
 		MmrSysConfigUt configUt =  sysConfigRepository.findByParamName("STATIC_SEARCH_BASE_ATTRIBUTE_IDS");
+		Predicate staticPredicate = null;
 		if(null!= configUt) {
+			List<Predicate> staticPredicates = new ArrayList<>();
 			String[] baseAttributeIds = configUt.getParamValue().split(",");
 			for (String id : baseAttributeIds) {
-				predicates.add(cb.equal(root.get("baseAttributeId"),id));
+				staticPredicates.add(cb.equal(root.get("baseAttributeId"),id));
 			}
+			staticPredicate = cb.or((Predicate[]) staticPredicates.toArray(new Predicate[0]));
 		}
-		
+
 		populateTextBaseAttributePredicate(model, cb, root, predicates);
 		populateTextMasterAttributePredicate(model, cb, root, predicates);
 		populateRangeBaseAttributePredicate(model, cb, root, predicates);
@@ -100,12 +106,15 @@ public class CustomRepositoryImpl implements CustomRepository {
 		if(!predicates.isEmpty()) {
 			Predicate predicate = cb.or((Predicate[]) predicates.toArray(new Predicate[0]));
 			if(null!=revisionPredicate) {
-				cr.select(root).where(cb.and(predicate,revisionPredicate));
+				Predicate pred1 = cb.and(revisionPredicate);
+				Predicate pred2 = cb.or(staticPredicate,predicate);
+
+				cr.select(root).where(cb.and(pred1,pred2));
 			}else {
-				cr.select(root).where(predicate);
+				cr.select(root).where(cb.or(predicate,staticPredicate));
 			}
 		}else {
-			cr.select(root);
+			cr.select(root).where(cb.and(staticPredicate));
 		}
 
 		Session session = (Session)entityManagerFactory.createEntityManager().getDelegate();
@@ -121,12 +130,16 @@ public class CustomRepositoryImpl implements CustomRepository {
 				if(null!=searchBaseModel.getProperty() && !searchBaseModel.getProperty().isEmpty()) {
 					Predicate predicate1 = cb.equal(root.get("baseAttributeId"),Long.parseLong(searchBaseModel.getProperty()));
 					Predicate predicate2 = null;
-					if(MetalsaConstant.UOM.PERCENT.equals(searchBaseModel.getUom())) {
-						predicate2 =cb.between(root.get("userUom1"), new BigDecimal(searchBaseModel.getMinValue()), new BigDecimal(searchBaseModel.getMaxValue()));
-					}else if(MetalsaConstant.UOM.PPM.equals(searchBaseModel.getUom())){
-						predicate2 =cb.between(root.get("userUom2"), new BigDecimal(searchBaseModel.getMinValue()), new BigDecimal(searchBaseModel.getMaxValue()));
+					List<MmrSearchDataSheetView> lst = dataSheetviewRepository.getViewByBaseAttributeId(Long.parseLong(searchBaseModel.getProperty()));
+					if(!lst.isEmpty()) {
+						MmrSearchDataSheetView dataSheetView = lst.get(0);
+						if(dataSheetView.getSom1Uom().equals(searchBaseModel.getUom())) {
+							predicate2 =cb.between(root.get("userUom1"), new BigDecimal(searchBaseModel.getMinValue()), new BigDecimal(searchBaseModel.getMaxValue()));
+						}else if(dataSheetView.getSom2Uom().equals(searchBaseModel.getUom())) {
+							predicate2 =cb.between(root.get("userUom2"), new BigDecimal(searchBaseModel.getMinValue()), new BigDecimal(searchBaseModel.getMaxValue()));
+						}
+						predicates.add(cb.and(predicate1,predicate2));
 					}
-					predicates.add(cb.and(predicate1,predicate2));
 				}
 			}
 		}
@@ -167,7 +180,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 		Query<MmrCompareDataSheetView> query = session.createQuery(cr);
 		return query.getResultList();
 	}
-	
+
 	@Override
 	public List<DataSheetDashboardModel> getDatasheetForDashboard(BigDecimal user) {
 
@@ -177,7 +190,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 				" to_char(datasheet.created_on, 'DD-MM-YYYY') as createdOn, to_char(datasheet.approved_on, 'DD-MM-YYYY') as apprivedOn, " + 
 				" (Select USERNAME from MMR_USER_UT where id = datasheet.approved_by) as approvedBy  " + 
 				" FROM MMR_DATA_SHEET_UT datasheet WHERE datasheet.modified_by = %s and datasheet.status =1 ",user);
-		
+
 		Query query = (Query) entityManagerFactory.createEntityManager().createNativeQuery(sql);
 		List<Object[]> result = query.getResultList(); 
 		for (Object[] objects : result) {
@@ -188,10 +201,10 @@ public class CustomRepositoryImpl implements CustomRepository {
 			model.setCreatedOn((objects[3] == null )? null : objects[3].toString());
 			model.setApprovedOn((objects[4] == null )? null : objects[4].toString());
 			model.setApprovedBy((objects[5] == null )? null : objects[5].toString());
-		
+
 			lstResultModel.add(model);
 		}
-		
+
 		return lstResultModel;
 	}
 
@@ -202,7 +215,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 		sql = String.format(" Select datasheet.id as datasheetId, datasheet.DATA_SHEET_NAME as datasheetName, (Select USERNAME from MMR_USER_UT where id = datasheet.created_by) as addedBy, " + 
 				" to_char(datasheet.created_on, 'DD-MM-YYYY') as createdOn " + 
 				" FROM MMR_DATA_SHEET_UT datasheet WHERE datasheet.status = %s ",status);
-		
+
 		Query query = (Query) entityManagerFactory.createEntityManager().createNativeQuery(sql);
 		List<Object[]> result = query.getResultList(); 
 		for (Object[] objects : result) {
@@ -211,14 +224,14 @@ public class CustomRepositoryImpl implements CustomRepository {
 			model.setDatasheetName((objects[1] == null )? null : objects[1].toString());
 			model.setAddedBy((objects[2] == null )? null : objects[2].toString());
 			model.setCreatedOn((objects[3] == null )? null : objects[3].toString());
-		
+
 			lstResultModel.add(model);
 		}
-		
+
 		return lstResultModel;
 
 	}
-	
+
 	public void saveDataSheet(MmrDataSheetUt mmrDataSheetUt) {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		entityManager.getTransaction().begin();
@@ -228,5 +241,5 @@ public class CustomRepositoryImpl implements CustomRepository {
 		entityManager.getTransaction().commit();
 		System.out.println(id);
 	}
-	
+
 }

@@ -128,53 +128,6 @@ public class SearchNCompareServiceImpl implements SearchNCompareService {
 		model.setSearchDatamp(resultDataSheet);
 		return model;
 	}
-	/*@Override
-	public List<MmrCompareDataSheetModel> compareDataSheetByIds(List<Long> datasheetIds) {
-		List<MmrCompareDataSheetView> list = customRepository.compareDataSheetByIds(datasheetIds);
-		
-		final Map<Long,Map<String, List<MmrCompareDataSheetView>>> mainDataMap = new LinkedHashMap<>();
-
-		for (MmrCompareDataSheetView viewObj : list) {
-			if(0l!=viewObj.getDataSheetId()) {
-				Map<String, List<MmrCompareDataSheetView>> map = null;
-				if(mainDataMap.keySet().contains(viewObj.getDataSheetId())){
-					map = mainDataMap.get(viewObj.getDataSheetId());
-					List< MmrCompareDataSheetView> lst = null;
-					if(map.keySet().contains(viewObj.getHeaderName())) {
-						lst = map.get(viewObj.getHeaderName());
-					}else {
-						lst = new ArrayList<>();
-					}
-					lst.add(viewObj);
-					map.put(viewObj.getHeaderName(), lst);
-				}else {
-					List <MmrCompareDataSheetView>lst = new ArrayList<>();
-					map = new LinkedHashMap<>();
-					lst.add(viewObj);
-					map .put(viewObj.getHeaderName(), lst);
-				}
-				mainDataMap.put(viewObj.getDataSheetId(), map);
-			}
-		}	
-		
-		List<MmrCompareDataSheetModel> resultDataSheet= new ArrayList<>();
-		for (Long dataSheetId : mainDataMap.keySet()) {
-			MmrCompareDataSheetModel modelResult = new MmrCompareDataSheetModel();
-			modelResult.setDataSheetId(dataSheetId);
-			List<CompareModel> compareModels = new ArrayList<>();
-			for (String headerName : mainDataMap.get(dataSheetId).keySet()) {
-				CompareModel compareModel = new CompareModel();
-				compareModel.setHeaderName(headerName);
-				compareModel.setCompareDataSheets(mainDataMap.get(dataSheetId).get(headerName));
-				compareModels.add(compareModel);
-			}
-			
-			modelResult.setHeaderDetails(compareModels);
-			resultDataSheet.add(modelResult);
-		}
-
-		return resultDataSheet;
-	}*/
 	
 	public List<MmrCompareDataSheetModel> compareDataSheetByIds(List<Long> datasheetIds) {
 		List<MmrCompareDataSheetView> list = customRepository.compareDataSheetByIds(datasheetIds);
@@ -223,12 +176,22 @@ public class SearchNCompareServiceImpl implements SearchNCompareService {
 				baseModel.setBaseAttributeId(baseId);
 				baseModel.setBaseAttributeDefaultDisplayName(baseMap.get(baseId));
 				List materialModelLst = new ArrayList<CompareMaterialModel>();
+				List<Long> tmpDatasheetId = new ArrayList<>();
+				
 				for (String str : testingInfo.get(baseId)) {
+					
 					CompareMaterialModel compareMaterialModel = new CompareMaterialModel();
 					List lt = Arrays.asList(str.split("\\|"));
 					if(null!=lt.get(0)) {
 						compareMaterialModel.setTestingInformation(lt.get(0)+"");
 					}
+					tmpDatasheetId.add(Long.parseLong(lt.get(1)+""));
+					
+					materialModelLst.add(compareMaterialModel);
+				}
+				if(!(tmpDatasheetId.size()==datasheetIds.size())) {
+					CompareMaterialModel compareMaterialModel = new CompareMaterialModel();
+					compareMaterialModel.setTestingInformation("NA");
 					materialModelLst.add(compareMaterialModel);
 				}
 				baseModel.setMaterialValue(materialModelLst);
