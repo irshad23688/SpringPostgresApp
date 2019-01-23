@@ -30,5 +30,10 @@ public class MetalsaConstant {
 		String APPROVED = "3";
 		String REJECT = "4";
 	}
+	
+	public static final String YES="Yes";
+	public static final String NO="No";
+	public static final String SOM1="SOM1";
+	public static final String SOM2="SOM2";
 
 }

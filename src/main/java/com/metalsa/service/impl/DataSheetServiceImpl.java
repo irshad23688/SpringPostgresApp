@@ -21,13 +21,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.metalsa.constant.MetalsaConstant;
+import com.metalsa.domain.MmrBaseAttributeMasterUt;
 import com.metalsa.domain.MmrDataSheetDetailUt;
 import com.metalsa.domain.MmrDataSheetUt;
 import com.metalsa.domain.MmrEditDataSheetDetailView;
 import com.metalsa.domain.MmrNewDataSheetDetailView;
+import com.metalsa.exception.ExceptionHandler;
+import com.metalsa.model.MmrBaseAttributeMasterUtModel;
+import com.metalsa.model.MmrBaseAttributeTableDataTypeUtModel;
 import com.metalsa.model.MmrDataSheetDetailUtModel;
 import com.metalsa.model.MmrDataSheetHeaderModel;
 import com.metalsa.model.MmrDataSheetUtModel;
+import com.metalsa.repository.BaseAttributeRepository;
 import com.metalsa.repository.ClassRepository;
 import com.metalsa.repository.DataSheetRepository;
 import com.metalsa.repository.DataTypeRepository;
@@ -36,6 +41,7 @@ import com.metalsa.repository.MmrEditDataSheetDetailViewRepository;
 import com.metalsa.repository.MmrNewDataSheetDetailViewRepository;
 import com.metalsa.repository.RegionRepository;
 import com.metalsa.repository.SubClassRepository;
+import com.metalsa.service.BaseAttributeService;
 import com.metalsa.service.DataSheetSevice;
 
 @Service
@@ -62,6 +68,12 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 	
 	@Autowired
 	private DataTypeRepository dataTypeRepository;
+	
+	@Autowired
+	private BaseAttributeRepository baseAttributeRepository;
+	
+	@Autowired
+	private BaseAttributeService baseAttributeService;
 	
 
 	@Autowired
@@ -140,8 +152,7 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 		MmrDataSheetUtModel  dataSheetUtModel =null;
 		for(MmrNewDataSheetDetailView detailView : list) {
 			if(mapHeaderToDetail.containsKey(detailView.getHeaderAttributeId())){
-				MmrDataSheetDetailUtModel dataSheetDetailUtModel = new MmrDataSheetDetailUtModel(detailView);
-				mapHeaderToDetail.get(detailView.getHeaderAttributeId()).addDataSheetDetails(dataSheetDetailUtModel);
+				mapHeaderToDetail.get(detailView.getHeaderAttributeId()).addDataSheetDetails(datasheetDetailMapping(detailView));
 			}else {
 				if(dataSheetUtModel==null) {
 					dataSheetUtModel = new MmrDataSheetUtModel();
@@ -152,24 +163,55 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 				MmrDataSheetHeaderModel headerModel= new MmrDataSheetHeaderModel();
 				headerModel.setHeaderAttributeId(detailView.getHeaderAttributeId());
 				headerModel.setHeaderAttributeName(detailView.getHeaderAttributeName());
-
-				MmrDataSheetDetailUtModel dataSheetDetailUtModel = new MmrDataSheetDetailUtModel(detailView);
-				 if(dataSheetDetailUtModel.getMmrDataTypeMasterUt().equalsIgnoreCase("Class Dropdown")) {
-					dataSheetDetailUtModel.setDropDownValues(classRepository.getClassByStatus(BigDecimal.ONE)); 
-				 }else if(dataSheetDetailUtModel.getMmrDataTypeMasterUt().equalsIgnoreCase("Subclass Dropdown")) {
-					 dataSheetDetailUtModel.setDropDownValues(subClassRepository.findSubClassByStatus(BigDecimal.ONE));
-				 }else if(dataSheetDetailUtModel.getMmrDataTypeMasterUt().equalsIgnoreCase("Region Dropdown")) {
-					 dataSheetDetailUtModel.setDropDownValues(regionRepository.findByStatus(BigDecimal.ONE));
-				 }else if(dataSheetDetailUtModel.getMmrDataTypeMasterUt().equalsIgnoreCase("Manufacturer Dropdown")) {
-					 dataSheetDetailUtModel.setDropDownValues(manufacturerRepository.findByStatus(BigDecimal.ONE));
-				 }
-				headerModel.addDataSheetDetails(dataSheetDetailUtModel);
+				headerModel.addDataSheetDetails(datasheetDetailMapping(detailView));
 				mapHeaderToDetail.put(headerModel.getHeaderAttributeId(),headerModel);
 			}
 		}
 		List<MmrDataSheetHeaderModel> result=new ArrayList(mapHeaderToDetail.values());
 		dataSheetUtModel.setDataSheetHeaderDetails(result);
 		return dataSheetUtModel;
+	}
+
+	private MmrDataSheetDetailUtModel datasheetDetailMapping(MmrNewDataSheetDetailView detailView) {
+		MmrDataSheetDetailUtModel dataSheetDetailUtModel = new MmrDataSheetDetailUtModel(detailView);
+		mappingForDataTypeDropdown(dataSheetDetailUtModel);
+		mappingForDataTypeRadio(dataSheetDetailUtModel);
+		mappingForDataTypeTable(dataSheetDetailUtModel);
+		return dataSheetDetailUtModel;
+	}
+
+	private void mappingForDataTypeTable(MmrDataSheetDetailUtModel dataSheetDetailUtModel) {
+		if(dataSheetDetailUtModel.getMmrDataTypeMasterUt().equalsIgnoreCase("Table")) {
+			MmrBaseAttributeMasterUt mmrBaseAttributeMasterUt = baseAttributeRepository.findById(dataSheetDetailUtModel.getBaseAttributeId())
+	    			.orElseThrow(() -> new ExceptionHandler("BaseAttributeMasterUt", "id", dataSheetDetailUtModel.getBaseAttributeId()));
+			MmrBaseAttributeMasterUtModel baseAttributeMasterUtModel = baseAttributeService.getOne(mmrBaseAttributeMasterUt);
+			for (MmrBaseAttributeTableDataTypeUtModel tableDataType : baseAttributeMasterUtModel.getMmrBaseAttributeTableDataTypeUts()) {
+				MmrDataSheetDetailUtModel dataSheetDetailTableType = new MmrDataSheetDetailUtModel(tableDataType);
+				dataSheetDetailUtModel.getTableLayoutValue().add(dataSheetDetailTableType);
+			}
+		}		
+	}
+
+	private void mappingForDataTypeRadio(MmrDataSheetDetailUtModel dataSheetDetailUtModel) {
+		if(dataSheetDetailUtModel.getMmrDataTypeMasterUt().equalsIgnoreCase("RadioYesNo")) {
+			dataSheetDetailUtModel.setRadio1(MetalsaConstant.YES);
+			dataSheetDetailUtModel.setRadio2(MetalsaConstant.NO);
+		 }else if(dataSheetDetailUtModel.getMmrDataTypeMasterUt().equalsIgnoreCase("RadioSOM1SOM2")) {
+			 dataSheetDetailUtModel.setRadio1(MetalsaConstant.SOM1);
+				dataSheetDetailUtModel.setRadio2(MetalsaConstant.SOM2);
+		 }
+	}
+
+	private void mappingForDataTypeDropdown(MmrDataSheetDetailUtModel dataSheetDetailUtModel) {
+		 if(dataSheetDetailUtModel.getMmrDataTypeMasterUt().equalsIgnoreCase("Class Dropdown")) {
+			dataSheetDetailUtModel.setDropDownValues(classRepository.getClassByStatus(BigDecimal.ONE)); 
+		 }else if(dataSheetDetailUtModel.getMmrDataTypeMasterUt().equalsIgnoreCase("Subclass Dropdown")) {
+			 dataSheetDetailUtModel.setDropDownValues(subClassRepository.findSubClassByStatus(BigDecimal.ONE));
+		 }else if(dataSheetDetailUtModel.getMmrDataTypeMasterUt().equalsIgnoreCase("Region Dropdown")) {
+			 dataSheetDetailUtModel.setDropDownValues(regionRepository.findByStatus(BigDecimal.ONE));
+		 }else if(dataSheetDetailUtModel.getMmrDataTypeMasterUt().equalsIgnoreCase("Manufacturer Dropdown")) {
+			 dataSheetDetailUtModel.setDropDownValues(manufacturerRepository.findByStatus(BigDecimal.ONE));
+		 }
 	}
 
 	@Override

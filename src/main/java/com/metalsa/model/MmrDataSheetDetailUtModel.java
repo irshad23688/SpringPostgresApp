@@ -15,6 +15,7 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 	private BigDecimal createdBy;
 	private BigDecimal modifiedBy;
 	private String headerAttributeName;
+	private long baseAttributeId;
 	private String baseAttributeName;
 	private String description;
 	private String placeHolderText;
@@ -32,6 +33,9 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 	private String userSelectUom;
 	private String mmrDataTypeMasterUt;
 	private List dropDownValues = new ArrayList<>();
+	private String radio1;
+	private String radio2;
+	private List<MmrDataSheetDetailUtModel> tableLayoutValue = new ArrayList<>();
      
 
 
@@ -41,6 +45,7 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 	
 	public MmrDataSheetDetailUtModel(MmrNewDataSheetDetailView detailView) {
 		this.headerAttributeName = detailView.getHeaderAttributeName();
+		this.baseAttributeId = detailView.getBaseAttributeId();
 		this.baseAttributeName = detailView.getBaseAttributeName();
 		this.baseAttributeSequenceNo = detailView.getBaseAttributeSequenceNo();
 		this.isMandatory = detailView.getIsMandatory();
@@ -71,6 +76,21 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 
 	}
  
+
+	public MmrDataSheetDetailUtModel(MmrBaseAttributeTableDataTypeUtModel tableDataType) {
+//		this.headerAttributeName = tableDataType.getMmrParameterBaseAttributeUt().get;
+		this.baseAttributeId = tableDataType.getMmrParameterBaseAttributeUt().getId();
+		this.baseAttributeName = tableDataType.getMmrParameterBaseAttributeUt().getName();
+//		this.baseAttributeSequenceNo = tableDataType.getMmrParameterBaseAttributeUt().getBaseAttributeSequenceNo();
+//		this.isMandatory = tableDataType.getMmrParameterBaseAttributeUt().getIsMandatory();
+//		this.testSheetDetailId = tableDataType.getMmrParameterBaseAttributeUt().getTestSheetDtlId();
+		this.mmrDataTypeMasterUt=tableDataType.getMmrParameterBaseAttributeUt().getMmrDataTypeMasterUt().getName();
+		this.description=tableDataType.getMmrParameterBaseAttributeUt().getDescription();
+		this.placeHolderText=tableDataType.getMmrParameterBaseAttributeUt().getPlaceHolderText();
+		this.symbol=tableDataType.getMmrParameterBaseAttributeUt().getSymbol();
+		this.tooltip=tableDataType.getMmrParameterBaseAttributeUt().getTooltip();
+	}
+
 
 	public long getDataSheetDetailId() {
 		return dataSheetDetailId;
@@ -248,4 +268,45 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 		this.dropDownValues = dropDownValues;
 	}
 
+
+	public String getRadio1() {
+		return radio1;
+	}
+
+
+	public void setRadio1(String radio1) {
+		this.radio1 = radio1;
+	}
+
+
+	public String getRadio2() {
+		return radio2;
+	}
+
+
+	public void setRadio2(String radio2) {
+		this.radio2 = radio2;
+	}
+
+
+	public List<MmrDataSheetDetailUtModel> getTableLayoutValue() {
+		return tableLayoutValue;
+	}
+
+
+	public void setTableLayoutValue(List<MmrDataSheetDetailUtModel> tableLayoutValue) {
+		this.tableLayoutValue = tableLayoutValue;
+	}
+
+
+	public long getBaseAttributeId() {
+		return baseAttributeId;
+	}
+
+
+	public void setBaseAttributeId(long baseAttributeId) {
+		this.baseAttributeId = baseAttributeId;
+	}
+
+	
 }
