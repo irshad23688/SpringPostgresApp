@@ -57,6 +57,14 @@ public class MmrDataTypeMasterUt implements Serializable {
 		return this.id;
 	}
 
+	public String getFrontDataType() {
+		return frontDataType;
+	}
+
+	public void setFrontDataType(String frontDataType) {
+		this.frontDataType = frontDataType;
+	}
+
 	public void setId(long id) {
 		this.id = id;
 	}

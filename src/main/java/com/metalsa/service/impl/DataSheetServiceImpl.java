@@ -229,7 +229,7 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 		dataSheetUt.setRevision(model.getRevision());
 		dataSheetUt.setStatus(model.getStatus());
 		dataSheetUt.setTestSheetId(model.getTestSheetId());
-		dataSheetUt.setIssubmitted("sub");
+		dataSheetUt.setIssubmitted("1");
 		List<MmrDataSheetDetailUt> dataSheetDetailUts = new ArrayList<>();
 		for (MmrDataSheetHeaderModel dataSheetHeaderModel : model.getDataSheetHeaderDetails()) {
 
@@ -266,13 +266,7 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 
 		}
 		dataSheetUt.setMmrDataSheetDetailUts(dataSheetDetailUts);
-		
-		/*Session session = (Session)entityManagerFactory.createEntityManager().getDelegate();
-		Transaction tx = session.beginTransaction();
-		session.persist(dataSheetUt);
-		tx.commit();*/
 		dataSheetRepository.save(dataSheetUt);
-
 		return model;
 	}
 

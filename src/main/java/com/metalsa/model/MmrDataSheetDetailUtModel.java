@@ -57,7 +57,7 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 		this.symbol=detailView.getSymbol();
 		this.tooltip=detailView.getTooltip();
 		this.frontDataType=detailView.getFrontDataType();
-		this.frontDataType=detailView.getFrontDataPattern();
+		this.frontDataPattern=detailView.getFrontDataPattern();
 	}
 
 
