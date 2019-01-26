@@ -101,6 +101,7 @@ public class SearchNCompareServiceImpl implements SearchNCompareService {
 
 	@Override
 	public SearchModel getSearchdata(final SearchModel model) {
+		
 		List<MmrSearchDataSheetView> results = customRepository.getSearchDataSheetView(model);
 		final Map<Long,Set<MmrSearchDataSheetView>> materialMap = new LinkedHashMap<>();
 

@@ -78,6 +78,24 @@ public class CustomRepositoryImpl implements CustomRepository {
 
 	@Override
 	public List<MmrSearchDataSheetView> getSearchDataSheetView(SearchModel model) {
+
+		List<Long> datasheets = new ArrayList<>();
+		if(!model.getTextBaseAttributeList().isEmpty()) {
+			CriteriaBuilder cb = entityManagerFactory.getCriteriaBuilder();
+			CriteriaQuery<MmrSearchDataSheetView> cr = cb.createQuery(MmrSearchDataSheetView.class);
+			Root<MmrSearchDataSheetView> root = cr.from(MmrSearchDataSheetView.class);
+			List<Predicate> predicates = new ArrayList<>();
+			populateTextBaseAttributePredicate(model,cb,root,predicates);
+			Predicate predicate = cb.or((Predicate[]) predicates.toArray(new Predicate[0]));
+			cr.select(root).where(predicate);
+			Session session = (Session)entityManagerFactory.createEntityManager().getDelegate();
+			Query<MmrSearchDataSheetView> query = session.createQuery(cr);
+			List<MmrSearchDataSheetView> lst = query.getResultList();
+			for (MmrSearchDataSheetView mmrSearchDataSheetView : lst) {
+				datasheets.add(mmrSearchDataSheetView.getDataSheetId());
+			}
+		}
+
 		CriteriaBuilder cb = entityManagerFactory.getCriteriaBuilder();
 		CriteriaQuery<MmrSearchDataSheetView> cr = cb.createQuery(MmrSearchDataSheetView.class);
 		Root<MmrSearchDataSheetView> root = cr.from(MmrSearchDataSheetView.class);
@@ -86,56 +104,55 @@ public class CustomRepositoryImpl implements CustomRepository {
 		if(!model.isShowRevision()) {
 			revisionPredicate = cb.equal(root.get("status"),MetalsaConstant.STATUS.APPROVED);
 		}
-/*
-		MmrSysConfigUt configUt =  sysConfigRepository.findByParamName("STATIC_SEARCH_BASE_ATTRIBUTE_IDS");
-		Predicate staticPredicate = null;
-		if(null!= configUt) {
-			List<Predicate> staticPredicates = new ArrayList<>();
-			String[] baseAttributeIds = configUt.getParamValue().split(",");
-			for (String id : baseAttributeIds) {
-				staticPredicates.add(cb.equal(root.get("baseAttributeId"),id));
-			}
-			staticPredicate = cb.or((Predicate[]) staticPredicates.toArray(new Predicate[0]));
-		}*/
 
-		populateTextBaseAttributePredicate(model, cb, root, predicates);
-		populateTextMasterAttributePredicate(model, cb, root, predicates);
-		populateRangeBaseAttributePredicate(model, cb, root, predicates);
+		Predicate dataSheetPredicate = null;
+		if(!datasheets.isEmpty()) {
+			List<Predicate> datasheetPredicates = new ArrayList<>();
+			for (Long dataSheetId : datasheets) {
+				datasheetPredicates.add(cb.equal(root.get("dataSheetId"),dataSheetId));
+			}
+			dataSheetPredicate = cb.or((Predicate[]) datasheetPredicates.toArray(new Predicate[0]));
+			predicates.add(dataSheetPredicate);
+		}else if(!model.getTextBaseAttributeList().isEmpty()){
+			predicates.add(cb.equal(root.get("dataSheetId"),-1l));
+		}
+		//populateTextBaseAttributePredicate(model, cb, root, predicates);
+		//populateTextMasterAttributePredicate(model, cb, root, predicates);
+		populateRangeBaseAttributePredicate(model, cb, root, predicates,datasheets);
 
 		if(!predicates.isEmpty()) {
-			Predicate predicate = cb.or((Predicate[]) predicates.toArray(new Predicate[0]));
+			Predicate predicate = cb.and((Predicate[]) predicates.toArray(new Predicate[0]));
 			if(null!=revisionPredicate) {
 				Predicate pred1 = cb.and(revisionPredicate);
-				Predicate pred2 = cb.or(predicate);
-//				Predicate pred2 = cb.or(staticPredicate,predicate);
-
+				Predicate pred2 = cb.and(predicate);
 				cr.select(root).where(cb.and(pred1,pred2));
 			}else {
-//				cr.select(root).where(cb.or(predicate,staticPredicate));
-				cr.select(root).where(cb.or(predicate));
+				cr.select(root).where(cb.and(predicate));
 			}
 		}else {
-//			cr.select(root).where(cb.and(staticPredicate));
 			cr.select(root);
 		}
 
 		Session session = (Session)entityManagerFactory.createEntityManager().getDelegate();
-
 		Query<MmrSearchDataSheetView> query = session.createQuery(cr);
-		List<Long> datasheetIds= new ArrayList<>();
-		for (MmrSearchDataSheetView dataSheetId : query.getResultList()) {
+		List<MmrSearchDataSheetView> data = query.getResultList();
+		if(!data.isEmpty()) {
 			
-			if(!datasheetIds.contains(dataSheetId.getDataSheetId())) {
-				datasheetIds.add(dataSheetId.getDataSheetId());
+			List<Long> datasheetIds= new ArrayList<>();
+			for (MmrSearchDataSheetView dataSheetId : data) {
+				
+				if(!datasheetIds.contains(dataSheetId.getDataSheetId())) {
+					datasheetIds.add(dataSheetId.getDataSheetId());
+				}
 			}
+			List<MmrSearchDataSheetView> basicList=getBasicFieldsSearchDataSheetView(datasheetIds);
+			data.addAll(basicList);
 		}
-		List<MmrSearchDataSheetView> basicList=getBasicFieldsSearchDataSheetView(datasheetIds);
-		basicList.addAll(query.getResultList());
-		return basicList;
+		return data;
 	}
 
 	private void populateRangeBaseAttributePredicate(SearchModel model, CriteriaBuilder cb,
-			Root<MmrSearchDataSheetView> root, List<Predicate> predicates) {
+			Root<MmrSearchDataSheetView> root, List<Predicate> predicates , List <Long> dataSheetIds) {
 		if(null!= model.getRangeBaseParameterList() && !model.getRangeBaseParameterList().isEmpty()) {
 			for (SearchBaseModel searchBaseModel  : model.getRangeBaseParameterList()) {
 				if(null!=searchBaseModel.getProperty() && !searchBaseModel.getProperty().isEmpty()) {
@@ -156,14 +173,6 @@ public class CustomRepositoryImpl implements CustomRepository {
 		}
 	}
 
-	private void populateTextMasterAttributePredicate(SearchModel model, CriteriaBuilder cb,
-			Root<MmrSearchDataSheetView> root, List<Predicate> predicates) {
-		if(null!= model.getTextMasterAttributeList() && !model.getTextMasterAttributeList().isEmpty()) {
-			for (SearchBaseModel searchBaseModel  : model.getTextMasterAttributeList()) {
-				predicates.add(cb.equal(root.get("baseAttributeId"),Long.parseLong(searchBaseModel.getProperty())));
-			}
-		}
-	}
 
 	private void populateTextBaseAttributePredicate(SearchModel model, CriteriaBuilder cb,
 			Root<MmrSearchDataSheetView> root, List<Predicate> predicates) {
@@ -243,16 +252,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 
 	}
 
-	public void saveDataSheet(MmrDataSheetUt mmrDataSheetUt) {
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		entityManager.getTransaction().begin();
-		Session session = (Session)entityManager.getDelegate();
 
-		long id = (long) session.save(mmrDataSheetUt);
-		entityManager.getTransaction().commit();
-		System.out.println(id);
-	}
-	
 	public List<MmrSearchDataSheetView> getBasicFieldsSearchDataSheetView(List<Long> datasheetIds) {
 		CriteriaBuilder cb = entityManagerFactory.getCriteriaBuilder();
 		CriteriaQuery<MmrSearchDataSheetView> cr = cb.createQuery(MmrSearchDataSheetView.class);
@@ -272,13 +272,13 @@ public class CustomRepositoryImpl implements CustomRepository {
 		for (Long id : datasheetIds) {
 			predicates.add(cb.equal(root.get("dataSheetId"),id));
 		}
-//		Predicate predicate = cb.or((Predicate[]) predicates.toArray(new Predicate[0]));
-//		cr.select(root).where(predicate);
+		//		Predicate predicate = cb.or((Predicate[]) predicates.toArray(new Predicate[0]));
+		//		cr.select(root).where(predicate);
 
 		if(!predicates.isEmpty()) {
 			Predicate predicate = cb.or((Predicate[]) predicates.toArray(new Predicate[0]));
-			 
-				cr.select(root).where(cb.and(predicate,staticPredicate));
+
+			cr.select(root).where(cb.and(predicate,staticPredicate));
 		} 
 
 		Session session = (Session)entityManagerFactory.createEntityManager().getDelegate();
