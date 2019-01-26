@@ -135,9 +135,9 @@ public class CustomRepositoryImpl implements CustomRepository {
 
 		Session session = (Session)entityManagerFactory.createEntityManager().getDelegate();
 		Query<MmrSearchDataSheetView> query = session.createQuery(cr);
+		List<MmrSearchDataSheetView> mainData = new ArrayList<>();
 		List<MmrSearchDataSheetView> data = query.getResultList();
 		if(!data.isEmpty()) {
-			
 			List<Long> datasheetIds= new ArrayList<>();
 			for (MmrSearchDataSheetView dataSheetId : data) {
 				
@@ -146,9 +146,10 @@ public class CustomRepositoryImpl implements CustomRepository {
 				}
 			}
 			List<MmrSearchDataSheetView> basicList=getBasicFieldsSearchDataSheetView(datasheetIds);
-			data.addAll(basicList);
+			mainData.addAll(basicList);
+			mainData.addAll(data);
 		}
-		return data;
+		return mainData;
 	}
 
 	private void populateRangeBaseAttributePredicate(SearchModel model, CriteriaBuilder cb,
