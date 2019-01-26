@@ -255,7 +255,7 @@ public class MmrBaseAttributeMasterUt implements Serializable {
 		this.mmrBaseAttributeTableDataTypeUts = mmrBaseAttributeTableDataTypeUts;
 		for(MmrBaseAttributeTableDataTypeUt mmrBaseAttributeTableDataTypeUt : this.mmrBaseAttributeTableDataTypeUts) {
 			MmrBaseAttributeMasterUt parameterBaseAttribute = new MmrBaseAttributeMasterUt();
-			mmrBaseAttributeTableDataTypeUt.setMmrBaseAttributeMasterUt(this.id);
+			mmrBaseAttributeTableDataTypeUt.setMmrBaseAttributeMasterUt(this);
 			parameterBaseAttribute.setId(mmrBaseAttributeTableDataTypeUt.getMmrParameterBaseAttributeUt());
 			mmrBaseAttributeTableDataTypeUt.setMmrParameterBaseAttributeUt(parameterBaseAttribute.getId());
 		}

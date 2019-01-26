@@ -32,9 +32,10 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 	private String testingInformationTableType;
 	private String userSelectUom;
 	private String mmrDataTypeMasterUt;
+	private String frontDataType;
+	private String frontDataPattern;
 	private List dropDownValues = new ArrayList<>();
-	private String radio1;
-	private String radio2;
+	private List options = new ArrayList<>();
 	private List<MmrDataSheetDetailUtModel> tableLayoutValue = new ArrayList<>();
      
 
@@ -55,6 +56,8 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 		this.placeHolderText=detailView.getPlaceHolderText();
 		this.symbol=detailView.getSymbol();
 		this.tooltip=detailView.getTooltip();
+		this.frontDataType=detailView.getFrontDataType();
+		this.frontDataType=detailView.getFrontDataPattern();
 	}
 
 
@@ -73,6 +76,7 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 		this.testingInformationTableType = detailView.getTestingInfoTableType();
 		this.userSelectUom = detailView.getUserSelectUom();
 		this.mmrDataTypeMasterUt=detailView.getInputDataTypeName();
+		this.frontDataType=detailView.getFrontDataType();
 
 	}
  
@@ -269,26 +273,6 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 	}
 
 
-	public String getRadio1() {
-		return radio1;
-	}
-
-
-	public void setRadio1(String radio1) {
-		this.radio1 = radio1;
-	}
-
-
-	public String getRadio2() {
-		return radio2;
-	}
-
-
-	public void setRadio2(String radio2) {
-		this.radio2 = radio2;
-	}
-
-
 	public List<MmrDataSheetDetailUtModel> getTableLayoutValue() {
 		return tableLayoutValue;
 	}
@@ -308,5 +292,36 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 		this.baseAttributeId = baseAttributeId;
 	}
 
+
+	public String getFrontDataType() {
+		return frontDataType;
+	}
+
+
+	public void setFrontDataType(String frontDataType) {
+		this.frontDataType = frontDataType;
+	}
+
+
+	public List getOptions() {
+		return options;
+	}
+
+
+	public void setOptions(List options) {
+		this.options = options;
+	}
+
+
+	public String getFrontDataPattern() {
+		return frontDataPattern;
+	}
+
+
+	public void setFrontDataPattern(String frontDataPattern) {
+		this.frontDataPattern = frontDataPattern;
+	}
+
+	
 	
 }

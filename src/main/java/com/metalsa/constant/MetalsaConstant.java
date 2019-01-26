@@ -1,12 +1,18 @@
 package com.metalsa.constant;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import com.metalsa.model.RadioModel;
 
 public class MetalsaConstant {
 
 	public static Map<Object,Object> statusMap = new HashMap<>();
+	public static List<RadioModel> radioYesNo = new ArrayList<>();
+	public static List<RadioModel> radioSOM1SOM2 = new ArrayList<>();
 	static {
 		statusMap.put(1, "PENDING");
 		statusMap.put(2, "SENT FOR APPROVAL");
@@ -17,6 +23,10 @@ public class MetalsaConstant {
 		statusMap.put("APPROVED", 3);
 		statusMap.put("REJECT", 4);
 		Collections.unmodifiableMap(statusMap);
+		radioYesNo.add(new RadioModel("Yes","Yes"));
+		radioYesNo.add(new RadioModel("No","No"));
+		radioSOM1SOM2.add(new RadioModel("SOM1","SOM1"));
+		radioSOM1SOM2.add(new RadioModel("SOM2","SOM2"));
 	}
 	
 	public interface UOM{
@@ -35,5 +45,6 @@ public class MetalsaConstant {
 	public static final String NO="No";
 	public static final String SOM1="SOM1";
 	public static final String SOM2="SOM2";
+	
 
 }

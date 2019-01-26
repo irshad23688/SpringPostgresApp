@@ -26,6 +26,12 @@ public class MmrNewDataSheetDetailView implements Serializable{
 	@Column(name ="data_type_name")
 	private String inputDataTypeName;
 	
+	@Column(name ="front_data_type")
+	private String frontDataType;
+	
+	@Column(name ="front_data_pattern")
+	private String frontDataPattern;
+	
 	@Column(name ="BASE_ATTRIBUTE_ID")
 	private long baseAttributeId;
 
@@ -191,6 +197,23 @@ public class MmrNewDataSheetDetailView implements Serializable{
 		this.tooltip = tooltip;
 	}
 
+	public String getFrontDataType() {
+		return frontDataType;
+	}
+
+	public void setFrontDataType(String frontDataType) {
+		this.frontDataType = frontDataType;
+	}
+
+	public String getFrontDataPattern() {
+		return frontDataPattern;
+	}
+
+	public void setFrontDataPattern(String frontDataPattern) {
+		this.frontDataPattern = frontDataPattern;
+	}
+
+	
 	
 	
 }

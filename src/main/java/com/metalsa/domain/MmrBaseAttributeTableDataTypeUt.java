@@ -55,8 +55,13 @@ public class MmrBaseAttributeTableDataTypeUt implements Serializable {
 	//@JsonManagedReference
 	private MmrBaseAttributeMasterUt mmrBaseAttributeMasterUt;*/
 
-	@Column(name="BASE_ATTRIBUTE_ID", nullable=false)
-	private Long mmrBaseAttributeMasterUt;
+	/*@Column(name="BASE_ATTRIBUTE_ID", nullable=false)
+	private Long mmrBaseAttributeMasterUt;*/
+	
+	@JsonIgnore
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="BASE_ATTRIBUTE_ID")
+	private MmrBaseAttributeMasterUt mmrBaseAttributeMasterUt;
 
 	/*//bi-directional many-to-one association to MmrHeaderAttributeMasterUt
 	//@JsonIgnore
@@ -130,16 +135,17 @@ public class MmrBaseAttributeTableDataTypeUt implements Serializable {
 	
 	
 	 
-	public Long getMmrBaseAttributeMasterUt() {
+	 
+	public Long getMmrParameterBaseAttributeUt() {
+		return mmrParameterBaseAttributeUt;
+	}
+
+	public MmrBaseAttributeMasterUt getMmrBaseAttributeMasterUt() {
 		return mmrBaseAttributeMasterUt;
 	}
 
-	public void setMmrBaseAttributeMasterUt(Long mmrBaseAttributeMasterUt) {
+	public void setMmrBaseAttributeMasterUt(MmrBaseAttributeMasterUt mmrBaseAttributeMasterUt) {
 		this.mmrBaseAttributeMasterUt = mmrBaseAttributeMasterUt;
-	}
-
-	public Long getMmrParameterBaseAttributeUt() {
-		return mmrParameterBaseAttributeUt;
 	}
 
 	public void setMmrParameterBaseAttributeUt(Long mmrParameterBaseAttributeUt) {

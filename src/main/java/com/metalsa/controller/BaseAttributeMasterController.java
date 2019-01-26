@@ -1,6 +1,7 @@
 package com.metalsa.controller;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.metalsa.domain.MmrBaseAttributeMasterUt;
+import com.metalsa.domain.MmrBaseAttributeUomDetailsUt;
 import com.metalsa.exception.ExceptionHandler;
 import com.metalsa.model.MmrBaseAttributeMasterUtModel;
 import com.metalsa.repository.BaseAttributeRepository;
@@ -52,6 +54,17 @@ public class BaseAttributeMasterController {
     }
     @PostMapping("/baseattribute")
     public List<MmrBaseAttributeMasterUtModel> createBaseAttribute(@Valid @RequestBody MmrBaseAttributeMasterUt baseAttributeMaster) {
+    	List<MmrBaseAttributeUomDetailsUt> lst= new ArrayList<>();
+    	if(baseAttributeMaster.getMmrBaseAttributeUomDetailsUts()!=null) {
+    		for (MmrBaseAttributeUomDetailsUt mmrBaseAttributeUomDetailsUt : baseAttributeMaster.getMmrBaseAttributeUomDetailsUts()) {
+    			if( mmrBaseAttributeUomDetailsUt.getSom1Uom()!=null && mmrBaseAttributeUomDetailsUt.getSom1Uom()!="" ) {
+    				lst.add(mmrBaseAttributeUomDetailsUt);
+    			}
+				
+			}
+    	}
+    	baseAttributeMaster.setMmrBaseAttributeUomDetailsUts(new ArrayList<>());
+    	baseAttributeMaster.setMmrBaseAttributeUomDetailsUts(lst);
     	baseAttributeRepository.save(baseAttributeMaster);
     	return baseAttributeService.getAll(true);
     }

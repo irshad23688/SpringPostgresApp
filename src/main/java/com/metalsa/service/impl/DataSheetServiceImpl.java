@@ -194,11 +194,9 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 
 	private void mappingForDataTypeRadio(MmrDataSheetDetailUtModel dataSheetDetailUtModel) {
 		if(dataSheetDetailUtModel.getMmrDataTypeMasterUt().equalsIgnoreCase("RadioYesNo")) {
-			dataSheetDetailUtModel.setRadio1(MetalsaConstant.YES);
-			dataSheetDetailUtModel.setRadio2(MetalsaConstant.NO);
+			dataSheetDetailUtModel.setOptions(MetalsaConstant.radioYesNo);
 		 }else if(dataSheetDetailUtModel.getMmrDataTypeMasterUt().equalsIgnoreCase("RadioSOM1SOM2")) {
-			 dataSheetDetailUtModel.setRadio1(MetalsaConstant.SOM1);
-				dataSheetDetailUtModel.setRadio2(MetalsaConstant.SOM2);
+			 dataSheetDetailUtModel.setOptions(MetalsaConstant.radioSOM1SOM2);
 		 }
 	}
 

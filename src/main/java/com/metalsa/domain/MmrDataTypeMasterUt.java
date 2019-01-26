@@ -34,6 +34,9 @@ public class MmrDataTypeMasterUt implements Serializable {
 
 	@Column(nullable=false, length=500)
 	private String description;
+	
+	@Column(name="FRONT_DATA_TYPE",nullable=false, length=500)
+	private String frontDataType;
 
 	@Column(name="MODIFIED_BY", precision=38)
 	private BigDecimal modifiedBy;

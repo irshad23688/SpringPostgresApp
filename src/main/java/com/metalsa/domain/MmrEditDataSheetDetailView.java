@@ -29,6 +29,9 @@ public class MmrEditDataSheetDetailView implements Serializable{
 	@Column(name ="data_type_name")
 	private String inputDataTypeName;
 	
+	@Column(name ="front_data_type")
+	private String frontDataType;
+	
 	@Column(name ="BASE_ATTRIBUTE_ID")
 	private long baseAttributeId;
 
@@ -265,6 +268,14 @@ public class MmrEditDataSheetDetailView implements Serializable{
 
 	public void setDataSheetUtId(long dataSheetUtId) {
 		this.dataSheetUtId = dataSheetUtId;
+	}
+
+	public String getFrontDataType() {
+		return frontDataType;
+	}
+
+	public void setFrontDataType(String frontDataType) {
+		this.frontDataType = frontDataType;
 	}
 
 	
