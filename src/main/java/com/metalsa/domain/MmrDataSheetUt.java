@@ -36,7 +36,7 @@ public class MmrDataSheetUt implements Serializable {
 	@Column(name="CREATED_ON", insertable=false,updatable=false)
 	private Timestamp createdOn;
 
-	@Column(name="DATA_SHEET_NAME", nullable=false, length=50)
+	@Column(name="DATA_SHEET_NAME", length=50)
 	private String dataSheetName;
 
 	@Column(nullable=false, length=5)
