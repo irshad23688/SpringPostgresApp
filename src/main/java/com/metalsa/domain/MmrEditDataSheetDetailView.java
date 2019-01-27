@@ -103,6 +103,19 @@ public class MmrEditDataSheetDetailView implements Serializable{
 	
 	@Column(name ="default_value")
 	private String defaultValue;
+	
+	@Column(name ="som1_uom")
+	private String som1Uom;
+	
+	@Column(name ="som1_conversion_factor")
+	private String som1ConversionFactor;
+	
+	@Column(name ="som2_uom")
+	private String som2Uom;
+	
+	@Column(name ="som2_conversion_factor")
+	private String som2ConversionFactor;
+	
 
 	public Long getId() {
 		return id;
@@ -342,6 +355,38 @@ public class MmrEditDataSheetDetailView implements Serializable{
 
 	public void setDefaultValue(String defaultValue) {
 		this.defaultValue = defaultValue;
+	}
+
+	public String getSom1Uom() {
+		return som1Uom;
+	}
+
+	public void setSom1Uom(String som1Uom) {
+		this.som1Uom = som1Uom;
+	}
+
+	public String getSom1ConversionFactor() {
+		return som1ConversionFactor;
+	}
+
+	public void setSom1ConversionFactor(String som1ConversionFactor) {
+		this.som1ConversionFactor = som1ConversionFactor;
+	}
+
+	public String getSom2Uom() {
+		return som2Uom;
+	}
+
+	public void setSom2Uom(String som2Uom) {
+		this.som2Uom = som2Uom;
+	}
+
+	public String getSom2ConversionFactor() {
+		return som2ConversionFactor;
+	}
+
+	public void setSom2ConversionFactor(String som2ConversionFactor) {
+		this.som2ConversionFactor = som2ConversionFactor;
 	}
 
 	

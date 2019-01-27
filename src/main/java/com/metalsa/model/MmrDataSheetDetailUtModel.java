@@ -23,6 +23,10 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 	private String placeHolderText;
 	private String symbol;
 	private String tooltip;
+	private String som1Uom;
+	private String som1ConversionFactor;
+	private String som2Uom;
+	private String som2ConversionFactor;
 	private BigDecimal baseAttributeSequenceNo;
 	private Integer isMandatory;
 	private String supplierInformationLhs;
@@ -74,6 +78,10 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 		this.supplierInformationOperator=detailView.getSupplierInfoOperator() ;
 		this.supplierInformationRhs=detailView.getSupplierInfoRHS() ;
 		this.supplierInformationTableType=detailView.getSupplierInfoTableType() ;
+		this.som1Uom=detailView.getSom1Uom();
+		this.som1ConversionFactor=detailView.getSom1ConversionFactor();
+		this.som2Uom=detailView.getSom2Uom();
+		this.som2ConversionFactor=detailView.getSom2ConversionFactor();
 	}
 
 
@@ -372,5 +380,46 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 	}
 
 
+	public String getSom1Uom() {
+		return som1Uom;
+	}
+
+
+	public void setSom1Uom(String som1Uom) {
+		this.som1Uom = som1Uom;
+	}
+
+
+	public String getSom1ConversionFactor() {
+		return som1ConversionFactor;
+	}
+
+
+	public void setSom1ConversionFactor(String som1ConversionFactor) {
+		this.som1ConversionFactor = som1ConversionFactor;
+	}
+
+
+	public String getSom2Uom() {
+		return som2Uom;
+	}
+
+
+	public void setSom2Uom(String som2Uom) {
+		this.som2Uom = som2Uom;
+	}
+
+
+	public String getSom2ConversionFactor() {
+		return som2ConversionFactor;
+	}
+
+
+	public void setSom2ConversionFactor(String som2ConversionFactor) {
+		this.som2ConversionFactor = som2ConversionFactor;
+	}
+
+
+	 
 
 }

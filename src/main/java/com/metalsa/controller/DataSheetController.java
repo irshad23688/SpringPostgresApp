@@ -1,6 +1,5 @@
 package com.metalsa.controller;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -95,9 +94,14 @@ public class DataSheetController {
     	return dataSheetRepository.save(model);
     }
     
-    @PostMapping("/datasheet/revision")
+    /*@PostMapping("/datasheet/revision")
     public List<MmrDataSheetUt> createRevision(@Valid @RequestBody MmrDataSheetUt datasheetUt) {
     	dataSheetService.createRevision(datasheetUt);
+    	return dataSheetRepository.findAll();
+    }*/
+    @PostMapping("/datasheet/revision")
+    public List<MmrDataSheetUt> createRevision(@Valid @RequestBody MmrDataSheetUtModel model) {
+    	dataSheetService.createRevision(model);
     	return dataSheetRepository.findAll();
     }
    /* @PostMapping("/datasheet")

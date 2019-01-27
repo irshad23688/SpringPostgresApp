@@ -119,11 +119,13 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 	}
 
 	@Override
-	public void createRevision(MmrDataSheetUt datasheetUt) {
-		if(MetalsaConstant.STATUS.APPROVED.equals(datasheetUt.getStatus().toString())){
+	public void createRevision(MmrDataSheetUtModel model) {
+		MmrDataSheetUt datasheetUt=mappingDataSheet(model);
+		if(MetalsaConstant.STATUS.APPROVED.equals(datasheetUt.getStatus()+"")){
 			MmrDataSheetUt revisedDataSheet = new MmrDataSheetUt();
 			BeanUtils.copyProperties(datasheetUt, revisedDataSheet,new String[]{"id"});
 			revisedDataSheet.setStatus(new BigDecimal(MetalsaConstant.STATUS.PENDING));
+			revisedDataSheet.setRevision(datasheetUt.getRevision().add(BigDecimal.ONE));
 			revisedDataSheet.setRevParentId(datasheetUt.getId());
 			dataSheetRepository.save(revisedDataSheet);
 		}
@@ -219,8 +221,8 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 			supplierOperator.setTestingInformation(dataSheetDetailUtModel.getSupplierInformationOperator());
 			
 			MmrDataSheetDetailUtModel supplierRhs = new MmrDataSheetDetailUtModel();
-			supplierRhs.setMmrDataTypeMasterUt(MetalsaConstant.DATA_TYPE_DROPDOWN);
-			supplierRhs.setFrontDataType(MetalsaConstant.FRONTEND_DATA_TYPE_DROPDOWN);
+			supplierRhs.setMmrDataTypeMasterUt(MetalsaConstant.DATA_TYPE_TEXT);
+			supplierRhs.setFrontDataType(MetalsaConstant.FRONTEND_DATA_TYPE_TEXT);
 			supplierRhs.setTestingInformation(dataSheetDetailUtModel.getSupplierInformationRhs());
 			
 			viewModel.getSupplierInfo().add(supplierLhs); 
@@ -232,7 +234,9 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 			}else {
 				parentModel = new MmrDataSheetDetailUtModel();
 				parentModel.setHeaderAttributeId(dataSheetDetailUtModel.getHeaderAttributeId());
+				parentModel.setHeadings(MetalsaConstant.LISTVIEW_HEADER_DATA);
 				parentModel.setMmrDataTypeMasterUt(MetalsaConstant.DATA_TYPE_LISTVIEW);
+				parentModel.setFrontDataType(MetalsaConstant.DATA_TYPE_LISTVIEW);
 				parentModel.getListviewData().add(viewModel);
 				mapListViewDetail.put(dataSheetDetailUtModel.getHeaderAttributeId(), parentModel);
 			}
@@ -273,6 +277,12 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 
 	@Override
 	public MmrDataSheetUtModel persistDataSheet(MmrDataSheetUtModel model) {
+		MmrDataSheetUt dataSheetUt = mappingDataSheet(model);
+		dataSheetRepository.save(dataSheetUt);
+		return model;
+	}
+
+	private MmrDataSheetUt mappingDataSheet(MmrDataSheetUtModel model) {
 		MmrDataSheetUt dataSheetUt ;
 		if(0l!=model.getDataSheetId()) {
 			dataSheetUt = dataSheetRepository.findById(model.getDataSheetId()).get();
@@ -313,8 +323,7 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 
 		}
 		dataSheetUt.setMmrDataSheetDetailUts(dataSheetDetailUts);
-		dataSheetRepository.save(dataSheetUt);
-		return model;
+		return dataSheetUt;
 	}
 
 	private MmrDataSheetDetailUt mappingDataSheetDetailForSave(MmrDataSheetUtModel model, MmrDataSheetUt dataSheetUt,

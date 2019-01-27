@@ -10,7 +10,7 @@ public interface DataSheetSevice {
 	
 	String saveFileOnserver(MultipartFile file, String dataSheetId);
 	Resource loadFile(String fileName, String dataSheetId);
-	void createRevision(MmrDataSheetUt datasheetUt);
+	void createRevision(MmrDataSheetUtModel model);
 	void updateDataSheet(MmrDataSheetUt datasheetUt);
 	MmrDataSheetUtModel getNewDataTestSheetDetailByClassSubClass(Long classId,Long subClassId);
 	MmrDataSheetUtModel persistDataSheet(MmrDataSheetUtModel model);
