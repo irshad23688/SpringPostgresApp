@@ -5,15 +5,16 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.metalsa.domain.MmrEditDataSheetDetailView;
+import com.metalsa.constant.MetalsaConstant;
 import com.metalsa.domain.MmrNewDataSheetDetailView;
 
- 
+
 public class MmrDataSheetDetailUtModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long dataSheetDetailId;
 	private BigDecimal createdBy;
 	private BigDecimal modifiedBy;
+	private long headerAttributeId;
 	private String headerAttributeName;
 	private long baseAttributeId;
 	private String baseAttributeName;
@@ -21,6 +22,11 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 	private String placeHolderText;
 	private String symbol;
 	private String tooltip;
+	private String som1Uom;
+	private String som1ConversionFactor;
+	private String som2Uom;
+	private String som2ConversionFactor;
+	private String isPrimary;
 	private BigDecimal baseAttributeSequenceNo;
 	private Integer isMandatory;
 	private String supplierInformationLhs;
@@ -37,14 +43,18 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 	private List dropDownValues = new ArrayList<>();
 	private List options = new ArrayList<>();
 	private List<MmrDataSheetDetailUtModel> tableLayoutValue = new ArrayList<>();
-     
+	private List<String> headings = new ArrayList<>();
+	private List<MmrDataSheetDetailListViewUtModel> listviewData = new ArrayList<>();
+
 
 
 	public MmrDataSheetDetailUtModel() {
 	}
 
-	
+
 	public MmrDataSheetDetailUtModel(MmrNewDataSheetDetailView detailView) {
+		this.dataSheetDetailId = detailView.getDatasheetDtlId();
+		this.headerAttributeId = detailView.getHeaderAttributeId();
 		this.headerAttributeName = detailView.getHeaderAttributeName();
 		this.baseAttributeId = detailView.getBaseAttributeId();
 		this.baseAttributeName = detailView.getBaseAttributeName();
@@ -58,10 +68,33 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 		this.tooltip=detailView.getTooltip();
 		this.frontDataType=detailView.getFrontDataType();
 		this.frontDataPattern=detailView.getFrontDataPattern();
+		if(detailView.getTestingInfo()==null) {
+			this.testingInformation=detailView.getDefaultValue();
+		}else {
+			this.testingInformation=detailView.getTestingInfo();
+		}
+		this.testingInformationTableType=detailView.getTestingInfoTableType();
+		this.supplierInformationLhs=detailView.getSupplierInfoLHS() ;
+		this.supplierInformationOperator=detailView.getSupplierInfoOperator() ;
+		this.supplierInformationRhs=detailView.getSupplierInfoRHS() ;
+		this.supplierInformationTableType=detailView.getSupplierInfoTableType() ;
+		this.som1Uom=detailView.getSom1Uom();
+		this.som1ConversionFactor=detailView.getSom1ConversionFactor();
+		this.som2Uom=detailView.getSom2Uom();
+		this.som2ConversionFactor=detailView.getSom2ConversionFactor();
+		this.isPrimary=detailView.getIsPrimary();
+		if(detailView.getIsPrimary()!=null) {
+			if(detailView.getIsPrimary().equals(MetalsaConstant.SOM1)){
+				this.userSelectUom=this.som1Uom;
+			}else {
+				this.userSelectUom=this.som2Uom;
+			}
+		}
 	}
 
 
-	public MmrDataSheetDetailUtModel(MmrEditDataSheetDetailView detailView) {
+	/*public MmrDataSheetDetailUtModel(MmrEditDataSheetDetailView detailView) {
+		this.headerAttributeId = detailView.getHeaderAttributeId();
 		this.dataSheetDetailId = detailView.getDatasheetDtlId();
 		this.headerAttributeName = detailView.getHeaderAttributeName();
 		this.baseAttributeName = detailView.getBaseAttributeName();
@@ -77,22 +110,24 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 		this.userSelectUom = detailView.getUserSelectUom();
 		this.mmrDataTypeMasterUt=detailView.getInputDataTypeName();
 		this.frontDataType=detailView.getFrontDataType();
+		this.frontDataPattern=detailView.getFrontDataPattern();
 
-	}
- 
+	}*/
+
 
 	public MmrDataSheetDetailUtModel(MmrBaseAttributeTableDataTypeUtModel tableDataType) {
-//		this.headerAttributeName = tableDataType.getMmrParameterBaseAttributeUt().get;
+		//		this.headerAttributeName = tableDataType.getMmrParameterBaseAttributeUt().get;
 		this.baseAttributeId = tableDataType.getMmrParameterBaseAttributeUt().getId();
 		this.baseAttributeName = tableDataType.getMmrParameterBaseAttributeUt().getName();
-//		this.baseAttributeSequenceNo = tableDataType.getMmrParameterBaseAttributeUt().getBaseAttributeSequenceNo();
-//		this.isMandatory = tableDataType.getMmrParameterBaseAttributeUt().getIsMandatory();
-//		this.testSheetDetailId = tableDataType.getMmrParameterBaseAttributeUt().getTestSheetDtlId();
+		//		this.baseAttributeSequenceNo = tableDataType.getMmrParameterBaseAttributeUt().getBaseAttributeSequenceNo();
+		//		this.isMandatory = tableDataType.getMmrParameterBaseAttributeUt().getIsMandatory();
+		//		this.testSheetDetailId = tableDataType.getMmrParameterBaseAttributeUt().getTestSheetDtlId();
 		this.mmrDataTypeMasterUt=tableDataType.getMmrParameterBaseAttributeUt().getMmrDataTypeMasterUt().getName();
 		this.description=tableDataType.getMmrParameterBaseAttributeUt().getDescription();
 		this.placeHolderText=tableDataType.getMmrParameterBaseAttributeUt().getPlaceHolderText();
 		this.symbol=tableDataType.getMmrParameterBaseAttributeUt().getSymbol();
 		this.tooltip=tableDataType.getMmrParameterBaseAttributeUt().getTooltip();
+		this.frontDataType=MetalsaConstant.FRONTEND_DATA_TYPE_TEXT;
 	}
 
 
@@ -215,7 +250,7 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 	public void setUserSelectUom(String userSelectUom) {
 		this.userSelectUom = userSelectUom;
 	}
- 
+
 
 
 	public String getMmrDataTypeMasterUt() {
@@ -322,6 +357,87 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 		this.frontDataPattern = frontDataPattern;
 	}
 
-	
-	
+
+	public List<String> getHeadings() {
+		return headings;
+	}
+
+
+	public void setHeadings(List<String> headings) {
+		this.headings = headings;
+	}
+
+
+	public List<MmrDataSheetDetailListViewUtModel> getListviewData() {
+		return listviewData;
+	}
+
+
+	public void setListviewData(List<MmrDataSheetDetailListViewUtModel> listviewData) {
+		this.listviewData = listviewData;
+	}
+
+
+	public long getHeaderAttributeId() {
+		return headerAttributeId;
+	}
+
+
+	public void setHeaderAttributeId(long headerAttributeId) {
+		this.headerAttributeId = headerAttributeId;
+	}
+
+
+	public String getSom1Uom() {
+		return som1Uom;
+	}
+
+
+	public void setSom1Uom(String som1Uom) {
+		this.som1Uom = som1Uom;
+	}
+
+
+	public String getSom1ConversionFactor() {
+		return som1ConversionFactor;
+	}
+
+
+	public void setSom1ConversionFactor(String som1ConversionFactor) {
+		this.som1ConversionFactor = som1ConversionFactor;
+	}
+
+
+	public String getSom2Uom() {
+		return som2Uom;
+	}
+
+
+	public void setSom2Uom(String som2Uom) {
+		this.som2Uom = som2Uom;
+	}
+
+
+	public String getSom2ConversionFactor() {
+		return som2ConversionFactor;
+	}
+
+
+	public void setSom2ConversionFactor(String som2ConversionFactor) {
+		this.som2ConversionFactor = som2ConversionFactor;
+	}
+
+
+	public String getIsPrimary() {
+		return isPrimary;
+	}
+
+
+	public void setIsPrimary(String isPrimary) {
+		this.isPrimary = isPrimary;
+	}
+
+
+	 
+
 }

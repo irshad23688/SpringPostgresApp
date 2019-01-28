@@ -71,7 +71,7 @@ public class MmrDataSheetDetailUt implements Serializable {
 	@Column(name="TESTING_INFORMATION_TABLE_TYPE")
 	private String testingInformationTableType;
 
-	@Column(name="USER_SELECT_UOM",  precision=38)
+	@Column(name="USER_SELECT_UOM")
 	private String userSelectUom;
 
 	@Column(name="USER_UOM1", length=50)

@@ -1,6 +1,7 @@
 package com.metalsa.constant;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -45,6 +46,13 @@ public class MetalsaConstant {
 	public static final String NO="No";
 	public static final String SOM1="SOM1";
 	public static final String SOM2="SOM2";
+	public static final String DATA_TYPE_DROPDOWN="dropdown";
+	public static final String FRONTEND_DATA_TYPE_DROPDOWN="select";
+	public static final String DATA_TYPE_TEXT="Text";
+	public static final String FRONTEND_DATA_TYPE_TEXT="text";
+	public static final List<String> SUPPLIER_DROPDOWN=Arrays.asList("SELECT","-",">","<","<=",">=");
+	public static final List<String> LISTVIEW_HEADER_DATA=Arrays.asList("SN","Base Attribute Name","Testing Information","UOM","Supplier Information","UOM");
+	public static final String DATA_TYPE_LISTVIEW = "ListView";
 	
 
 }

@@ -46,3 +46,7 @@ order by tsd.base_attribute_sequence_no;
   
   
  Data Revision Number
+ 
+ 
+ALTER TABLE mmr_data_sheet_detail_ut MODIFY USER_SELECT_UOM varchar(10) NULL;
+ALTER TABLE mmr_data_sheet_ut MODIFY DATA_SHEET_NAME varchar(50) NULL;

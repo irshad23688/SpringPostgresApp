@@ -32,6 +32,9 @@ public class MmrEditDataSheetDetailView implements Serializable{
 	@Column(name ="front_data_type")
 	private String frontDataType;
 	
+	@Column(name ="front_data_pattern")
+	private String frontDataPattern;
+	
 	@Column(name ="BASE_ATTRIBUTE_ID")
 	private long baseAttributeId;
 
@@ -85,6 +88,37 @@ public class MmrEditDataSheetDetailView implements Serializable{
 
 	@Column(name ="BASE_ATTRIBUTE_SEQUENCE_NO")
 	private BigDecimal baseAttributeSequenceNo;
+	
+	@Column(name ="description")
+	private String description;
+	
+	@Column(name ="place_holder_text")
+	private String placeHolderText;
+	
+	@Column(name ="symbol")
+	private String symbol;
+	
+	@Column(name ="tooltip")
+	private String tooltip;
+	
+	@Column(name ="default_value")
+	private String defaultValue;
+	
+	@Column(name ="som1_uom")
+	private String som1Uom;
+	
+	@Column(name ="som1_conversion_factor")
+	private String som1ConversionFactor;
+	
+	@Column(name ="som2_uom")
+	private String som2Uom;
+	
+	@Column(name ="som2_conversion_factor")
+	private String som2ConversionFactor;
+	
+	@Column(name ="is_primary")
+	private String isPrimary;
+	
 
 	public Long getId() {
 		return id;
@@ -278,6 +312,95 @@ public class MmrEditDataSheetDetailView implements Serializable{
 		this.frontDataType = frontDataType;
 	}
 
+	public String getFrontDataPattern() {
+		return frontDataPattern;
+	}
+
+	public void setFrontDataPattern(String frontDataPattern) {
+		this.frontDataPattern = frontDataPattern;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getPlaceHolderText() {
+		return placeHolderText;
+	}
+
+	public void setPlaceHolderText(String placeHolderText) {
+		this.placeHolderText = placeHolderText;
+	}
+
+	public String getSymbol() {
+		return symbol;
+	}
+
+	public void setSymbol(String symbol) {
+		this.symbol = symbol;
+	}
+
+	public String getTooltip() {
+		return tooltip;
+	}
+
+	public void setTooltip(String tooltip) {
+		this.tooltip = tooltip;
+	}
+
+	public String getDefaultValue() {
+		return defaultValue;
+	}
+
+	public void setDefaultValue(String defaultValue) {
+		this.defaultValue = defaultValue;
+	}
+
+	public String getSom1Uom() {
+		return som1Uom;
+	}
+
+	public void setSom1Uom(String som1Uom) {
+		this.som1Uom = som1Uom;
+	}
+
+	public String getSom1ConversionFactor() {
+		return som1ConversionFactor;
+	}
+
+	public void setSom1ConversionFactor(String som1ConversionFactor) {
+		this.som1ConversionFactor = som1ConversionFactor;
+	}
+
+	public String getSom2Uom() {
+		return som2Uom;
+	}
+
+	public void setSom2Uom(String som2Uom) {
+		this.som2Uom = som2Uom;
+	}
+
+	public String getSom2ConversionFactor() {
+		return som2ConversionFactor;
+	}
+
+	public void setSom2ConversionFactor(String som2ConversionFactor) {
+		this.som2ConversionFactor = som2ConversionFactor;
+	}
+
+	public String getIsPrimary() {
+		return isPrimary;
+	}
+
+	public void setIsPrimary(String isPrimary) {
+		this.isPrimary = isPrimary;
+	}
+
+	
 	
 	
 }
