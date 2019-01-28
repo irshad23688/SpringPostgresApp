@@ -87,15 +87,19 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 		String rootLocation = env.getProperty("datasheet.server.filepath");
 		Path path = null;
 		if(null!=rootLocation && !rootLocation.isEmpty()) {
+			File direct = new File(rootLocation+File.separator+dataSheetId);
+			if(!direct.isDirectory()) {
+				direct.mkdir();
+			}
 			path = Paths.get(rootLocation+File.separator+dataSheetId);
 			try {
 				Files.copy(file.getInputStream(), path.resolve(file.getOriginalFilename()));
 
 			} catch(Exception e) {
-				return null;
+				throw new RuntimeException(e.getMessage());
 			}
 		}
-		return file.getOriginalFilename();	
+		return rootLocation+File.separator+dataSheetId+File.separator+file.getOriginalFilename();	
 	}
 
 	@Override
@@ -112,7 +116,7 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 				throw new RuntimeException();
 			}
 		} catch (MalformedURLException e) {
-			throw new RuntimeException();
+			throw new RuntimeException(e.getMessage());
 		}
 	}
 

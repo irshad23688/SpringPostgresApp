@@ -127,9 +127,10 @@ public class DataSheetController {
 		}
 	}
     
-    @GetMapping("datasheet/files/{filename:.+}")
+    @GetMapping("datasheet/files/{dataSheetId}/{filename}")
 	@ResponseBody
-	public ResponseEntity<Resource> getFile(@PathVariable String fileName,@PathVariable String dataSheetId) {
+	public ResponseEntity<Resource> getFile(@PathVariable(value = "filename") String fileName,
+			@PathVariable(value = "dataSheetId") String dataSheetId) {
 		 Resource file =  dataSheetService.loadFile(fileName, dataSheetId);
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
