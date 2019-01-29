@@ -1,11 +1,15 @@
 package com.metalsa.controller;
 
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -139,6 +143,22 @@ public class DataSheetController {
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
 				.body(file);
+	}
+    
+    @PostMapping("/datasheet/updatestatus")
+	public ResponseEntity<String> uploadFile(@Param("status") Long status,@Param("id") Long id,@Param("approvedby") Long approvedby) {
+		 
+//    	dataSheetRepository.setStatusForDataSheet(status, id);
+//    	customRepository.updateDatasheetByStatus(new BigDecimal(status), id);
+    	MmrDataSheetUt ut= dataSheetRepository.findById(id)
+        .orElseThrow(() -> new ExceptionHandler("MmrDataSheetUt", "id", id));
+    	ut.setStatus(new BigDecimal(status));
+    	ut.setApprovedBy(new BigDecimal(approvedby));
+    	ut.setApprovedOn(new Timestamp( new Date().getTime()) );
+    	
+    	dataSheetRepository.save(ut);
+    	return ResponseEntity.ok()
+				.body("success");
 	}
 
 }

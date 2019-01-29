@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -213,20 +214,24 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 			viewModel.setBaseAttribute(dataSheetDetailUtModel);
 			
 			MmrDataSheetDetailUtModel supplierLhs = new MmrDataSheetDetailUtModel();
-			supplierLhs.setBaseAttributeId(viewModel.getBaseAttribute().getBaseAttributeId());
+			Random ran = new Random();
+			int x = ran.nextInt(1000) + 5;
+			supplierLhs.setBaseAttributeId(x);
 			supplierLhs.setMmrDataTypeMasterUt(MetalsaConstant.DATA_TYPE_TEXT);
 			supplierLhs.setFrontDataType(MetalsaConstant.FRONTEND_DATA_TYPE_TEXT);
 			supplierLhs.setTestingInformation(dataSheetDetailUtModel.getSupplierInformationLhs());
 			
 			MmrDataSheetDetailUtModel supplierOperator = new MmrDataSheetDetailUtModel();
-			supplierOperator.setBaseAttributeId(viewModel.getBaseAttribute().getBaseAttributeId());
+			int y = ran.nextInt(1000) + 5;
+			supplierOperator.setBaseAttributeId(y);
 			supplierOperator.setMmrDataTypeMasterUt(MetalsaConstant.DATA_TYPE_DROPDOWN);
 			supplierOperator.setFrontDataType(MetalsaConstant.FRONTEND_DATA_TYPE_DROPDOWN);
 			supplierOperator.setDropDownValues(MetalsaConstant.SUPPLIER_DROPDOWN);
 			supplierOperator.setTestingInformation(dataSheetDetailUtModel.getSupplierInformationOperator());
 			
 			MmrDataSheetDetailUtModel supplierRhs = new MmrDataSheetDetailUtModel();
-			supplierRhs.setBaseAttributeId(viewModel.getBaseAttribute().getBaseAttributeId());
+			int z = ran.nextInt(1000) + 5;
+			supplierRhs.setBaseAttributeId(z);
 			supplierRhs.setMmrDataTypeMasterUt(MetalsaConstant.DATA_TYPE_TEXT);
 			supplierRhs.setFrontDataType(MetalsaConstant.FRONTEND_DATA_TYPE_TEXT);
 			supplierRhs.setTestingInformation(dataSheetDetailUtModel.getSupplierInformationRhs());
@@ -351,7 +356,11 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 		dataSheetDetailUt.setSupplierInformationRhs(sheetDetailUtModel.getSupplierInformationRhs());
 		dataSheetDetailUt.setSupplierInformationOperator(sheetDetailUtModel.getSupplierInformationOperator());
 		dataSheetDetailUt.setSupplierInformationTableType(sheetDetailUtModel.getSupplierInformationTableType());
-		dataSheetDetailUt.setTestingInformation(sheetDetailUtModel.getTestingInformation());
+		if(sheetDetailUtModel.getTestingInformation()!=null) {
+			dataSheetDetailUt.setTestingInformation(sheetDetailUtModel.getTestingInformation());
+		}else {
+			dataSheetDetailUt.setTestingInformation("NA");
+		}
 		dataSheetDetailUt.setTestingInformationTableType(sheetDetailUtModel.getTestingInformationTableType());
 		dataSheetDetailUt.setTestSheetDetailId(sheetDetailUtModel.getTestSheetDetailId());
 		dataSheetDetailUt.setUserSelectUom(sheetDetailUtModel.getUserSelectUom());
@@ -383,6 +392,11 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 		dataSheetDetailUt.setTestingInformationTableType(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformationTableType());
 		dataSheetDetailUt.setTestSheetDetailId(mmrDataSheetDetailUt.getBaseAttribute().getTestSheetDetailId());
 		dataSheetDetailUt.setUserSelectUom(mmrDataSheetDetailUt.getBaseAttribute().getIsPrimary());
+		if(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformation()!=null) {
+			dataSheetDetailUt.setTestingInformation(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformation());
+		}else {
+			dataSheetDetailUt.setTestingInformation("NA");
+		}
 		//TODO
 		dataSheetDetailUt.setUserUom1("");
 		dataSheetDetailUt.setUserUom2("");

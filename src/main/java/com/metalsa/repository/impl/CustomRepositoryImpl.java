@@ -4,12 +4,12 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -291,6 +291,16 @@ public class CustomRepositoryImpl implements CustomRepository {
 
 		Query<MmrSearchDataSheetView> query = session.createQuery(cr);
 		return query.getResultList();
+	}
+
+	@Override
+	@Transactional
+	public String updateDatasheetByStatus(BigDecimal status, Long id) {
+		String sql = String.format(" update MMR_DATA_SHEET_UT datasheet set datasheet.status = %s  where datasheet.id =%s ",status,id);
+
+		
+		int query = (int) entityManagerFactory.createEntityManager().createNativeQuery(sql).executeUpdate();
+		return query+"";
 	}
 
 

@@ -18,5 +18,6 @@ public interface CustomRepository {
 	List<MmrCompareDataSheetView> compareDataSheetByIds(List<Long> datasheetIds);
 	List<DataSheetDashboardModel> getDatasheetForDashboard(BigDecimal user);
 	List<DataSheetDashboardModel> findDatasheetByStatus(BigDecimal status);
+	String updateDatasheetByStatus(BigDecimal status,Long id);
 
 }
