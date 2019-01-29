@@ -24,6 +24,10 @@ public class MmrDataSheetUtModel implements Serializable {
 	private BigDecimal status;
 	private Long subclassId;
 	private Long testSheetId;
+	private Long headerAttributeSequenceNo;
+	private Long maxHeaders;
+	private Long minHeaders;
+	private String traverseFlag;
 	private List<MmrDataSheetHeaderModel> dataSheetHeaderDetails= new ArrayList<>();
 
 	public MmrDataSheetUtModel() {
@@ -125,6 +129,40 @@ public class MmrDataSheetUtModel implements Serializable {
 		this.testSheetId = testSheetId;
 	}
 
+	public Long getHeaderAttributeSequenceNo() {
+		return headerAttributeSequenceNo;
+	}
+
+	public void setHeaderAttributeSequenceNo(Long headerAttributeSequenceNo) {
+		this.headerAttributeSequenceNo = headerAttributeSequenceNo;
+	}
+
+	public Long getMaxHeaders() {
+		return maxHeaders;
+	}
+
+	public void setMaxHeaders(Long maxHeaders) {
+		this.maxHeaders = maxHeaders;
+	}
+
+	public Long getMinHeaders() {
+		return minHeaders;
+	}
+
+	public void setMinHeaders(Long minHeaders) {
+		this.minHeaders = minHeaders;
+	}
+
+	public String getTraverseFlag() {
+		return traverseFlag;
+	}
+
+	public void setTraverseFlag(String traverseFlag) {
+		this.traverseFlag = traverseFlag;
+	}
+ 
+
+	 
  	
 
 }

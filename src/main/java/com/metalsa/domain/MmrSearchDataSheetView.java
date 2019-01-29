@@ -1,11 +1,14 @@
 package com.metalsa.domain;
 
 import java.io.Serializable;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="SEARCH_DATASHEET_VIEW")
@@ -51,6 +54,9 @@ public class MmrSearchDataSheetView implements Serializable{
 	
 	@Column(name ="STATUS")
 	private long status;
+	
+	@Transient
+	private Map<String, String> uomMap = new LinkedHashMap<>();
 
 	public long getDataSheetId() {
 		return dataSheetId;
@@ -240,6 +246,16 @@ public class MmrSearchDataSheetView implements Serializable{
 			return false;
 		return true;
 	}
+
+	public Map<String, String> getUomMap() {
+		return uomMap;
+	}
+
+	public void setUomMap(Map<String, String> uomMap) {
+		this.uomMap = uomMap;
+	}
+	
+	
 	
 	
 }

@@ -151,7 +151,12 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 
 	@Override
 	public MmrDataSheetUtModel getNewDataTestSheetDetailByClassSubClass(Long classId, Long subClassId) {
-		return getHeaderWiseBaseAttributeList(newDataSheetDetailViewRepository.findByClassIdAndSubClassId(classId, subClassId));
+		long min =newDataSheetDetailViewRepository.getMinHeaderCount(classId, subClassId);
+		MmrDataSheetUtModel model= getHeaderWiseBaseAttributeList(newDataSheetDetailViewRepository.
+				findByClassIdAndSubClassIdAndHeaderAttributeSequenceNo(classId, subClassId, min));
+		model.setRevision(BigDecimal.ONE);
+		model.setStatus(BigDecimal.ONE);
+		return model;
 	}
 
 	private MmrDataSheetUtModel getHeaderWiseBaseAttributeList(List<MmrNewDataSheetDetailView> list) {
@@ -172,6 +177,11 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 					dataSheetUtModel.setClassId(detailView.getClassId());
 					dataSheetUtModel.setSubclassId(detailView.getSubClassId());
 					dataSheetUtModel.setTestSheetId(detailView.getTestSheetId());
+					long max =newDataSheetDetailViewRepository.getMaxHeaderCount(detailView.getClassId(), detailView.getSubClassId());
+					long min =newDataSheetDetailViewRepository.getMinHeaderCount(detailView.getClassId(), detailView.getSubClassId());
+					dataSheetUtModel.setHeaderAttributeSequenceNo(min+1);
+					dataSheetUtModel.setMinHeaders(min);
+					dataSheetUtModel.setMaxHeaders(max);
 				}
 				MmrDataSheetHeaderModel headerModel= new MmrDataSheetHeaderModel();
 				headerModel.setHeaderAttributeId(detailView.getHeaderAttributeId());
@@ -288,10 +298,61 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 
 	@Override
 	public MmrDataSheetUtModel persistDataSheet(MmrDataSheetUtModel model) {
-		MmrDataSheetUt dataSheetUt = mappingDataSheet(model);
-		dataSheetRepository.save(dataSheetUt);
-		return model;
+		MmrDataSheetUtModel	mmrDataSheetUtModel = new MmrDataSheetUtModel();
+		mmrDataSheetUtModel.setMaxHeaders(model.getMaxHeaders());
+		mmrDataSheetUtModel.setMinHeaders(model.getMinHeaders());
+		if(model.getTraverseFlag()==null) {
+			throw new ExceptionHandler("Traverse Flag", "is", "null"); 
+		}
+		if(model.getTraverseFlag().equals("N")) {
+			MmrDataSheetUt dataSheetUt = mappingDataSheet(model);
+			dataSheetRepository.save(dataSheetUt);
+			BeanUtils.copyProperties(dataSheetUt,mmrDataSheetUtModel);
+			mmrDataSheetUtModel.setDataSheetId(dataSheetUt.getId());
+			long nextHeader=0;
+			if(model.getMaxHeaders()==(model.getHeaderAttributeSequenceNo())) {
+				nextHeader=model.getHeaderAttributeSequenceNo();
+			}else {
+				nextHeader=model.getHeaderAttributeSequenceNo()+1;
+			}
+			mmrDataSheetUtModel.setHeaderAttributeSequenceNo(nextHeader);
+			MmrDataSheetUtModel	nextModel= getHeaderWiseBaseAttributeList(
+					newDataSheetDetailViewRepository.findByClassIdAndSubClassIdAndHeaderAttributeSequenceNo(
+							model.getClassId(), model.getSubclassId(), model.getHeaderAttributeSequenceNo()));
+			nextModel.setHeaderAttributeSequenceNo(nextHeader);
+			mmrDataSheetUtModel.getDataSheetHeaderDetails().addAll(nextModel.getDataSheetHeaderDetails());
+		}else {
+			
+			MmrDataSheetUt dataSheetUt= dataSheetRepository.findById(model.getDataSheetId())
+			        .orElseThrow(() -> new ExceptionHandler("MmrDataSheetUt", "id", model.getDataSheetId()));
+//			MmrDataSheetUtModel	mmrDataSheetUtModel = new MmrDataSheetUtModel();
+			BeanUtils.copyProperties(dataSheetUt,mmrDataSheetUtModel);
+			mmrDataSheetUtModel.setDataSheetId(dataSheetUt.getId());
+			long prevHeader=0;
+			if(model.getMinHeaders()==(model.getHeaderAttributeSequenceNo())) {
+				prevHeader=model.getHeaderAttributeSequenceNo();
+			}else {
+				prevHeader=model.getHeaderAttributeSequenceNo()-1;
+			}
+			mmrDataSheetUtModel.setHeaderAttributeSequenceNo(prevHeader);
+			List<MmrNewDataSheetDetailView> listNew = new ArrayList<>();
+			List<MmrEditDataSheetDetailView> listEdit = editDataSheetDetailViewRepository.
+					findByDataSheetUtIdAndHeaderAttributeSequenceNo(dataSheetUt.getId(), model.getHeaderAttributeSequenceNo());
+
+			for (MmrEditDataSheetDetailView mmrEditDataSheetDetailView : listEdit) {
+				MmrNewDataSheetDetailView newView= new MmrNewDataSheetDetailView();
+				BeanUtils.copyProperties(mmrEditDataSheetDetailView, newView);
+				listNew.add(newView);
+			}
+			MmrDataSheetUtModel	nextModel= getHeaderWiseBaseAttributeList(listNew);
+			nextModel.setHeaderAttributeSequenceNo(prevHeader);
+			mmrDataSheetUtModel.getDataSheetHeaderDetails().addAll(nextModel.getDataSheetHeaderDetails());
+		}
+		
+		return mmrDataSheetUtModel;
 	}
+
+	 
 
 	private MmrDataSheetUt mappingDataSheet(MmrDataSheetUtModel model) {
 		MmrDataSheetUt dataSheetUt ;
@@ -349,7 +410,7 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 			dataSheetDetailUt = new MmrDataSheetDetailUt();
 		}
 		//BeanUtils.copyProperties(sheetDetailUtModel, dataSheetDetailUt,new String[]{"id"});
-		dataSheetDetailUt.setCreatedBy(sheetDetailUtModel.getCreatedBy());
+		dataSheetDetailUt.setCreatedBy(model.getCreatedBy());
 		dataSheetDetailUt.setModifiedBy(sheetDetailUtModel.getModifiedBy());
 		dataSheetDetailUt.setStatus(model.getStatus());
 		dataSheetDetailUt.setSupplierInformationLhs(sheetDetailUtModel.getSupplierInformationLhs());
@@ -382,7 +443,7 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 			dataSheetDetailUt = new MmrDataSheetDetailUt();
 		}
 		//BeanUtils.copyProperties(sheetDetailUtModel, dataSheetDetailUt,new String[]{"id"});
-		dataSheetDetailUt.setCreatedBy(mmrDataSheetDetailUt.getBaseAttribute().getCreatedBy());
+		dataSheetDetailUt.setCreatedBy(model.getCreatedBy());
 		dataSheetDetailUt.setModifiedBy(mmrDataSheetDetailUt.getBaseAttribute().getModifiedBy());
 		dataSheetDetailUt.setStatus(model.getStatus());
 		dataSheetDetailUt.setSupplierInformationLhs(mmrDataSheetDetailUt.getSupplierInfo().get(0).getTestingInformation());
@@ -394,26 +455,49 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 		dataSheetDetailUt.setUserSelectUom(mmrDataSheetDetailUt.getBaseAttribute().getIsPrimary());
 		if(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformation()!=null) {
 			dataSheetDetailUt.setTestingInformation(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformation());
+			calculateConversion(mmrDataSheetDetailUt, dataSheetDetailUt);
 		}else {
 			dataSheetDetailUt.setTestingInformation("NA");
 		}
 		//TODO
-		dataSheetDetailUt.setUserUom1("");
-		dataSheetDetailUt.setUserUom2("");
-		/*if(dataSheetDetailUt.getUserSelectUom().equals(MetalsaConstant.SOM1)) {
+//		dataSheetDetailUt.setUserUom1("");
+//		dataSheetDetailUt.setUserUom2("");
+		return dataSheetDetailUt;
+	}
+
+	private void calculateConversion(MmrDataSheetDetailListViewUtModel mmrDataSheetDetailUt,
+			MmrDataSheetDetailUt dataSheetDetailUt) {
+		if(MetalsaConstant.SOM1.equals(dataSheetDetailUt.getUserSelectUom()) && 
+				MetalsaConstant.SOM1.equals(mmrDataSheetDetailUt.getBaseAttribute().getIsPrimary())) {
 			dataSheetDetailUt.setTestingInformation(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformation());
 			dataSheetDetailUt.setUserUom1(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformation());
-			if(mmrDataSheetDetailUt.getBaseAttribute().getSom1ConversionFactor()(x/100) x*100!=null) {
-				dataSheetDetailUt.setUserUom2("");
+			if(mmrDataSheetDetailUt.getBaseAttribute().getSom1ConversionFactor()!=null && mmrDataSheetDetailUt.getBaseAttribute().getSom1ConversionFactor().contains("/") ) {
+				BigDecimal cal=new BigDecimal(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformation()).
+						divide(new BigDecimal(mmrDataSheetDetailUt.getBaseAttribute().getSom1ConversionFactor().split("/")[1]));
+				dataSheetDetailUt.setUserUom2(cal+"");
+			}
+			if(mmrDataSheetDetailUt.getBaseAttribute().getSom1ConversionFactor()!=null &&
+					mmrDataSheetDetailUt.getBaseAttribute().getSom1ConversionFactor().contains("*") ) {
+				BigDecimal cal=new BigDecimal(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformation()).
+						multiply(new BigDecimal(mmrDataSheetDetailUt.getBaseAttribute().getSom1ConversionFactor().split("*")[1]));
+				dataSheetDetailUt.setUserUom2(cal+"");
 			}
 		}else {
 			dataSheetDetailUt.setTestingInformation(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformation());
-			dataSheetDetailUt.setUserUom1(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformation());
-			if(mmrDataSheetDetailUt.getBaseAttribute().getSom1ConversionFactor()!=null) {
-				dataSheetDetailUt.setUserUom2("");
+			dataSheetDetailUt.setUserUom2(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformation());
+			if(mmrDataSheetDetailUt.getBaseAttribute().getSom2ConversionFactor()!=null 
+					&& mmrDataSheetDetailUt.getBaseAttribute().getSom2ConversionFactor().contains("/") ) {
+				BigDecimal cal=new BigDecimal(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformation()).
+						divide(new BigDecimal(mmrDataSheetDetailUt.getBaseAttribute().getSom2ConversionFactor().split("/")[1]));
+				dataSheetDetailUt.setUserUom1(cal+"");
 			}
-		}*/
-		return dataSheetDetailUt;
+			if(mmrDataSheetDetailUt.getBaseAttribute().getSom2ConversionFactor()!=null &&
+					mmrDataSheetDetailUt.getBaseAttribute().getSom2ConversionFactor().contains("*") ) {
+				BigDecimal cal=new BigDecimal(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformation()).
+						multiply(new BigDecimal(mmrDataSheetDetailUt.getBaseAttribute().getSom2ConversionFactor().split("*")[1]));
+				dataSheetDetailUt.setUserUom1(cal+"");
+			}
+		}
 	}
 
 	private MmrDataSheetDetailUt getDataSheetDetailById(List<MmrDataSheetDetailUt> mmrDataSheetDetailUts, long dataSheetDetailId) {

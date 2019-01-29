@@ -75,6 +75,9 @@ public class MmrNewDataSheetDetailView implements Serializable{
 	@Column(name ="BASE_ATTRIBUTE_SEQUENCE_NO")
 	private BigDecimal baseAttributeSequenceNo;
 	
+	@Column(name="HEADER_ATTRIBUTE_SEQUENCE_NO")
+	private Long headerAttributeSequenceNo;
+	
 	
 	@Column(name ="SUPPLIER_INFORMATION_LHS")
 	private String supplierInfoLHS;
@@ -431,7 +434,13 @@ public class MmrNewDataSheetDetailView implements Serializable{
 		this.isPrimary = isPrimary;
 	}
 
-	
-	
+	public Long getHeaderAttributeSequenceNo() {
+		return headerAttributeSequenceNo;
+	}
+
+	public void setHeaderAttributeSequenceNo(Long headerAttributeSequenceNo) {
+		this.headerAttributeSequenceNo = headerAttributeSequenceNo;
+	}
+ 
 	
 }

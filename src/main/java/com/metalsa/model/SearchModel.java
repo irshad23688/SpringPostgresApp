@@ -23,6 +23,9 @@ public class SearchModel {
 	private List<ResultDataSheetModel> searchDatamp = new ArrayList<>(); 
 	private List<Long> datasheetIds;	
 	private Set<String> headerSet = new LinkedHashSet<String>();	
+	
+	private Map<String,String> uomMap = new LinkedHashMap<>();
+	
 	public String getStaticBaseAttributeIds() {
 		return staticBaseAttributeIds;
 	}
@@ -86,8 +89,13 @@ public class SearchModel {
 	public void setSearchDatamp(List<ResultDataSheetModel> searchDatamp) {
 		this.searchDatamp = searchDatamp;
 	}
+	public Map<String, String> getUomMap() {
+		return uomMap;
+	}
+	public void setUomMap(Map<String, String> uomMap) {
+		this.uomMap = uomMap;
+	}
 	 
-
 
 	
 }

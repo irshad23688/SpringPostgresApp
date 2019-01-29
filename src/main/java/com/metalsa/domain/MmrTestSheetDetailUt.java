@@ -26,6 +26,10 @@ public class MmrTestSheetDetailUt implements Serializable {
 	@Column(name="BASE_ATTRIBUTE_SEQUENCE_NO", nullable=false, precision=38)
 	private BigDecimal baseAttributeSequenceNo;
 
+	
+	@Column(name="HEADER_ATTRIBUTE_SEQUENCE_NO",  precision=38)
+	private BigDecimal headerAttributeSequenceNo;
+	
 	@Column(name="CREATED_BY", nullable=false, precision=38)
 	private BigDecimal createdBy;
 
@@ -145,4 +149,14 @@ public class MmrTestSheetDetailUt implements Serializable {
 	public void setMmrTestSheetUt(MmrTestSheetUt mmrTestSheetUt) {
 		this.mmrTestSheetUt = mmrTestSheetUt;
 	}
+
+	public BigDecimal getHeaderAttributeSequenceNo() {
+		return headerAttributeSequenceNo;
+	}
+
+	public void setHeaderAttributeSequenceNo(BigDecimal headerAttributeSequenceNo) {
+		this.headerAttributeSequenceNo = headerAttributeSequenceNo;
+	}
+	
+	
 }

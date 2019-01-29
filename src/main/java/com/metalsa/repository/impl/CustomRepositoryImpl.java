@@ -162,6 +162,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 		if(null!= model.getRangeBaseParameterList() && !model.getRangeBaseParameterList().isEmpty()) {
 			for (SearchBaseModel searchBaseModel  : model.getRangeBaseParameterList()) {
 				if(null!=searchBaseModel.getProperty() && !searchBaseModel.getProperty().isEmpty()) {
+					model.getUomMap().put(searchBaseModel.getProperty(), searchBaseModel.getUom());
 					Predicate predicate1 = cb.equal(root.get("baseAttributeId"),Long.parseLong(searchBaseModel.getProperty()));
 					Predicate predicate2 = null;
 					List<MmrSearchDataSheetView> lst = dataSheetviewRepository.getViewByBaseAttributeId(Long.parseLong(searchBaseModel.getProperty()));

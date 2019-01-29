@@ -107,11 +107,16 @@ public class SearchNCompareServiceImpl implements SearchNCompareService {
 
 		for (MmrSearchDataSheetView viewObj : results) {
 			if(0l!=viewObj.getDataSheetId()) {
+				viewObj.getUomMap().put(viewObj.getSom1Uom(), viewObj.getUserUom1());
+				viewObj.getUomMap().put(viewObj.getSom2Uom(), viewObj.getUserUom2());
 				Set<MmrSearchDataSheetView> lst=null;
 				if(materialMap.keySet().contains(viewObj.getDataSheetId())){
 					lst = materialMap.get(viewObj.getDataSheetId());
 				}else {
 					lst = new LinkedHashSet<>();
+				}
+				if(model.getUomMap().containsKey(viewObj.getBaseAttributeId()+"")) {
+					viewObj.setTestingInformation(viewObj.getUomMap().get(model.getUomMap().get(viewObj.getBaseAttributeId()+"")));
 				}
 				lst.add(viewObj);
 				materialMap.put(viewObj.getDataSheetId(),lst);
