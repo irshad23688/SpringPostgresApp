@@ -569,15 +569,22 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 	public MmrDataSheetUtModel getEditDatasheet(@Valid MmrDataSheetUtModel model) {
 		
 		MmrDataSheetUtModel mmrDataSheetUtModel = new MmrDataSheetUtModel();
-		long max =editDataSheetDetailViewRepository.getMaxHeaderCount(model.getClassId(), model.getSubclassId());
-		long min =editDataSheetDetailViewRepository.getMinHeaderCount(model.getClassId(), model.getSubclassId());
-		mmrDataSheetUtModel.setMaxHeaders(max);
-		mmrDataSheetUtModel.setMinHeaders(min);
+		if(model.getMaxHeaders()==null){
+			long max =editDataSheetDetailViewRepository.getMaxHeaderCount(model.getClassId(), model.getSubclassId());
+			mmrDataSheetUtModel.setMaxHeaders(max);
+		}
+		if(model.getMaxHeaders()==null){
+			long min =editDataSheetDetailViewRepository.getMinHeaderCount(model.getClassId(), model.getSubclassId());
+			mmrDataSheetUtModel.setMinHeaders(min);
+		}
+		if(model.getHeaderAttributeSequenceNo()==null){
+			model.setHeaderAttributeSequenceNo(1l);
+		}
 		if(model.getTraverseFlag()==null) {
 			throw new ExceptionHandler("Traverse Flag", "is", "null"); 
 		}
 		if(model.getTraverseFlag().equals("N")) {
-			long nextHeader=min;
+			long nextHeader;
 			if(model.getMaxHeaders()==(model.getHeaderAttributeSequenceNo())) {
 				nextHeader=model.getHeaderAttributeSequenceNo();
 			}else {
@@ -585,11 +592,11 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 			}
 			mmrDataSheetUtModel.setHeaderAttributeSequenceNo(nextHeader);
 			MmrDataSheetUtModel	nextModel= getHeaderWiseBaseAttributeList(editDataSheetDetailViewRepository.
-					findByClassIdAndSubClassIdAndHeaderAttributeSequenceNo(model.getClassId(), model.getSubclassId(), nextHeader));
+					findByClassIdAndSubClassIdAndHeaderAttributeSequenceNo(model.getClassId(), model.getSubclassId(), model.getHeaderAttributeSequenceNo()));
 			nextModel.setHeaderAttributeSequenceNo(nextHeader);
 			mmrDataSheetUtModel.getDataSheetHeaderDetails().addAll(nextModel.getDataSheetHeaderDetails());
 		}else {
-			long prevHeader=min;
+			long prevHeader;
 			if(model.getMinHeaders()==(model.getHeaderAttributeSequenceNo())) {
 				prevHeader=model.getHeaderAttributeSequenceNo();
 			}else {
