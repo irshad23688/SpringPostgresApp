@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -561,6 +563,16 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 		List<MmrDataSheetHeaderModel> result=new ArrayList(mapHeaderToDetail.values());
 		dataSheetUtModel.setDataSheetHeaderDetails(result);
 */		return dataSheetUtModel;
+	}
+
+	@Override
+	public MmrDataSheetUtModel getEditDatasheet(@Valid MmrDataSheetUtModel model) {
+		/*long min =newDataSheetDetailViewRepository.getMinHeaderCount(model.getClassId(), model.gets);
+		MmrDataSheetUtModel model= getHeaderWiseBaseAttributeList(newDataSheetDetailViewRepository.
+				findByClassIdAndSubClassIdAndHeaderAttributeSequenceNo(classId, subClassId, min));
+		model.setRevision(BigDecimal.ONE);
+		model.setStatus(BigDecimal.ONE);*/
+		return null;
 	}
 
 

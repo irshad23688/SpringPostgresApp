@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.metalsa.domain.MmrDataSheetUt;
 import com.metalsa.exception.ExceptionHandler;
+import com.metalsa.model.DashboardModel;
 import com.metalsa.model.MmrDataSheetUtModel;
 import com.metalsa.repository.ClassRepository;
 import com.metalsa.repository.CustomRepository;
@@ -79,6 +80,10 @@ public class DataSheetController {
     public MmrDataSheetUtModel createNewDataSheet(@PathVariable(value = "classId") Long classId,
     		@PathVariable(value = "subClassId") Long subClassId) {
     	return dataSheetService.getNewDataTestSheetDetailByClassSubClass(classId,subClassId);
+    }
+    @PostMapping("/datasheet/edit/")
+    public MmrDataSheetUtModel getDataSheet(@Valid @RequestBody MmrDataSheetUtModel model) {
+    	return dataSheetService.getEditDatasheet(model);
     }
     @GetMapping("/datasheet/new1/{classId}/{subClassId}")
     public MmrDataSheetUtModel createNewDataSheet1(@PathVariable(value = "classId") Long classId,
@@ -146,14 +151,14 @@ public class DataSheetController {
 	}
     
     @PostMapping("/datasheet/updatestatus")
-	public ResponseEntity<String> uploadFile(@Param("status") Long status,@Param("id") Long id,@Param("approvedby") Long approvedby) {
+	public ResponseEntity<String> uploadStatus(@Valid @RequestBody DashboardModel model) {
 		 
 //    	dataSheetRepository.setStatusForDataSheet(status, id);
 //    	customRepository.updateDatasheetByStatus(new BigDecimal(status), id);
-    	MmrDataSheetUt ut= dataSheetRepository.findById(id)
-        .orElseThrow(() -> new ExceptionHandler("MmrDataSheetUt", "id", id));
-    	ut.setStatus(new BigDecimal(status));
-    	ut.setApprovedBy(new BigDecimal(approvedby));
+    	MmrDataSheetUt ut= dataSheetRepository.findById(model.getId())
+        .orElseThrow(() -> new ExceptionHandler("MmrDataSheetUt", "id", model.getId()));
+    	ut.setStatus(new BigDecimal(model.getStatus()));
+    	ut.setApprovedBy(new BigDecimal(model.getApprovedby()));
     	ut.setApprovedOn(new Timestamp( new Date().getTime()) );
     	
     	dataSheetRepository.save(ut);
