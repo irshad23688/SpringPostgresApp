@@ -372,7 +372,11 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 		dataSheetUt.setRevision(model.getRevision());
 		dataSheetUt.setStatus(model.getStatus());
 		dataSheetUt.setTestSheetId(model.getTestSheetId());
-		dataSheetUt.setIssubmitted("1");
+		if(model.getStatus().equals(new BigDecimal(2))) {
+		dataSheetUt.setIssubmitted("Yes");
+		}else{
+			dataSheetUt.setIssubmitted("No");
+		}
 		List<MmrDataSheetDetailUt> dataSheetDetailUts = new ArrayList<>();
 		for (MmrDataSheetHeaderModel dataSheetHeaderModel : model.getDataSheetHeaderDetails()) {
 
