@@ -116,6 +116,9 @@ public class MmrEditDataSheetDetailView implements Serializable{
 	@Column(name ="som2_conversion_factor")
 	private String som2ConversionFactor;
 	
+	@Column(name ="is_primary")
+	private String isPrimary;
+	
 
 	public Long getId() {
 		return id;
@@ -387,6 +390,14 @@ public class MmrEditDataSheetDetailView implements Serializable{
 
 	public void setSom2ConversionFactor(String som2ConversionFactor) {
 		this.som2ConversionFactor = som2ConversionFactor;
+	}
+
+	public String getIsPrimary() {
+		return isPrimary;
+	}
+
+	public void setIsPrimary(String isPrimary) {
+		this.isPrimary = isPrimary;
 	}
 
 	

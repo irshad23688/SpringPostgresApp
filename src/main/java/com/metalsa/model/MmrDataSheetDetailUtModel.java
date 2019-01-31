@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.metalsa.constant.MetalsaConstant;
-import com.metalsa.domain.MmrEditDataSheetDetailView;
 import com.metalsa.domain.MmrNewDataSheetDetailView;
 
 
@@ -27,6 +26,7 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 	private String som1ConversionFactor;
 	private String som2Uom;
 	private String som2ConversionFactor;
+	private String isPrimary;
 	private BigDecimal baseAttributeSequenceNo;
 	private Integer isMandatory;
 	private String supplierInformationLhs;
@@ -82,10 +82,18 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 		this.som1ConversionFactor=detailView.getSom1ConversionFactor();
 		this.som2Uom=detailView.getSom2Uom();
 		this.som2ConversionFactor=detailView.getSom2ConversionFactor();
+		this.isPrimary=detailView.getIsPrimary();
+		if(detailView.getIsPrimary()!=null) {
+			if(detailView.getIsPrimary().equals(MetalsaConstant.SOM1)){
+				this.userSelectUom=this.som1Uom;
+			}else {
+				this.userSelectUom=this.som2Uom;
+			}
+		}
 	}
 
 
-	public MmrDataSheetDetailUtModel(MmrEditDataSheetDetailView detailView) {
+	/*public MmrDataSheetDetailUtModel(MmrEditDataSheetDetailView detailView) {
 		this.headerAttributeId = detailView.getHeaderAttributeId();
 		this.dataSheetDetailId = detailView.getDatasheetDtlId();
 		this.headerAttributeName = detailView.getHeaderAttributeName();
@@ -104,7 +112,7 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 		this.frontDataType=detailView.getFrontDataType();
 		this.frontDataPattern=detailView.getFrontDataPattern();
 
-	}
+	}*/
 
 
 	public MmrDataSheetDetailUtModel(MmrBaseAttributeTableDataTypeUtModel tableDataType) {
@@ -417,6 +425,16 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 
 	public void setSom2ConversionFactor(String som2ConversionFactor) {
 		this.som2ConversionFactor = som2ConversionFactor;
+	}
+
+
+	public String getIsPrimary() {
+		return isPrimary;
+	}
+
+
+	public void setIsPrimary(String isPrimary) {
+		this.isPrimary = isPrimary;
 	}
 
 

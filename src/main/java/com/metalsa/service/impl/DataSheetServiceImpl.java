@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -210,17 +209,20 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 			viewModel.setBaseAttribute(dataSheetDetailUtModel);
 			
 			MmrDataSheetDetailUtModel supplierLhs = new MmrDataSheetDetailUtModel();
+			supplierLhs.setBaseAttributeId(viewModel.getBaseAttribute().getBaseAttributeId());
 			supplierLhs.setMmrDataTypeMasterUt(MetalsaConstant.DATA_TYPE_TEXT);
 			supplierLhs.setFrontDataType(MetalsaConstant.FRONTEND_DATA_TYPE_TEXT);
 			supplierLhs.setTestingInformation(dataSheetDetailUtModel.getSupplierInformationLhs());
 			
 			MmrDataSheetDetailUtModel supplierOperator = new MmrDataSheetDetailUtModel();
+			supplierOperator.setBaseAttributeId(viewModel.getBaseAttribute().getBaseAttributeId());
 			supplierOperator.setMmrDataTypeMasterUt(MetalsaConstant.DATA_TYPE_DROPDOWN);
 			supplierOperator.setFrontDataType(MetalsaConstant.FRONTEND_DATA_TYPE_DROPDOWN);
 			supplierOperator.setDropDownValues(MetalsaConstant.SUPPLIER_DROPDOWN);
 			supplierOperator.setTestingInformation(dataSheetDetailUtModel.getSupplierInformationOperator());
 			
 			MmrDataSheetDetailUtModel supplierRhs = new MmrDataSheetDetailUtModel();
+			supplierRhs.setBaseAttributeId(viewModel.getBaseAttribute().getBaseAttributeId());
 			supplierRhs.setMmrDataTypeMasterUt(MetalsaConstant.DATA_TYPE_TEXT);
 			supplierRhs.setFrontDataType(MetalsaConstant.FRONTEND_DATA_TYPE_TEXT);
 			supplierRhs.setTestingInformation(dataSheetDetailUtModel.getSupplierInformationRhs());
@@ -374,13 +376,25 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 		dataSheetDetailUt.setSupplierInformationOperator(mmrDataSheetDetailUt.getSupplierInfo().get(1).getTestingInformation());
 		dataSheetDetailUt.setSupplierInformationRhs(mmrDataSheetDetailUt.getSupplierInfo().get(2).getTestingInformation());
 		dataSheetDetailUt.setSupplierInformationTableType(mmrDataSheetDetailUt.getSupplierInfo().get(0).getTestingInformationTableType());
-		dataSheetDetailUt.setTestingInformation(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformation());
 		dataSheetDetailUt.setTestingInformationTableType(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformationTableType());
 		dataSheetDetailUt.setTestSheetDetailId(mmrDataSheetDetailUt.getBaseAttribute().getTestSheetDetailId());
-		dataSheetDetailUt.setUserSelectUom(mmrDataSheetDetailUt.getBaseAttribute().getUserSelectUom());
+		dataSheetDetailUt.setUserSelectUom(mmrDataSheetDetailUt.getBaseAttribute().getIsPrimary());
 		//TODO
 		dataSheetDetailUt.setUserUom1("");
 		dataSheetDetailUt.setUserUom2("");
+		/*if(dataSheetDetailUt.getUserSelectUom().equals(MetalsaConstant.SOM1)) {
+			dataSheetDetailUt.setTestingInformation(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformation());
+			dataSheetDetailUt.setUserUom1(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformation());
+			if(mmrDataSheetDetailUt.getBaseAttribute().getSom1ConversionFactor()!=null) {
+				dataSheetDetailUt.setUserUom2("");
+			}
+		}else {
+			dataSheetDetailUt.setTestingInformation(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformation());
+			dataSheetDetailUt.setUserUom1(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformation());
+			if(mmrDataSheetDetailUt.getBaseAttribute().getSom1ConversionFactor()!=null) {
+				dataSheetDetailUt.setUserUom2("");
+			}
+		}*/
 		return dataSheetDetailUt;
 	}
 
