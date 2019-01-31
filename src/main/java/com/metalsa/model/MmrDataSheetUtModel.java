@@ -28,6 +28,7 @@ public class MmrDataSheetUtModel implements Serializable {
 	private Long maxHeaders;
 	private Long minHeaders;
 	private String traverseFlag;
+	private String action;
 	private List<MmrDataSheetHeaderModel> dataSheetHeaderDetails= new ArrayList<>();
 
 	public MmrDataSheetUtModel() {
@@ -159,6 +160,14 @@ public class MmrDataSheetUtModel implements Serializable {
 
 	public void setTraverseFlag(String traverseFlag) {
 		this.traverseFlag = traverseFlag;
+	}
+
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
 	}
  
 

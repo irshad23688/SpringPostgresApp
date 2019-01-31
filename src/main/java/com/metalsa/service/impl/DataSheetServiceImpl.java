@@ -181,7 +181,11 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 					dataSheetUtModel.setTestSheetId(detailView.getTestSheetId());
 					long max =newDataSheetDetailViewRepository.getMaxHeaderCount(detailView.getClassId(), detailView.getSubClassId());
 					long min =newDataSheetDetailViewRepository.getMinHeaderCount(detailView.getClassId(), detailView.getSubClassId());
-					dataSheetUtModel.setHeaderAttributeSequenceNo(min+1);
+					long nextHeader=min+1;
+					if(nextHeader>max) {
+						nextHeader=min;
+					}
+					dataSheetUtModel.setHeaderAttributeSequenceNo(nextHeader);
 					dataSheetUtModel.setMinHeaders(min);
 					dataSheetUtModel.setMaxHeaders(max);
 				}
@@ -306,9 +310,14 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 		if(model.getTraverseFlag()==null) {
 			throw new ExceptionHandler("Traverse Flag", "is", "null"); 
 		}
-		if(model.getTraverseFlag().equals("N")) {
+		if(model.getAction()==null) {
+			throw new ExceptionHandler("Action ", "is", "either SAVE or VIEW or Update"); 
+		}
+		if(model.getTraverseFlag().equalsIgnoreCase("N")) {
 			MmrDataSheetUt dataSheetUt = mappingDataSheet(model);
-			dataSheetRepository.save(dataSheetUt);
+			if(!model.getAction().equalsIgnoreCase("View")){
+				dataSheetRepository.save(dataSheetUt);
+			}
 			BeanUtils.copyProperties(dataSheetUt,mmrDataSheetUtModel);
 			mmrDataSheetUtModel.setDataSheetId(dataSheetUt.getId());
 			long nextHeader=0;
@@ -317,11 +326,21 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 			}else {
 				nextHeader=model.getHeaderAttributeSequenceNo()+1;
 			}
+			if(nextHeader>model.getMaxHeaders()) {
+				nextHeader=model.getMaxHeaders();
+				throw new ExceptionHandler("Max Header", "is", "Reached");
+			}
 			mmrDataSheetUtModel.setHeaderAttributeSequenceNo(nextHeader);
-			MmrDataSheetUtModel	nextModel= getHeaderWiseBaseAttributeList(
-					newDataSheetDetailViewRepository.findByClassIdAndSubClassIdAndHeaderAttributeSequenceNo(
-							model.getClassId(), model.getSubclassId(), model.getHeaderAttributeSequenceNo()));
-			nextModel.setHeaderAttributeSequenceNo(nextHeader);
+			MmrDataSheetUtModel	nextModel=null;
+			if(model.getAction().equalsIgnoreCase("View")|| model.getAction().equalsIgnoreCase("Update")) {
+				List<MmrNewDataSheetDetailView> listNew = convertEditListtoNewList(model, dataSheetUt);
+				nextModel= getHeaderWiseBaseAttributeList(listNew);
+			}else {
+				nextModel= getHeaderWiseBaseAttributeList(
+						newDataSheetDetailViewRepository.findByClassIdAndSubClassIdAndHeaderAttributeSequenceNo(
+								model.getClassId(), model.getSubclassId(), nextHeader));
+				
+			}
 			mmrDataSheetUtModel.getDataSheetHeaderDetails().addAll(nextModel.getDataSheetHeaderDetails());
 		}else {
 			
@@ -337,21 +356,26 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 				prevHeader=model.getHeaderAttributeSequenceNo()-1;
 			}
 			mmrDataSheetUtModel.setHeaderAttributeSequenceNo(prevHeader);
-			List<MmrNewDataSheetDetailView> listNew = new ArrayList<>();
-			List<MmrEditDataSheetDetailView> listEdit = editDataSheetDetailViewRepository.
-					findByDataSheetUtIdAndHeaderAttributeSequenceNo(dataSheetUt.getId(), model.getHeaderAttributeSequenceNo());
-
-			for (MmrEditDataSheetDetailView mmrEditDataSheetDetailView : listEdit) {
-				MmrNewDataSheetDetailView newView= new MmrNewDataSheetDetailView();
-				BeanUtils.copyProperties(mmrEditDataSheetDetailView, newView);
-				listNew.add(newView);
-			}
+			List<MmrNewDataSheetDetailView> listNew = convertEditListtoNewList(model, dataSheetUt);
 			MmrDataSheetUtModel	nextModel= getHeaderWiseBaseAttributeList(listNew);
-			nextModel.setHeaderAttributeSequenceNo(prevHeader);
 			mmrDataSheetUtModel.getDataSheetHeaderDetails().addAll(nextModel.getDataSheetHeaderDetails());
 		}
 		
 		return mmrDataSheetUtModel;
+	}
+
+	private List<MmrNewDataSheetDetailView> convertEditListtoNewList(MmrDataSheetUtModel model,
+			MmrDataSheetUt dataSheetUt) {
+		List<MmrNewDataSheetDetailView> listNew = new ArrayList<>();
+		List<MmrEditDataSheetDetailView> listEdit = editDataSheetDetailViewRepository.
+				findByDataSheetUtIdAndHeaderAttributeSequenceNo(dataSheetUt.getId(), model.getHeaderAttributeSequenceNo());
+
+		for (MmrEditDataSheetDetailView mmrEditDataSheetDetailView : listEdit) {
+			MmrNewDataSheetDetailView newView= new MmrNewDataSheetDetailView();
+			BeanUtils.copyProperties(mmrEditDataSheetDetailView, newView);
+			listNew.add(newView);
+		}
+		return listNew;
 	}
 
 	 
