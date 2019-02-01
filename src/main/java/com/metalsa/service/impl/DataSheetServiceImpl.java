@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -291,38 +290,84 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 			for (MmrDataSheetDetailUtModel sheetDetailUtModel : dataSheetHeaderModel.getDataSheetDetails()) {
 				
 				
-				MmrDataSheetDetailUt dataSheetDetailUt = null;
-				if(0l!= sheetDetailUtModel.getDataSheetDetailId()) {
-					dataSheetDetailUt = getDataSheetDetailById(dataSheetUt.getMmrDataSheetDetailUts(), sheetDetailUtModel.getDataSheetDetailId());
-					if (null==dataSheetDetailUt){
-						dataSheetDetailUt = new MmrDataSheetDetailUt();
-					}
+				if(sheetDetailUtModel.getListviewData().size()==0) {
+					MmrDataSheetDetailUt dataSheetDetailUt = mappingDataSheetDetailForSave(model, dataSheetUt,
+							sheetDetailUtModel);
+					dataSheetDetailUts.add(dataSheetDetailUt);
 				}else {
-					dataSheetDetailUt = new MmrDataSheetDetailUt();
+					
+					for (MmrDataSheetDetailListViewUtModel mmrDataSheetDetailUt : sheetDetailUtModel.getListviewData()) {
+						
+						MmrDataSheetDetailUt dataSheetDetailUt = mappingDataSheetDetailForListView(model, dataSheetUt,
+								mmrDataSheetDetailUt);
+						dataSheetDetailUts.add(dataSheetDetailUt);
+					}
 				}
-				//BeanUtils.copyProperties(sheetDetailUtModel, dataSheetDetailUt,new String[]{"id"});
-				dataSheetDetailUt.setCreatedBy(sheetDetailUtModel.getCreatedBy());
-				dataSheetDetailUt.setModifiedBy(sheetDetailUtModel.getModifiedBy());
-				dataSheetDetailUt.setStatus(model.getStatus());
-				dataSheetDetailUt.setSupplierInformationLhs(sheetDetailUtModel.getSupplierInformationLhs());
-				dataSheetDetailUt.setSupplierInformationRhs(sheetDetailUtModel.getSupplierInformationRhs());
-				dataSheetDetailUt.setSupplierInformationOperator(sheetDetailUtModel.getSupplierInformationOperator());
-				//dataSheetDetailUt.setSupplierInformationTableType(sheetDetailUtModel.getSupplierInformationTableType());
-				dataSheetDetailUt.setTestingInformation(sheetDetailUtModel.getTestingInformation());
-				//dataSheetDetailUt.setTestingInformationTableType(sheetDetailUtModel.getTestingInformationTableType());
-				dataSheetDetailUt.setTestSheetDetailId(sheetDetailUtModel.getTestSheetDetailId());
-				dataSheetDetailUt.setUserSelectUom(sheetDetailUtModel.getUserSelectUom());
-				//TODO
-				dataSheetDetailUt.setUserUom1("");
-				dataSheetDetailUt.setUserUom2("");
 				
-				dataSheetDetailUts.add(dataSheetDetailUt);
 			}
 
 		}
 		dataSheetUt.setMmrDataSheetDetailUts(dataSheetDetailUts);
 		dataSheetRepository.save(dataSheetUt);
 		return model;
+	}
+
+	private MmrDataSheetDetailUt mappingDataSheetDetailForSave(MmrDataSheetUtModel model, MmrDataSheetUt dataSheetUt,
+			MmrDataSheetDetailUtModel sheetDetailUtModel) {
+		MmrDataSheetDetailUt dataSheetDetailUt = null;
+		if(0l!= sheetDetailUtModel.getDataSheetDetailId()) {
+			dataSheetDetailUt = getDataSheetDetailById(dataSheetUt.getMmrDataSheetDetailUts(), sheetDetailUtModel.getDataSheetDetailId());
+			if (null==dataSheetDetailUt){
+				dataSheetDetailUt = new MmrDataSheetDetailUt();
+			}
+		}else {
+			dataSheetDetailUt = new MmrDataSheetDetailUt();
+		}
+		//BeanUtils.copyProperties(sheetDetailUtModel, dataSheetDetailUt,new String[]{"id"});
+		dataSheetDetailUt.setCreatedBy(sheetDetailUtModel.getCreatedBy());
+		dataSheetDetailUt.setModifiedBy(sheetDetailUtModel.getModifiedBy());
+		dataSheetDetailUt.setStatus(model.getStatus());
+		dataSheetDetailUt.setSupplierInformationLhs(sheetDetailUtModel.getSupplierInformationLhs());
+		dataSheetDetailUt.setSupplierInformationRhs(sheetDetailUtModel.getSupplierInformationRhs());
+		dataSheetDetailUt.setSupplierInformationOperator(sheetDetailUtModel.getSupplierInformationOperator());
+		dataSheetDetailUt.setSupplierInformationTableType(sheetDetailUtModel.getSupplierInformationTableType());
+		dataSheetDetailUt.setTestingInformation(sheetDetailUtModel.getTestingInformation());
+		dataSheetDetailUt.setTestingInformationTableType(sheetDetailUtModel.getTestingInformationTableType());
+		dataSheetDetailUt.setTestSheetDetailId(sheetDetailUtModel.getTestSheetDetailId());
+		dataSheetDetailUt.setUserSelectUom(sheetDetailUtModel.getUserSelectUom());
+		//TODO
+		dataSheetDetailUt.setUserUom1("");
+		dataSheetDetailUt.setUserUom2("");
+		return dataSheetDetailUt;
+	}
+	private MmrDataSheetDetailUt mappingDataSheetDetailForListView(MmrDataSheetUtModel model, MmrDataSheetUt dataSheetUt,
+			MmrDataSheetDetailListViewUtModel mmrDataSheetDetailUt) {
+		MmrDataSheetDetailUt dataSheetDetailUt = null;
+		if(0l!= mmrDataSheetDetailUt.getBaseAttribute().getDataSheetDetailId()) {
+			dataSheetDetailUt = getDataSheetDetailById(dataSheetUt.getMmrDataSheetDetailUts(),
+					mmrDataSheetDetailUt.getBaseAttribute().getDataSheetDetailId());
+			if (null==dataSheetDetailUt){
+				dataSheetDetailUt = new MmrDataSheetDetailUt();
+			}
+		}else {
+			dataSheetDetailUt = new MmrDataSheetDetailUt();
+		}
+		//BeanUtils.copyProperties(sheetDetailUtModel, dataSheetDetailUt,new String[]{"id"});
+		dataSheetDetailUt.setCreatedBy(mmrDataSheetDetailUt.getBaseAttribute().getCreatedBy());
+		dataSheetDetailUt.setModifiedBy(mmrDataSheetDetailUt.getBaseAttribute().getModifiedBy());
+		dataSheetDetailUt.setStatus(model.getStatus());
+		dataSheetDetailUt.setSupplierInformationLhs(mmrDataSheetDetailUt.getSupplierInfo().get(0).getTestingInformation());
+		dataSheetDetailUt.setSupplierInformationOperator(mmrDataSheetDetailUt.getSupplierInfo().get(0).getTestingInformation());
+		dataSheetDetailUt.setSupplierInformationRhs(mmrDataSheetDetailUt.getSupplierInfo().get(0).getTestingInformation());
+		dataSheetDetailUt.setSupplierInformationTableType(mmrDataSheetDetailUt.getSupplierInfo().get(0).getTestingInformationTableType());
+		dataSheetDetailUt.setTestingInformation(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformation());
+		dataSheetDetailUt.setTestingInformationTableType(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformationTableType());
+		dataSheetDetailUt.setTestSheetDetailId(mmrDataSheetDetailUt.getBaseAttribute().getTestSheetDetailId());
+		dataSheetDetailUt.setUserSelectUom(mmrDataSheetDetailUt.getBaseAttribute().getUserSelectUom());
+		//TODO
+		dataSheetDetailUt.setUserUom1("");
+		dataSheetDetailUt.setUserUom2("");
+		return dataSheetDetailUt;
 	}
 
 	private MmrDataSheetDetailUt getDataSheetDetailById(List<MmrDataSheetDetailUt> mmrDataSheetDetailUts, long dataSheetDetailId) {
