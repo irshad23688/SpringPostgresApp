@@ -63,6 +63,9 @@ public class MmrNewDataSheetDetailView implements Serializable{
 	@Column(name ="tooltip")
 	private String tooltip;
 	
+	@Column(name ="default_value")
+	private String defaultValue;
+	
 	@Column(name ="ISMANADATORY")
 	private Integer isMandatory;
 
@@ -211,6 +214,14 @@ public class MmrNewDataSheetDetailView implements Serializable{
 
 	public void setFrontDataPattern(String frontDataPattern) {
 		this.frontDataPattern = frontDataPattern;
+	}
+
+	public String getDefaultValue() {
+		return defaultValue;
+	}
+
+	public void setDefaultValue(String defaultValue) {
+		this.defaultValue = defaultValue;
 	}
 
 	

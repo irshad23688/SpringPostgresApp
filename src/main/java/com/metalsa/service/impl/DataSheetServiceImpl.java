@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,7 @@ import com.metalsa.domain.MmrNewDataSheetDetailView;
 import com.metalsa.exception.ExceptionHandler;
 import com.metalsa.model.MmrBaseAttributeMasterUtModel;
 import com.metalsa.model.MmrBaseAttributeTableDataTypeUtModel;
+import com.metalsa.model.MmrDataSheetDetailListViewUtModel;
 import com.metalsa.model.MmrDataSheetDetailUtModel;
 import com.metalsa.model.MmrDataSheetHeaderModel;
 import com.metalsa.model.MmrDataSheetUtModel;
@@ -149,10 +151,14 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 	private MmrDataSheetUtModel getHeaderWiseBaseAttributeList(List<MmrNewDataSheetDetailView> list) {
 		//		MmrDataTestSheetDetailUtViewModel modelView = new MmrDataTestSheetDetailUtViewModel();
 		Map<Long,MmrDataSheetHeaderModel> mapHeaderToDetail = new LinkedHashMap<Long,MmrDataSheetHeaderModel>();
+		Map<Long,MmrDataSheetDetailUtModel> mapListViewDetail = new LinkedHashMap<Long,MmrDataSheetDetailUtModel>();
 		MmrDataSheetUtModel  dataSheetUtModel =null;
 		for(MmrNewDataSheetDetailView detailView : list) {
 			if(mapHeaderToDetail.containsKey(detailView.getHeaderAttributeId())){
-				mapHeaderToDetail.get(detailView.getHeaderAttributeId()).addDataSheetDetails(datasheetDetailMapping(detailView));
+				MmrDataSheetDetailUtModel dataSheetDetailUtModel =datasheetDetailMapping(detailView,mapListViewDetail);
+				if(dataSheetDetailUtModel!=null) {
+					mapHeaderToDetail.get(detailView.getHeaderAttributeId()).addDataSheetDetails(datasheetDetailMapping(detailView,mapListViewDetail));
+				}
 			}else {
 				if(dataSheetUtModel==null) {
 					dataSheetUtModel = new MmrDataSheetUtModel();
@@ -163,21 +169,70 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 				MmrDataSheetHeaderModel headerModel= new MmrDataSheetHeaderModel();
 				headerModel.setHeaderAttributeId(detailView.getHeaderAttributeId());
 				headerModel.setHeaderAttributeName(detailView.getHeaderAttributeName());
-				headerModel.addDataSheetDetails(datasheetDetailMapping(detailView));
+				MmrDataSheetDetailUtModel dataSheetDetailUtModel =datasheetDetailMapping(detailView,mapListViewDetail);
+				if(dataSheetDetailUtModel!=null) {
+					headerModel.addDataSheetDetails(datasheetDetailMapping(detailView,mapListViewDetail));
+				}
 				mapHeaderToDetail.put(headerModel.getHeaderAttributeId(),headerModel);
 			}
+		}
+		for (MmrDataSheetDetailUtModel listViewModel : mapListViewDetail.values()) {
+			mapHeaderToDetail.get(listViewModel.getHeaderAttributeId()).addDataSheetDetails(listViewModel);
 		}
 		List<MmrDataSheetHeaderModel> result=new ArrayList(mapHeaderToDetail.values());
 		dataSheetUtModel.setDataSheetHeaderDetails(result);
 		return dataSheetUtModel;
 	}
 
-	private MmrDataSheetDetailUtModel datasheetDetailMapping(MmrNewDataSheetDetailView detailView) {
-		MmrDataSheetDetailUtModel dataSheetDetailUtModel = new MmrDataSheetDetailUtModel(detailView);
-		mappingForDataTypeDropdown(dataSheetDetailUtModel);
-		mappingForDataTypeRadio(dataSheetDetailUtModel);
-		mappingForDataTypeTable(dataSheetDetailUtModel);
+	private MmrDataSheetDetailUtModel datasheetDetailMapping(MmrNewDataSheetDetailView detailView,
+			Map<Long, MmrDataSheetDetailUtModel> mapListViewDetail) {
+		MmrDataSheetDetailUtModel dataSheetDetailUtModel =new MmrDataSheetDetailUtModel(detailView);
+		if(detailView.getInputDataTypeName().equalsIgnoreCase("Integer Number") || 
+				detailView.getInputDataTypeName().equalsIgnoreCase("Decimal Number")) {
+			mappingForDataSOMListView(dataSheetDetailUtModel,mapListViewDetail);
+			dataSheetDetailUtModel=null;
+		}else {
+			mappingForDataTypeDropdown(dataSheetDetailUtModel);
+			mappingForDataTypeRadio(dataSheetDetailUtModel);
+			mappingForDataTypeTable(dataSheetDetailUtModel);
+		}
 		return dataSheetDetailUtModel;
+	}
+
+	private void mappingForDataSOMListView(MmrDataSheetDetailUtModel dataSheetDetailUtModel, 
+			Map<Long, MmrDataSheetDetailUtModel> mapListViewDetail) {
+		 
+		
+			MmrDataSheetDetailListViewUtModel viewModel= new MmrDataSheetDetailListViewUtModel();
+			viewModel.setBaseAttribute(dataSheetDetailUtModel);
+			
+			MmrDataSheetDetailUtModel supplierLhs = new MmrDataSheetDetailUtModel();
+			supplierLhs.setMmrDataTypeMasterUt(MetalsaConstant.DATA_TYPE_TEXT);
+			supplierLhs.setFrontDataType(MetalsaConstant.FRONTEND_DATA_TYPE_TEXT);
+			
+			MmrDataSheetDetailUtModel supplierOperator = new MmrDataSheetDetailUtModel();
+			supplierOperator.setMmrDataTypeMasterUt(MetalsaConstant.DATA_TYPE_DROPDOWN);
+			supplierOperator.setFrontDataType(MetalsaConstant.FRONTEND_DATA_TYPE_DROPDOWN);
+			supplierOperator.setDropDownValues(MetalsaConstant.SUPPLIER_DROPDOWN);
+			
+			MmrDataSheetDetailUtModel supplierRhs = new MmrDataSheetDetailUtModel();
+			supplierRhs.setMmrDataTypeMasterUt(MetalsaConstant.DATA_TYPE_DROPDOWN);
+			supplierRhs.setFrontDataType(MetalsaConstant.FRONTEND_DATA_TYPE_DROPDOWN);
+			
+			viewModel.getSupplierInfo().add(supplierLhs); 
+			viewModel.getSupplierInfo().add(supplierOperator); 
+			viewModel.getSupplierInfo().add(supplierRhs); 
+			MmrDataSheetDetailUtModel parentModel =null;
+			if(mapListViewDetail.containsKey(dataSheetDetailUtModel.getHeaderAttributeId())) {
+				mapListViewDetail.get(dataSheetDetailUtModel.getHeaderAttributeId()).getListviewData().add(viewModel);
+			}else {
+				parentModel = new MmrDataSheetDetailUtModel();
+				parentModel.setHeaderAttributeId(dataSheetDetailUtModel.getHeaderAttributeId());
+				parentModel.setMmrDataTypeMasterUt(MetalsaConstant.DATA_TYPE_LISTVIEW);
+				parentModel.getListviewData().add(viewModel);
+				mapListViewDetail.put(dataSheetDetailUtModel.getHeaderAttributeId(), parentModel);
+			}
+		
 	}
 
 	private void mappingForDataTypeTable(MmrDataSheetDetailUtModel dataSheetDetailUtModel) {
