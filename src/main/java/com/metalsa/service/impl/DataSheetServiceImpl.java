@@ -572,52 +572,76 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 	@Override
 	public MmrDataSheetUtModel getEditDatasheet(@Valid MmrDataSheetUtModel model) {
 		
-		MmrDataSheetUtModel mmrDataSheetUtModel = new MmrDataSheetUtModel();
+		MmrDataSheetUtModel mmrDataSheetUtModel = model;
+		MmrDataSheetUtModel	nextModel=null;
 		if(model.getMaxHeaders()==null){
-			long max =editDataSheetDetailViewRepository.getMaxHeaderCount(model.getClassId(), model.getSubclassId());
+			long max =editDataSheetDetailViewRepository.getMaxHeaderCount(model.getDataSheetId());
 			mmrDataSheetUtModel.setMaxHeaders(max);
 		}
-		if(model.getMaxHeaders()==null){
-			long min =editDataSheetDetailViewRepository.getMinHeaderCount(model.getClassId(), model.getSubclassId());
+		if(model.getMinHeaders()==null){
+			long min =editDataSheetDetailViewRepository.getMinHeaderCount(model.getDataSheetId());
 			mmrDataSheetUtModel.setMinHeaders(min);
 		}
 		if(model.getHeaderAttributeSequenceNo()==null){
-			model.setHeaderAttributeSequenceNo(1l);
+			mmrDataSheetUtModel.setHeaderAttributeSequenceNo(1l);
 		}
 		if(model.getTraverseFlag()==null) {
 			throw new ExceptionHandler("Traverse Flag", "is", "null"); 
 		}
+		MmrDataSheetUt dataSheetUt= dataSheetRepository.findById(model.getDataSheetId())
+		        .orElseThrow(() -> new ExceptionHandler("MmrDataSheetUt", "id", model.getDataSheetId()));
+//		MmrDataSheetUtModel	mmrDataSheetUtModel = new MmrDataSheetUtModel();
 		if(model.getTraverseFlag().equals("N")) {
 			long nextHeader;
-			if(model.getMaxHeaders()==(model.getHeaderAttributeSequenceNo())) {
-				nextHeader=model.getHeaderAttributeSequenceNo();
+			if(mmrDataSheetUtModel.getMaxHeaders()==(mmrDataSheetUtModel.getHeaderAttributeSequenceNo())) {
+				nextHeader=mmrDataSheetUtModel.getHeaderAttributeSequenceNo();
 			}else {
-				nextHeader=model.getHeaderAttributeSequenceNo()+1;
+				nextHeader=mmrDataSheetUtModel.getHeaderAttributeSequenceNo()+1;
 			}
-			mmrDataSheetUtModel.setHeaderAttributeSequenceNo(nextHeader);
-			MmrDataSheetUtModel	nextModel= getHeaderWiseBaseAttributeList(editDataSheetDetailViewRepository.
-					findByClassIdAndSubClassIdAndHeaderAttributeSequenceNo(model.getClassId(), model.getSubclassId(), model.getHeaderAttributeSequenceNo()));
-			nextModel.setHeaderAttributeSequenceNo(nextHeader);
-			mmrDataSheetUtModel.getDataSheetHeaderDetails().addAll(nextModel.getDataSheetHeaderDetails());
-		}else {
-			long prevHeader;
-			if(model.getMinHeaders()==(model.getHeaderAttributeSequenceNo())) {
-				prevHeader=model.getHeaderAttributeSequenceNo();
-			}else {
-				prevHeader=model.getHeaderAttributeSequenceNo()-1;
-			}
-			mmrDataSheetUtModel.setHeaderAttributeSequenceNo(prevHeader);
 			List<MmrNewDataSheetDetailView> listNew = new ArrayList<>();
 			List<MmrEditDataSheetDetailView> listEdit = editDataSheetDetailViewRepository.
-					findByDataSheetUtIdAndHeaderAttributeSequenceNo(model.getDataSheetId(), model.getHeaderAttributeSequenceNo());
+					findByDataSheetUtIdAndHeaderAttributeSequenceNo(model.getDataSheetId(), mmrDataSheetUtModel.getHeaderAttributeSequenceNo());
 
 			for (MmrEditDataSheetDetailView mmrEditDataSheetDetailView : listEdit) {
 				MmrNewDataSheetDetailView newView= new MmrNewDataSheetDetailView();
 				BeanUtils.copyProperties(mmrEditDataSheetDetailView, newView);
 				listNew.add(newView);
 			}
-			MmrDataSheetUtModel	nextModel= getHeaderWiseBaseAttributeList(listNew);
-			nextModel.setHeaderAttributeSequenceNo(prevHeader);
+//			model.setHeaderAttributeSequenceNo(nextHeader);
+			nextModel= getHeaderWiseBaseAttributeList(listNew);
+			BeanUtils.copyProperties(dataSheetUt,mmrDataSheetUtModel);
+			mmrDataSheetUtModel.setDataSheetId(dataSheetUt.getId());
+			mmrDataSheetUtModel.setHeaderAttributeSequenceNo(nextHeader);
+//			mmrDataSheetUtModel.setMaxHeaders(model.getMaxHeaders());
+//			mmrDataSheetUtModel.setMinHeaders(model.getMinHeaders());
+			mmrDataSheetUtModel.setHeaderAttributeSequenceNo(nextHeader);
+			mmrDataSheetUtModel.getDataSheetHeaderDetails().clear();
+			mmrDataSheetUtModel.getDataSheetHeaderDetails().addAll(nextModel.getDataSheetHeaderDetails());
+		}else {
+			long prevHeader;
+			if(mmrDataSheetUtModel.getMinHeaders()==(mmrDataSheetUtModel.getHeaderAttributeSequenceNo())) {
+				prevHeader=mmrDataSheetUtModel.getHeaderAttributeSequenceNo();
+			}else {
+				prevHeader=mmrDataSheetUtModel.getHeaderAttributeSequenceNo()-1;
+			}
+//			mmrDataSheetUtModel.setHeaderAttributeSequenceNo(prevHeader);
+			List<MmrNewDataSheetDetailView> listNew = new ArrayList<>();
+			List<MmrEditDataSheetDetailView> listEdit = editDataSheetDetailViewRepository.
+					findByDataSheetUtIdAndHeaderAttributeSequenceNo(model.getDataSheetId(), prevHeader);
+
+			for (MmrEditDataSheetDetailView mmrEditDataSheetDetailView : listEdit) {
+				MmrNewDataSheetDetailView newView= new MmrNewDataSheetDetailView();
+				BeanUtils.copyProperties(mmrEditDataSheetDetailView, newView);
+				listNew.add(newView);
+			}
+			nextModel= getHeaderWiseBaseAttributeList(listNew);
+			BeanUtils.copyProperties(dataSheetUt,mmrDataSheetUtModel);
+			mmrDataSheetUtModel.setDataSheetId(dataSheetUt.getId());
+			mmrDataSheetUtModel.setHeaderAttributeSequenceNo(prevHeader);
+//			mmrDataSheetUtModel.setMaxHeaders(model.getMaxHeaders());
+//			mmrDataSheetUtModel.setMinHeaders(model.getMinHeaders());
+			mmrDataSheetUtModel.setHeaderAttributeSequenceNo(prevHeader);
+			mmrDataSheetUtModel.getDataSheetHeaderDetails().clear();
 			mmrDataSheetUtModel.getDataSheetHeaderDetails().addAll(nextModel.getDataSheetHeaderDetails());
 		}
 		 

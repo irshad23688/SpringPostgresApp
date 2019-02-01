@@ -40,9 +40,12 @@ public class MmrTestSheetDetailUtView implements Serializable {
 	@Column(name="BASE_ATTRIBUTE_NAME" )
 	private String baseAttributeName;
 	
+	@Column(name="HEADER_ATTRIBUTE_SEQUENCE_NO" )
+	private BigDecimal headerAttributeSequenceNo;
+
 	@Column(name="BASE_ATTRIBUTE_SEQUENCE_NO" )
 	private BigDecimal baseAttributeSequenceNo;
-
+	
 	@Column
 	private BigDecimal status;
 
@@ -134,5 +137,14 @@ public class MmrTestSheetDetailUtView implements Serializable {
 		this.isMandatory = isMandatory;
 	}
 
+	public BigDecimal getHeaderAttributeSequenceNo() {
+		return headerAttributeSequenceNo;
+	}
+
+	public void setHeaderAttributeSequenceNo(BigDecimal headerAttributeSequenceNo) {
+		this.headerAttributeSequenceNo = headerAttributeSequenceNo;
+	}
+
+	
 	 
 }

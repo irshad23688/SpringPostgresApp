@@ -22,6 +22,7 @@ public interface TestSheetDetailUtViewRepository extends JpaRepository<MmrTestSh
 	 		"case when testsheetdtl.base_attribute_id is null then base.id else testsheetdtl.base_attribute_id end as base_attribute_id,\r\n" + 
 	 		"base.name as BASE_ATTRIBUTE_NAME,\r\n" + 
 	 		"case when testsheetdtl.base_attribute_sequence_no is null then 0 else testsheetdtl.base_attribute_sequence_no end as base_attribute_sequence_no,\r\n" + 
+	 		"case when testsheetdtl.header_attribute_sequence_no is null then 0 else testsheetdtl.header_attribute_sequence_no end as header_attribute_sequence_no,\r\n" + 
 	 		"case when testsheetdtl.ismanadatory is null then 0 else testsheetdtl.ismanadatory end as ismanadatory,\r\n" + 
 	 		"case when testsheetdtl.status is null then base.status else testsheetdtl.status end as status\r\n" + 
 	 		"FROM\r\n" + 

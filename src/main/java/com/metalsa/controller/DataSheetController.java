@@ -81,7 +81,7 @@ public class DataSheetController {
     		@PathVariable(value = "subClassId") Long subClassId) {
     	return dataSheetService.getNewDataTestSheetDetailByClassSubClass(classId,subClassId);
     }
-    @PostMapping("/datasheet/edit/")
+    @PostMapping("/datasheet/edit")
     public MmrDataSheetUtModel getDataSheet(@Valid @RequestBody MmrDataSheetUtModel model) {
     	return dataSheetService.getEditDatasheet(model);
     }

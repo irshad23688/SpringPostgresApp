@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 public class MmrTestSheetDetailUtModel extends MetalsaAbstractEntityModel {
 
 	private BigDecimal baseAttributeSequenceNo;
+	private BigDecimal headerAttributeSequenceNo;
 	private Long mmrBaseAttributeMasterUt;
 	private Long mmrHeaderAttributeMasterUt;
 	private Integer isMandatory;
@@ -49,4 +50,13 @@ public class MmrTestSheetDetailUtModel extends MetalsaAbstractEntityModel {
 		this.mmrHeaderAttributeMasterUt = mmrHeaderAttributeMasterUt;
 	}
 
+	public BigDecimal getHeaderAttributeSequenceNo() {
+		return headerAttributeSequenceNo;
+	}
+
+	public void setHeaderAttributeSequenceNo(BigDecimal headerAttributeSequenceNo) {
+		this.headerAttributeSequenceNo = headerAttributeSequenceNo;
+	}
+
+	
 }
