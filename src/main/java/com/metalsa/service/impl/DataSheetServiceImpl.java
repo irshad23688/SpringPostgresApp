@@ -90,7 +90,7 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 		if(null!=rootLocation && !rootLocation.isEmpty()) {
 			File direct = new File(rootLocation+File.separator+dataSheetId);
 			if(!direct.isDirectory()) {
-				direct.mkdir();
+				direct.mkdirs();
 			}
 			path = Paths.get(rootLocation+File.separator+dataSheetId);
 			try {
@@ -100,7 +100,7 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 				throw new RuntimeException(e.getMessage());
 			}
 		}
-		return rootLocation+File.separator+dataSheetId+File.separator+file.getOriginalFilename();	
+		return file.getOriginalFilename();	
 	}
 
 	@Override
@@ -389,7 +389,7 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 		/*if(dataSheetDetailUt.getUserSelectUom().equals(MetalsaConstant.SOM1)) {
 			dataSheetDetailUt.setTestingInformation(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformation());
 			dataSheetDetailUt.setUserUom1(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformation());
-			if(mmrDataSheetDetailUt.getBaseAttribute().getSom1ConversionFactor()!=null) {
+			if(mmrDataSheetDetailUt.getBaseAttribute().getSom1ConversionFactor()(x/100) x*100!=null) {
 				dataSheetDetailUt.setUserUom2("");
 			}
 		}else {

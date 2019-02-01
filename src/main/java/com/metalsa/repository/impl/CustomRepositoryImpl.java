@@ -118,8 +118,13 @@ public class CustomRepositoryImpl implements CustomRepository {
 		}
 		//populateTextBaseAttributePredicate(model, cb, root, predicates);
 		//populateTextMasterAttributePredicate(model, cb, root, predicates);
-		populateRangeBaseAttributePredicate(model, cb, root, predicates,datasheets);
-
+		//populateRangeBaseAttributePredicate(model, cb, root, predicates,datasheets);
+		List <Predicate> pred = new ArrayList();
+		populateRangeBaseAttributePredicate(model, cb, root, pred,datasheets);
+		if(!pred.isEmpty()) {
+		Predicate rangebasepredicate = cb.or((Predicate[]) pred.toArray(new Predicate[0]));
+		predicates.add(rangebasepredicate);
+		}
 		if(!predicates.isEmpty()) {
 			Predicate predicate = cb.and((Predicate[]) predicates.toArray(new Predicate[0]));
 			if(null!=revisionPredicate) {
