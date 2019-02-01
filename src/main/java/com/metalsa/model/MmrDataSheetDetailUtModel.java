@@ -2,6 +2,8 @@ package com.metalsa.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.metalsa.domain.MmrEditDataSheetDetailView;
 import com.metalsa.domain.MmrNewDataSheetDetailView;
@@ -14,6 +16,10 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 	private BigDecimal modifiedBy;
 	private String headerAttributeName;
 	private String baseAttributeName;
+	private String description;
+	private String placeHolderText;
+	private String symbol;
+	private String tooltip;
 	private BigDecimal baseAttributeSequenceNo;
 	private Integer isMandatory;
 	private String supplierInformationLhs;
@@ -24,7 +30,8 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 	private String testingInformation;
 	private String testingInformationTableType;
 	private String userSelectUom;
-	private String inputDataTypeName;
+	private String mmrDataTypeMasterUt;
+	private List dropDownValues = new ArrayList<>();
      
 
 
@@ -38,7 +45,11 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 		this.baseAttributeSequenceNo = detailView.getBaseAttributeSequenceNo();
 		this.isMandatory = detailView.getIsMandatory();
 		this.testSheetDetailId = detailView.getTestSheetDtlId();
-		this.inputDataTypeName=detailView.getInputDataTypeName();
+		this.mmrDataTypeMasterUt=detailView.getInputDataTypeName();
+		this.description=detailView.getDescription();
+		this.placeHolderText=detailView.getPlaceHolderText();
+		this.symbol=detailView.getSymbol();
+		this.tooltip=detailView.getTooltip();
 	}
 
 
@@ -56,7 +67,7 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 		this.testingInformation = detailView.getTestingInfo();
 		this.testingInformationTableType = detailView.getTestingInfoTableType();
 		this.userSelectUom = detailView.getUserSelectUom();
-		this.inputDataTypeName=detailView.getInputDataTypeName();
+		this.mmrDataTypeMasterUt=detailView.getInputDataTypeName();
 
 	}
  
@@ -180,18 +191,61 @@ public class MmrDataSheetDetailUtModel implements Serializable {
 	public void setUserSelectUom(String userSelectUom) {
 		this.userSelectUom = userSelectUom;
 	}
+ 
 
 
-	public String getInputDataTypeName() {
-		return inputDataTypeName;
+	public String getMmrDataTypeMasterUt() {
+		return mmrDataTypeMasterUt;
 	}
 
 
-	public void setInputDataTypeName(String inputDataTypeName) {
-		this.inputDataTypeName = inputDataTypeName;
+	public void setMmrDataTypeMasterUt(String mmrDataTypeMasterUt) {
+		this.mmrDataTypeMasterUt = mmrDataTypeMasterUt;
 	}
 
- 
-	
- 
+
+	public String getDescription() {
+		return description;
+	}
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+
+	public String getPlaceHolderText() {
+		return placeHolderText;
+	}
+
+
+	public void setPlaceHolderText(String placeHolderText) {
+		this.placeHolderText = placeHolderText;
+	}
+
+
+	public String getSymbol() {
+		return symbol;
+	}
+
+
+	public void setSymbol(String symbol) {
+		this.symbol = symbol;
+	}
+
+	public String getTooltip() {
+		return tooltip;
+	}
+
+	public void setTooltip(String tooltip) {
+		this.tooltip = tooltip;
+	}
+	public List getDropDownValues() {
+		return dropDownValues;
+	}
+
+	public void setDropDownValues(List dropDownValues) {
+		this.dropDownValues = dropDownValues;
+	}
+
 }

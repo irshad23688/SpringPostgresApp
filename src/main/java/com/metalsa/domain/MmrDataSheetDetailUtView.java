@@ -15,17 +15,17 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="MMR_DATA_SHEET_DETAIL_UT_VIEW")
-public class MmrDataSheetDetailUtView extends MmrDataSheetDetailUt implements Serializable {
+public class MmrDataSheetDetailUtView  implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name="ID")
 	private long id;
 	
-	@Column(name="TEST_SHEET_DTL_ID", insertable=false,updatable=false)
+	@Column(name="TEST_SHEET_DTL_ID")
 	private Long testSheetDtlId;
 	
-	@Column(name="mmr_test_sheet_ut_id", insertable=false,updatable=false)
+	@Column(name="mmr_test_sheet_ut_id")
 	private Long mmrTestSheetUtId;
 	
 	@Column(name="HEADER_ATTRIBUTE_ID")

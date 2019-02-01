@@ -1,17 +1,12 @@
 package com.metalsa.service.impl;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
-import com.metalsa.domain.MmrHeaderAttributeMasterUt;
 import com.metalsa.model.DashboardModel;
-import com.metalsa.model.DataSheetDashboardModel;
 import com.metalsa.repository.CustomRepository;
 import com.metalsa.service.DashboardSevice;
 

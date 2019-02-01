@@ -50,7 +50,7 @@ public class MmrHeaderAttributeMasterUt implements Serializable {
 	@Column(nullable=false, length=100)
 	private String name;
 
-	@Column(nullable=false, precision=38,insertable=false)
+	@Column(nullable=false, precision=38)
 	private BigDecimal status;
 	
 	//bi-directional many-to-one association to MmrBaseAttributeMasterUt

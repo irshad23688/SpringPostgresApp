@@ -13,6 +13,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 /**
  * The persistent class for the MMR_DATA_SHEET_DETAIL_UT database table.
@@ -79,6 +81,7 @@ public class MmrDataSheetDetailUt implements Serializable {
 	private String userUom2;
 
 	@ManyToOne
+	@JsonIgnore
 	private MmrDataSheetUt mmrDataSheetUt;
 
 	public MmrDataSheetDetailUt() {

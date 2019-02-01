@@ -45,6 +45,18 @@ public class MmrNewDataSheetDetailView implements Serializable{
 	@Column(name ="BASE_ATTRIBUTE_NAME")
 	private String baseAttributeName;
 
+	@Column(name ="description")
+	private String description;
+	
+	@Column(name ="place_holder_text")
+	private String placeHolderText;
+	
+	@Column(name ="symbol")
+	private String symbol;
+	
+	@Column(name ="tooltip")
+	private String tooltip;
+	
 	@Column(name ="ISMANADATORY")
 	private Integer isMandatory;
 
@@ -147,5 +159,38 @@ public class MmrNewDataSheetDetailView implements Serializable{
 		this.inputDataTypeName = inputDataTypeName;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getPlaceHolderText() {
+		return placeHolderText;
+	}
+
+	public void setPlaceHolderText(String placeHolderText) {
+		this.placeHolderText = placeHolderText;
+	}
+
+	public String getSymbol() {
+		return symbol;
+	}
+
+	public void setSymbol(String symbol) {
+		this.symbol = symbol;
+	}
+
+	public String getTooltip() {
+		return tooltip;
+	}
+
+	public void setTooltip(String tooltip) {
+		this.tooltip = tooltip;
+	}
+
+	
 	
 }

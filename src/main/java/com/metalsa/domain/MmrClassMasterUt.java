@@ -51,7 +51,7 @@ public class MmrClassMasterUt implements Serializable {
 	@Column(nullable=false, length=100)
 	private String name;
 
-	@Column(nullable=false, precision=38,insertable=false)
+	@Column(nullable=false, precision=38)
 	private BigDecimal status;
 	
 	@OneToMany(mappedBy="mmrClassMasterUt")

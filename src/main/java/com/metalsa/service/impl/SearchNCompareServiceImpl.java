@@ -1,5 +1,6 @@
 package com.metalsa.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -59,15 +60,17 @@ public class SearchNCompareServiceImpl implements SearchNCompareService {
 		SearchModel model = new SearchModel();
 		List<MmrHeaderAttributeMasterUt> textBasedHeader = new ArrayList<>();
 		List<MmrHeaderAttributeMasterUt> rangeBaseHeader = new ArrayList<>();
-		for (MmrHeaderAttributeMasterUt header : headerAttrRepository.findAll()) {
+		for (MmrHeaderAttributeMasterUt header : headerAttrRepository.findByIstableheaderFlagAndStatus(BigDecimal.ZERO, BigDecimal.ONE)) {
 			List<MmrBaseAttributeMasterUt> textBaseAttribute = new ArrayList<>();
 			List<MmrBaseAttributeMasterUt> rangeBaseAttribute = new ArrayList<>();
 			for (MmrBaseAttributeMasterUt baseAttribute : header.getMmrBaseAttributeMasterUts()) {
+				if(baseAttribute.getStatus().intValue()==1) {
 				if(textIds.contains(baseAttribute.getMmrDataTypeMasterUt().getId()+"")){
 					textBaseAttribute.add(baseAttribute);
 				}
 				if(rangeIds.contains(baseAttribute.getMmrDataTypeMasterUt().getId()+"")){
 					rangeBaseAttribute.add(baseAttribute);
+				}
 				}
 			}
 			MmrHeaderAttributeMasterUt textBase= new MmrHeaderAttributeMasterUt();
@@ -75,19 +78,21 @@ public class SearchNCompareServiceImpl implements SearchNCompareService {
 
 			if(textBaseAttribute.size()>0){
 				textBase.setMmrBaseAttributeMasterUts(textBaseAttribute);
+			textBasedHeader.add(textBase);
 			}else{
 				textBase.setMmrBaseAttributeMasterUts(new ArrayList<>());
 			}
-			textBasedHeader.add(textBase);
+//			textBasedHeader.add(textBase);
 
 			MmrHeaderAttributeMasterUt rangeBase=new MmrHeaderAttributeMasterUt();
 			BeanUtils.copyProperties(header, rangeBase);
 			if(rangeBaseAttribute.size()>0){
 				rangeBase.setMmrBaseAttributeMasterUts(rangeBaseAttribute);
+			rangeBaseHeader.add(rangeBase);
 			}else {
 				rangeBase.setMmrBaseAttributeMasterUts(new ArrayList<>());
 			}
-			rangeBaseHeader.add(rangeBase);
+//			rangeBaseHeader.add(rangeBase);
 		}
 		model.setRangeBaseHeader(rangeBaseHeader);
 		model.setTextBasedHeader(textBasedHeader);

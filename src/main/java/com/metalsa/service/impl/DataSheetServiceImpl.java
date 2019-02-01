@@ -11,11 +11,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.EntityManagerFactory;
-
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -33,9 +28,14 @@ import com.metalsa.domain.MmrNewDataSheetDetailView;
 import com.metalsa.model.MmrDataSheetDetailUtModel;
 import com.metalsa.model.MmrDataSheetHeaderModel;
 import com.metalsa.model.MmrDataSheetUtModel;
+import com.metalsa.repository.ClassRepository;
 import com.metalsa.repository.DataSheetRepository;
+import com.metalsa.repository.DataTypeRepository;
+import com.metalsa.repository.ManufacturerRepository;
 import com.metalsa.repository.MmrEditDataSheetDetailViewRepository;
 import com.metalsa.repository.MmrNewDataSheetDetailViewRepository;
+import com.metalsa.repository.RegionRepository;
+import com.metalsa.repository.SubClassRepository;
 import com.metalsa.service.DataSheetSevice;
 
 @Service
@@ -49,7 +49,19 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 	private DataSheetRepository dataSheetRepository ; 
 	
 	@Autowired
-	private EntityManagerFactory entityManagerFactory;
+	private ClassRepository classRepository ; 
+	
+	@Autowired
+	private SubClassRepository subClassRepository ; 
+	
+	@Autowired
+	private RegionRepository regionRepository ; 
+	
+	@Autowired
+	private ManufacturerRepository manufacturerRepository ; 
+	
+	@Autowired
+	private DataTypeRepository dataTypeRepository;
 	
 
 	@Autowired
@@ -142,6 +154,15 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 				headerModel.setHeaderAttributeName(detailView.getHeaderAttributeName());
 
 				MmrDataSheetDetailUtModel dataSheetDetailUtModel = new MmrDataSheetDetailUtModel(detailView);
+				 if(dataSheetDetailUtModel.getMmrDataTypeMasterUt().equalsIgnoreCase("Class Dropdown")) {
+					dataSheetDetailUtModel.setDropDownValues(classRepository.getClassByStatus(BigDecimal.ONE)); 
+				 }else if(dataSheetDetailUtModel.getMmrDataTypeMasterUt().equalsIgnoreCase("Subclass Dropdown")) {
+					 dataSheetDetailUtModel.setDropDownValues(subClassRepository.findSubClassByStatus(BigDecimal.ONE));
+				 }else if(dataSheetDetailUtModel.getMmrDataTypeMasterUt().equalsIgnoreCase("Region Dropdown")) {
+					 dataSheetDetailUtModel.setDropDownValues(regionRepository.findByStatus(BigDecimal.ONE));
+				 }else if(dataSheetDetailUtModel.getMmrDataTypeMasterUt().equalsIgnoreCase("Manufacturer Dropdown")) {
+					 dataSheetDetailUtModel.setDropDownValues(manufacturerRepository.findByStatus(BigDecimal.ONE));
+				 }
 				headerModel.addDataSheetDetails(dataSheetDetailUtModel);
 				mapHeaderToDetail.put(headerModel.getHeaderAttributeId(),headerModel);
 			}
