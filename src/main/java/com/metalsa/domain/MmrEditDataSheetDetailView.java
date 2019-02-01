@@ -88,6 +88,21 @@ public class MmrEditDataSheetDetailView implements Serializable{
 
 	@Column(name ="BASE_ATTRIBUTE_SEQUENCE_NO")
 	private BigDecimal baseAttributeSequenceNo;
+	
+	@Column(name ="description")
+	private String description;
+	
+	@Column(name ="place_holder_text")
+	private String placeHolderText;
+	
+	@Column(name ="symbol")
+	private String symbol;
+	
+	@Column(name ="tooltip")
+	private String tooltip;
+	
+	@Column(name ="default_value")
+	private String defaultValue;
 
 	public Long getId() {
 		return id;
@@ -289,6 +304,47 @@ public class MmrEditDataSheetDetailView implements Serializable{
 		this.frontDataPattern = frontDataPattern;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getPlaceHolderText() {
+		return placeHolderText;
+	}
+
+	public void setPlaceHolderText(String placeHolderText) {
+		this.placeHolderText = placeHolderText;
+	}
+
+	public String getSymbol() {
+		return symbol;
+	}
+
+	public void setSymbol(String symbol) {
+		this.symbol = symbol;
+	}
+
+	public String getTooltip() {
+		return tooltip;
+	}
+
+	public void setTooltip(String tooltip) {
+		this.tooltip = tooltip;
+	}
+
+	public String getDefaultValue() {
+		return defaultValue;
+	}
+
+	public void setDefaultValue(String defaultValue) {
+		this.defaultValue = defaultValue;
+	}
+
+	
 	
 	
 }

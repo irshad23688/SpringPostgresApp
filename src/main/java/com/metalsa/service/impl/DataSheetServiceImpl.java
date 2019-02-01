@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -161,6 +162,7 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 			}else {
 				if(dataSheetUtModel==null) {
 					dataSheetUtModel = new MmrDataSheetUtModel();
+					dataSheetUtModel.setDataSheetId(detailView.getDataSheetUtId());
 					dataSheetUtModel.setClassId(detailView.getClassId());
 					dataSheetUtModel.setSubclassId(detailView.getSubClassId());
 					dataSheetUtModel.setTestSheetId(detailView.getTestSheetId());
@@ -208,15 +210,18 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 			MmrDataSheetDetailUtModel supplierLhs = new MmrDataSheetDetailUtModel();
 			supplierLhs.setMmrDataTypeMasterUt(MetalsaConstant.DATA_TYPE_TEXT);
 			supplierLhs.setFrontDataType(MetalsaConstant.FRONTEND_DATA_TYPE_TEXT);
+			supplierLhs.setTestingInformation(dataSheetDetailUtModel.getSupplierInformationLhs());
 			
 			MmrDataSheetDetailUtModel supplierOperator = new MmrDataSheetDetailUtModel();
 			supplierOperator.setMmrDataTypeMasterUt(MetalsaConstant.DATA_TYPE_DROPDOWN);
 			supplierOperator.setFrontDataType(MetalsaConstant.FRONTEND_DATA_TYPE_DROPDOWN);
 			supplierOperator.setDropDownValues(MetalsaConstant.SUPPLIER_DROPDOWN);
+			supplierOperator.setTestingInformation(dataSheetDetailUtModel.getSupplierInformationOperator());
 			
 			MmrDataSheetDetailUtModel supplierRhs = new MmrDataSheetDetailUtModel();
 			supplierRhs.setMmrDataTypeMasterUt(MetalsaConstant.DATA_TYPE_DROPDOWN);
 			supplierRhs.setFrontDataType(MetalsaConstant.FRONTEND_DATA_TYPE_DROPDOWN);
+			supplierRhs.setTestingInformation(dataSheetDetailUtModel.getSupplierInformationRhs());
 			
 			viewModel.getSupplierInfo().add(supplierLhs); 
 			viewModel.getSupplierInfo().add(supplierOperator); 
@@ -357,8 +362,8 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 		dataSheetDetailUt.setModifiedBy(mmrDataSheetDetailUt.getBaseAttribute().getModifiedBy());
 		dataSheetDetailUt.setStatus(model.getStatus());
 		dataSheetDetailUt.setSupplierInformationLhs(mmrDataSheetDetailUt.getSupplierInfo().get(0).getTestingInformation());
-		dataSheetDetailUt.setSupplierInformationOperator(mmrDataSheetDetailUt.getSupplierInfo().get(0).getTestingInformation());
-		dataSheetDetailUt.setSupplierInformationRhs(mmrDataSheetDetailUt.getSupplierInfo().get(0).getTestingInformation());
+		dataSheetDetailUt.setSupplierInformationOperator(mmrDataSheetDetailUt.getSupplierInfo().get(1).getTestingInformation());
+		dataSheetDetailUt.setSupplierInformationRhs(mmrDataSheetDetailUt.getSupplierInfo().get(2).getTestingInformation());
 		dataSheetDetailUt.setSupplierInformationTableType(mmrDataSheetDetailUt.getSupplierInfo().get(0).getTestingInformationTableType());
 		dataSheetDetailUt.setTestingInformation(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformation());
 		dataSheetDetailUt.setTestingInformationTableType(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformationTableType());
@@ -382,32 +387,55 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 
 	@Override
 	public MmrDataSheetUtModel getDataSheetById(MmrDataSheetUt dataSheetUt) {
-		return getEditHeaderWiseBaseAttributeList(dataSheetUt);
+		
+//		return getEditHeaderWiseBaseAttributeList(editDataSheetDetailViewRepository.findByDataSheetUtId(dataSheetUt.getId()));
+		List<MmrNewDataSheetDetailView> listNew = new ArrayList<>();
+		List<MmrEditDataSheetDetailView> listEdit = editDataSheetDetailViewRepository.findByDataSheetUtId(dataSheetUt.getId());
+
+		for (MmrEditDataSheetDetailView mmrEditDataSheetDetailView : listEdit) {
+			MmrNewDataSheetDetailView newView= new MmrNewDataSheetDetailView();
+			BeanUtils.copyProperties(mmrEditDataSheetDetailView, newView);
+			listNew.add(newView);
+		}
+		return getHeaderWiseBaseAttributeList(listNew);
 	}
 
-	private MmrDataSheetUtModel getEditHeaderWiseBaseAttributeList(MmrDataSheetUt dataSheetUt) {
-		Map<Long,MmrDataSheetHeaderModel> mapHeaderToDetail = new LinkedHashMap<Long,MmrDataSheetHeaderModel>();
+	private MmrDataSheetUtModel getEditHeaderWiseBaseAttributeList(List<MmrEditDataSheetDetailView> list) {
+		//		MmrDataTestSheetDetailUtViewModel modelView = new MmrDataTestSheetDetailUtViewModel();
 		MmrDataSheetUtModel  dataSheetUtModel =null;
-		for(MmrEditDataSheetDetailView detailView : editDataSheetDetailViewRepository.findByDataSheetUtId(dataSheetUt.getId())) {
+/*		Map<Long,MmrDataSheetHeaderModel> mapHeaderToDetail = new LinkedHashMap<Long,MmrDataSheetHeaderModel>();
+		Map<Long,MmrDataSheetDetailUtModel> mapListViewDetail = new LinkedHashMap<Long,MmrDataSheetDetailUtModel>();
+		for(MmrEditDataSheetDetailView detailView : list) {
 			if(mapHeaderToDetail.containsKey(detailView.getHeaderAttributeId())){
-				MmrDataSheetDetailUtModel dataSheetDetailUtModel = new MmrDataSheetDetailUtModel(detailView);
-				mapHeaderToDetail.get(detailView.getHeaderAttributeId()).addDataSheetDetails(dataSheetDetailUtModel);
+				MmrNewDataSheetDetailView newDatasheetView = new MmrNewDataSheetDetailView();
+				BeanUtils.copyProperties(detailView,newDatasheetView);
+				MmrDataSheetDetailUtModel dataSheetDetailUtModel =datasheetDetailMapping(detailView,mapListViewDetail);
+				if(dataSheetDetailUtModel!=null) {
+					mapHeaderToDetail.get(detailView.getHeaderAttributeId()).addDataSheetDetails(datasheetDetailMapping(detailView,mapListViewDetail));
+				}
 			}else {
 				if(dataSheetUtModel==null) {
-					dataSheetUtModel = new MmrDataSheetUtModel(dataSheetUt);
+					dataSheetUtModel = new MmrDataSheetUtModel();
+					dataSheetUtModel.setClassId(detailView.getClassId());
+					dataSheetUtModel.setSubclassId(detailView.getSubClassId());
+					dataSheetUtModel.setTestSheetId(detailView.getTestSheetId());
 				}
 				MmrDataSheetHeaderModel headerModel= new MmrDataSheetHeaderModel();
 				headerModel.setHeaderAttributeId(detailView.getHeaderAttributeId());
 				headerModel.setHeaderAttributeName(detailView.getHeaderAttributeName());
-				
-				MmrDataSheetDetailUtModel dataSheetDetailUtModel = new MmrDataSheetDetailUtModel(detailView);
-				headerModel.addDataSheetDetails(dataSheetDetailUtModel);
+				MmrDataSheetDetailUtModel dataSheetDetailUtModel =datasheetDetailMapping(detailView,mapListViewDetail);
+				if(dataSheetDetailUtModel!=null) {
+					headerModel.addDataSheetDetails(datasheetDetailMapping(detailView,mapListViewDetail));
+				}
 				mapHeaderToDetail.put(headerModel.getHeaderAttributeId(),headerModel);
 			}
 		}
+		for (MmrDataSheetDetailUtModel listViewModel : mapListViewDetail.values()) {
+			mapHeaderToDetail.get(listViewModel.getHeaderAttributeId()).addDataSheetDetails(listViewModel);
+		}
 		List<MmrDataSheetHeaderModel> result=new ArrayList(mapHeaderToDetail.values());
 		dataSheetUtModel.setDataSheetHeaderDetails(result);
-		return dataSheetUtModel;
+*/		return dataSheetUtModel;
 	}
 
 
