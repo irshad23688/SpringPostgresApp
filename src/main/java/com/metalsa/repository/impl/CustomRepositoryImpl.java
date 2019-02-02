@@ -11,7 +11,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.hibernate.MultiIdentifierLoadAccess;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,7 +86,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 		if(!model.isShowRevision()) {
 			revisionPredicate = cb.equal(root.get("status"),MetalsaConstant.STATUS.APPROVED);
 		}
-
+/*
 		MmrSysConfigUt configUt =  sysConfigRepository.findByParamName("STATIC_SEARCH_BASE_ATTRIBUTE_IDS");
 		Predicate staticPredicate = null;
 		if(null!= configUt) {
@@ -97,7 +96,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 				staticPredicates.add(cb.equal(root.get("baseAttributeId"),id));
 			}
 			staticPredicate = cb.or((Predicate[]) staticPredicates.toArray(new Predicate[0]));
-		}
+		}*/
 
 		populateTextBaseAttributePredicate(model, cb, root, predicates);
 		populateTextMasterAttributePredicate(model, cb, root, predicates);
@@ -107,20 +106,32 @@ public class CustomRepositoryImpl implements CustomRepository {
 			Predicate predicate = cb.or((Predicate[]) predicates.toArray(new Predicate[0]));
 			if(null!=revisionPredicate) {
 				Predicate pred1 = cb.and(revisionPredicate);
-				Predicate pred2 = cb.or(staticPredicate,predicate);
+				Predicate pred2 = cb.or(predicate);
+//				Predicate pred2 = cb.or(staticPredicate,predicate);
 
 				cr.select(root).where(cb.and(pred1,pred2));
 			}else {
-				cr.select(root).where(cb.or(predicate,staticPredicate));
+//				cr.select(root).where(cb.or(predicate,staticPredicate));
+				cr.select(root).where(cb.or(predicate));
 			}
 		}else {
-			cr.select(root).where(cb.and(staticPredicate));
+//			cr.select(root).where(cb.and(staticPredicate));
+			cr.select(root);
 		}
 
 		Session session = (Session)entityManagerFactory.createEntityManager().getDelegate();
 
 		Query<MmrSearchDataSheetView> query = session.createQuery(cr);
-		return query.getResultList();
+		List<Long> datasheetIds= new ArrayList<>();
+		for (MmrSearchDataSheetView dataSheetId : query.getResultList()) {
+			
+			if(!datasheetIds.contains(dataSheetId.getDataSheetId())) {
+				datasheetIds.add(dataSheetId.getDataSheetId());
+			}
+		}
+		List<MmrSearchDataSheetView> basicList=getBasicFieldsSearchDataSheetView(datasheetIds);
+		basicList.addAll(query.getResultList());
+		return basicList;
 	}
 
 	private void populateRangeBaseAttributePredicate(SearchModel model, CriteriaBuilder cb,
@@ -241,5 +252,40 @@ public class CustomRepositoryImpl implements CustomRepository {
 		entityManager.getTransaction().commit();
 		System.out.println(id);
 	}
+	
+	public List<MmrSearchDataSheetView> getBasicFieldsSearchDataSheetView(List<Long> datasheetIds) {
+		CriteriaBuilder cb = entityManagerFactory.getCriteriaBuilder();
+		CriteriaQuery<MmrSearchDataSheetView> cr = cb.createQuery(MmrSearchDataSheetView.class);
+		Root<MmrSearchDataSheetView> root = cr.from(MmrSearchDataSheetView.class);
+		List<Predicate> predicates = new ArrayList<>();
+
+		MmrSysConfigUt configUt =  sysConfigRepository.findByParamName("STATIC_SEARCH_BASE_ATTRIBUTE_IDS");
+		Predicate staticPredicate = null;
+		if(null!= configUt) {
+			List<Predicate> staticPredicates = new ArrayList<>();
+			String[] baseAttributeIds = configUt.getParamValue().split(",");
+			for (String id : baseAttributeIds) {
+				staticPredicates.add(cb.equal(root.get("baseAttributeId"),id));
+			}
+			staticPredicate = cb.or((Predicate[]) staticPredicates.toArray(new Predicate[0]));
+		}
+		for (Long id : datasheetIds) {
+			predicates.add(cb.equal(root.get("dataSheetId"),id));
+		}
+//		Predicate predicate = cb.or((Predicate[]) predicates.toArray(new Predicate[0]));
+//		cr.select(root).where(predicate);
+
+		if(!predicates.isEmpty()) {
+			Predicate predicate = cb.or((Predicate[]) predicates.toArray(new Predicate[0]));
+			 
+				cr.select(root).where(cb.and(predicate,staticPredicate));
+		} 
+
+		Session session = (Session)entityManagerFactory.createEntityManager().getDelegate();
+
+		Query<MmrSearchDataSheetView> query = session.createQuery(cr);
+		return query.getResultList();
+	}
+
 
 }
