@@ -2,6 +2,7 @@ package com.metalsa.controller;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,7 +10,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -151,7 +151,7 @@ public class DataSheetController {
 	}
     
     @PostMapping("/datasheet/updatestatus")
-	public ResponseEntity<String> uploadStatus(@Valid @RequestBody DashboardModel model) {
+	public List<String> uploadStatus(@Valid @RequestBody DashboardModel model) {
 		 
 //    	dataSheetRepository.setStatusForDataSheet(status, id);
 //    	customRepository.updateDatasheetByStatus(new BigDecimal(status), id);
@@ -162,8 +162,7 @@ public class DataSheetController {
     	ut.setApprovedOn(new Timestamp( new Date().getTime()) );
     	
     	dataSheetRepository.save(ut);
-    	return ResponseEntity.ok()
-				.body("success");
+    	return new ArrayList<>();
 	}
 
 }

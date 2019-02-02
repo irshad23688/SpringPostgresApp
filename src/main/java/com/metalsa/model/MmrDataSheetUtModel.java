@@ -25,6 +25,7 @@ public class MmrDataSheetUtModel implements Serializable {
 	private Long subclassId;
 	private Long testSheetId;
 	private Long headerAttributeSequenceNo;
+	private Long currentSequenceNo=0l;
 	private Long maxHeaders;
 	private Long minHeaders;
 	private String traverseFlag;
@@ -169,9 +170,26 @@ public class MmrDataSheetUtModel implements Serializable {
 	public void setAction(String action) {
 		this.action = action;
 	}
- 
 
-	 
- 	
+	public Long getCurrentSequenceNo() {
+		/*if(headerAttributeSequenceNo!=null) {
+			Long sequenceNo=headerAttributeSequenceNo-1;
+			if(traverseFlag.equalsIgnoreCase("N")) {
+				sequenceNo=sequenceNo-1;
+			}else if(traverseFlag.equalsIgnoreCase("P")) {
+				sequenceNo=sequenceNo-1;
+			}
+			if(sequenceNo>maxHeaders || sequenceNo<minHeaders) {
+				sequenceNo=headerAttributeSequenceNo;
+			}
+			this.currentSequenceNo=sequenceNo;
+			
+		}*/
+		return currentSequenceNo;
+	}
+
+	public void setCurrentSequenceNo(Long currentSequenceNo) {
+		this.currentSequenceNo = currentSequenceNo;
+	}
 
 }

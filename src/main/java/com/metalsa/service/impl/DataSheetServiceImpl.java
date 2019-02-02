@@ -185,6 +185,7 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 					if(nextHeader>max) {
 						nextHeader=min;
 					}
+					dataSheetUtModel.setCurrentSequenceNo(min);
 					dataSheetUtModel.setHeaderAttributeSequenceNo(nextHeader);
 					dataSheetUtModel.setMinHeaders(min);
 					dataSheetUtModel.setMaxHeaders(max);
@@ -330,6 +331,7 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 				nextHeader=model.getMaxHeaders();
 				throw new ExceptionHandler("Max Header", "is", "Reached");
 			}
+			mmrDataSheetUtModel.setCurrentSequenceNo(model.getHeaderAttributeSequenceNo());
 			mmrDataSheetUtModel.setHeaderAttributeSequenceNo(nextHeader);
 			MmrDataSheetUtModel	nextModel=null;
 			if(model.getAction().equalsIgnoreCase("View")|| model.getAction().equalsIgnoreCase("Update")) {
@@ -355,8 +357,10 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 			}else {
 				prevHeader=model.getHeaderAttributeSequenceNo()-1;
 			}
+
 			mmrDataSheetUtModel.setHeaderAttributeSequenceNo(prevHeader);
-			List<MmrNewDataSheetDetailView> listNew = convertEditListtoNewList(model, dataSheetUt);
+			mmrDataSheetUtModel.setCurrentSequenceNo(prevHeader);
+			List<MmrNewDataSheetDetailView> listNew = convertEditListtoNewList(mmrDataSheetUtModel, dataSheetUt);
 			MmrDataSheetUtModel	nextModel= getHeaderWiseBaseAttributeList(listNew);
 			mmrDataSheetUtModel.getDataSheetHeaderDetails().addAll(nextModel.getDataSheetHeaderDetails());
 		}
@@ -635,10 +639,12 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 			nextModel= getHeaderWiseBaseAttributeList(listNew);
 			BeanUtils.copyProperties(dataSheetUt,mmrDataSheetUtModel);
 			mmrDataSheetUtModel.setDataSheetId(dataSheetUt.getId());
+			mmrDataSheetUtModel.setCurrentSequenceNo(mmrDataSheetUtModel.getHeaderAttributeSequenceNo());
 			mmrDataSheetUtModel.setHeaderAttributeSequenceNo(nextHeader);
 //			mmrDataSheetUtModel.setMaxHeaders(model.getMaxHeaders());
 //			mmrDataSheetUtModel.setMinHeaders(model.getMinHeaders());
 			mmrDataSheetUtModel.setHeaderAttributeSequenceNo(nextHeader);
+			mmrDataSheetUtModel.setHeaderAttributeSequenceNo(mmrDataSheetUtModel.getHeaderAttributeSequenceNo());
 			mmrDataSheetUtModel.getDataSheetHeaderDetails().clear();
 			mmrDataSheetUtModel.getDataSheetHeaderDetails().addAll(nextModel.getDataSheetHeaderDetails());
 		}else {
