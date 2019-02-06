@@ -53,6 +53,7 @@ public class MetalsaConstant {
 	public static final List<String> SUPPLIER_DROPDOWN=Arrays.asList("SELECT","-",">","<","<=",">=");
 	public static final List<String> LISTVIEW_HEADER_DATA=Arrays.asList("SN","Base Attribute Name","Testing Information","UOM","Supplier Information","UOM");
 	public static final String DATA_TYPE_LISTVIEW = "ListView";
+	public static final String METALSA_DESIGNATION = "Metalsa Designation";
 	
 
 }

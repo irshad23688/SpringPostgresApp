@@ -340,7 +340,7 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 			}else {
 				nextModel= getHeaderWiseBaseAttributeList(
 						newDataSheetDetailViewRepository.findByClassIdAndSubClassIdAndHeaderAttributeSequenceNo(
-								model.getClassId(), model.getSubclassId(), nextHeader));
+								model.getClassId(), model.getSubclassId(), model.getHeaderAttributeSequenceNo()));
 				
 			}
 			mmrDataSheetUtModel.getDataSheetHeaderDetails().addAll(nextModel.getDataSheetHeaderDetails());
@@ -444,6 +444,9 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 			dataSheetDetailUt = new MmrDataSheetDetailUt();
 		}
 		//BeanUtils.copyProperties(sheetDetailUtModel, dataSheetDetailUt,new String[]{"id"});
+		if(sheetDetailUtModel.getBaseAttributeName().equalsIgnoreCase(MetalsaConstant.METALSA_DESIGNATION)) {
+			dataSheetUt.setDataSheetName(sheetDetailUtModel.getTestingInformation());
+		}
 		dataSheetDetailUt.setCreatedBy(model.getCreatedBy());
 		dataSheetDetailUt.setModifiedBy(sheetDetailUtModel.getModifiedBy());
 		dataSheetDetailUt.setStatus(model.getStatus());
