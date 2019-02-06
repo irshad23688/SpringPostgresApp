@@ -51,6 +51,9 @@ public class MmrDataSheetUt implements Serializable {
 	@Column(nullable=false, precision=38)
 	private BigDecimal revision;
 
+//	@Column(name="REGION_ID", precision=38)
+//	private BigDecimal regionId;
+	
 	@Column(nullable=false, precision=38)
 	private BigDecimal status;
 

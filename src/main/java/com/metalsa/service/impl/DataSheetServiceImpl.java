@@ -355,7 +355,7 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 			if(model.getMinHeaders()==(model.getHeaderAttributeSequenceNo())) {
 				prevHeader=model.getHeaderAttributeSequenceNo();
 			}else {
-				prevHeader=model.getHeaderAttributeSequenceNo()-1;
+				prevHeader=model.getHeaderAttributeSequenceNo()-2;
 			}
 
 			mmrDataSheetUtModel.setHeaderAttributeSequenceNo(prevHeader);
@@ -679,6 +679,12 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 		}
 		 
 		return mmrDataSheetUtModel;
+	}
+
+	@Override
+	public String getNewRevisonNumber(Long classId, Long subClassId, Long regionId) {
+		
+		return null;
 	}
 
 

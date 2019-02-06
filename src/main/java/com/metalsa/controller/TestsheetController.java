@@ -1,5 +1,6 @@
 package com.metalsa.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -47,7 +48,14 @@ public class TestsheetController {
     
     @PostMapping("/testsheet")
     public List<MmrTestSheetUtModel> createTestsheet(@Valid @RequestBody MmrTestSheetUt testSheetUt) {
-    	 testSheetRepository.save(testSheetUt);
+    	
+    	List<MmrTestSheetUt> oldTestSheetList=testSheetRepository.
+    			findByMmrClassMasterUtAndMmrSubclassMasterUt(testSheetUt.getMmrClassMasterUt(), testSheetUt.getMmrSubclassMasterUt());
+    	for (MmrTestSheetUt mmrTestSheetUt : oldTestSheetList) {
+    		mmrTestSheetUt.setStatus(BigDecimal.ZERO);
+    		testSheetRepository.save(mmrTestSheetUt);
+		}
+    	testSheetRepository.save(testSheetUt);
     	return testSheetService.getAll();
     }
 

@@ -81,6 +81,11 @@ public class DataSheetController {
     		@PathVariable(value = "subClassId") Long subClassId) {
     	return dataSheetService.getNewDataTestSheetDetailByClassSubClass(classId,subClassId);
     }
+    @GetMapping("/datasheet/revisionnumber/{classId}/{subClassId}/{regionId}")
+    public String createNewDataSheet(@PathVariable(value = "classId") Long classId,
+    		@PathVariable(value = "subClassId") Long subClassId,@PathVariable(value = "classId") Long regionId) {
+    	return dataSheetService.getNewRevisonNumber(classId,subClassId,regionId);
+    }
     @PostMapping("/datasheet/edit")
     public MmrDataSheetUtModel getDataSheet(@Valid @RequestBody MmrDataSheetUtModel model) {
     	return dataSheetService.getEditDatasheet(model);
@@ -160,6 +165,8 @@ public class DataSheetController {
     	ut.setStatus(new BigDecimal(model.getStatus()));
     	ut.setApprovedBy(new BigDecimal(model.getApprovedby()));
     	ut.setApprovedOn(new Timestamp( new Date().getTime()) );
+    	ut.setModifiedBy(new BigDecimal(model.getApprovedby()));
+    	ut.setModifiedOn(new Timestamp( new Date().getTime()) );
     	
     	dataSheetRepository.save(ut);
     	return new ArrayList<>();

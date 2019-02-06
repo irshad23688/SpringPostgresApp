@@ -216,7 +216,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 		sql = String.format(" Select datasheet.id as datasheetId, datasheet.DATA_SHEET_NAME as datasheetName, (Select USERNAME from MMR_USER_UT where id = datasheet.modified_by) as userName," + 
 				" to_char(datasheet.created_on, 'DD-MM-YYYY') as createdOn, to_char(datasheet.approved_on, 'DD-MM-YYYY') as apprivedOn, " + 
 				" (Select USERNAME from MMR_USER_UT where id = datasheet.approved_by) as approvedBy  " + 
-				" FROM MMR_DATA_SHEET_UT datasheet WHERE datasheet.modified_by = %s and datasheet.status =1 ",user);
+				" FROM MMR_DATA_SHEET_UT datasheet WHERE datasheet.modified_by = %s ",user);
 
 		Query query = (Query) entityManagerFactory.createEntityManager().createNativeQuery(sql);
 		List<Object[]> result = query.getResultList(); 
