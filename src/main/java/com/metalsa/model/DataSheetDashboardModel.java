@@ -3,6 +3,16 @@ package com.metalsa.model;
 public class DataSheetDashboardModel {
 	
 	private String datasheetId, datasheetName, addedBy, createdOn, approvedBy, approvedOn, userName;
+	private String Status;
+	
+	
+	public String getStatus() {
+		return Status;
+	}
+
+	public void setStatus(String status) {
+		Status = status;
+	}
 
 	public String getDatasheetId() {
 		return datasheetId;

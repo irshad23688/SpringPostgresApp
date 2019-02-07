@@ -25,6 +25,7 @@ import com.metalsa.domain.MmrTestSheetUt;
 import com.metalsa.model.DataSheetDashboardModel;
 import com.metalsa.model.SearchBaseModel;
 import com.metalsa.model.SearchModel;
+import com.metalsa.model.UserMasterModel;
 import com.metalsa.repository.CustomRepository;
 import com.metalsa.repository.MMRSearchDataSheetviewRepository;
 import com.metalsa.repository.SysConfigRepository;
@@ -213,9 +214,9 @@ public class CustomRepositoryImpl implements CustomRepository {
 
 		List<DataSheetDashboardModel> lstResultModel = new ArrayList();
 		String sql;
-		sql = String.format(" Select datasheet.id as datasheetId, datasheet.DATA_SHEET_NAME as datasheetName, (Select USERNAME from MMR_USER_UT where id = datasheet.modified_by) as userName," + 
+		sql = String.format(" Select datasheet.id as datasheetId, datasheet.DATA_SHEET_NAME as datasheetName, (Select USERNAME from MMR_USER_UT where id = datasheet.created_by) as addedBy," + 
 				" to_char(datasheet.created_on, 'DD-MM-YYYY') as createdOn, to_char(datasheet.approved_on, 'DD-MM-YYYY') as apprivedOn, " + 
-				" (Select USERNAME from MMR_USER_UT where id = datasheet.approved_by) as approvedBy  " + 
+				" (Select USERNAME from MMR_USER_UT where id = datasheet.approved_by) as approvedBy, datasheet.status as status  " + 
 				" FROM MMR_DATA_SHEET_UT datasheet WHERE datasheet.modified_by = %s ",user);
 
 		Query query = (Query) entityManagerFactory.createEntityManager().createNativeQuery(sql);
@@ -224,11 +225,11 @@ public class CustomRepositoryImpl implements CustomRepository {
 			DataSheetDashboardModel model = new DataSheetDashboardModel();
 			model.setDatasheetId(objects[0].toString());
 			model.setDatasheetName(objects[1].toString());
-			model.setUserName((objects[2] == null )? null : objects[2].toString());
+			model.setAddedBy((objects[2] == null )? null : objects[2].toString());
 			model.setCreatedOn((objects[3] == null )? null : objects[3].toString());
 			model.setApprovedOn((objects[4] == null )? null : objects[4].toString());
 			model.setApprovedBy((objects[5] == null )? null : objects[5].toString());
-
+			model.setStatus((objects[6] == null )? null : objects[6].toString());
 			lstResultModel.add(model);
 		}
 
@@ -305,4 +306,31 @@ public class CustomRepositoryImpl implements CustomRepository {
 	}
 
 
+	@Override
+	public UserMasterModel findUserDetailsByUserId(Long userId) {
+		UserMasterModel userMasterModel = new UserMasterModel();
+		String sql;
+		sql = String.format(" Select usr.id as userid, usr.NAME as name, lvl.description as role, rgn.description as region, sysdate as currentDate\n" + 
+				"from mmr_user_ut usr, mmr_Level_function_ut lvlFunc, mmr_Level_ut lvl  , mmr_region_master_ut rgn\n" + 
+				"where lvl.id = lvlFunc.level_id and lvlFunc.status = 1 and lvlFunc.id = usr.level_function_id \n" + 
+				"and rgn.id = usr.region_id and usr.status =1 and usr.id = %s ",userId);
+
+		Query query = (Query) entityManagerFactory.createEntityManager().createNativeQuery(sql);
+		List<Object[]> resultSet = query.getResultList(); 
+		System.out.println(" result :"+resultSet.toString());
+		for (Object[] result : resultSet) {
+
+			if (null!=result) {
+				userMasterModel.setUserId((result[0] == null )? null : result[0].toString());
+				userMasterModel.setUserName((result[1] == null )? null : result[1].toString());
+				userMasterModel.setRole((result[2] == null )? null : result[2].toString());
+				userMasterModel.setRegion((result[3] == null )? null : result[3].toString());
+				userMasterModel.setCurrentDate((result[4] == null )? null : result[4].toString());
+				break;	
+			}
+		}
+
+		return userMasterModel;
+
+	}
 }

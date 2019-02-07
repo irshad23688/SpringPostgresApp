@@ -9,6 +9,7 @@ import com.metalsa.domain.MmrSearchDataSheetView;
 import com.metalsa.domain.MmrTestSheetUt;
 import com.metalsa.model.DataSheetDashboardModel;
 import com.metalsa.model.SearchModel;
+import com.metalsa.model.UserMasterModel;
 
 public interface CustomRepository {
 
@@ -19,5 +20,6 @@ public interface CustomRepository {
 	List<DataSheetDashboardModel> getDatasheetForDashboard(BigDecimal user);
 	List<DataSheetDashboardModel> findDatasheetByStatus(BigDecimal status);
 	String updateDatasheetByStatus(BigDecimal status,Long id);
+	UserMasterModel findUserDetailsByUserId(Long userId);
 
 }
