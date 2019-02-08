@@ -12,4 +12,6 @@ import com.metalsa.domain.MmrRegionMasterUt;
 public interface RegionRepository extends JpaRepository<MmrRegionMasterUt, Long> {
 	
 	List<MmrRegionMasterUt> findByStatus(BigDecimal status);
+	
+	MmrRegionMasterUt findByName(String name);
 }

@@ -32,4 +32,8 @@ public interface DataSheetRepository extends JpaRepository<MmrDataSheetUt, Long>
 	 @Transactional
 	@Query("update MmrDataSheetUt u set u.status = :status where u.id = :id")
 	int updateMmrDataSheetUtSetStatusForId(@Param("status") BigDecimal status, @Param("id") Long id);
+	 
+	 @Query(value = "select max(v.revision)from mmr_data_sheet_ut v where v.class_id=?1 and v.subclass_id=?2 and v.region_id=?3", 
+				nativeQuery=true)
+		String getMaxHeaderCount(Long classId,Long subClassId,Long regionId);
 }

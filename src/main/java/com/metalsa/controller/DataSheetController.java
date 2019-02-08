@@ -83,7 +83,7 @@ public class DataSheetController {
     }
     @GetMapping("/datasheet/revisionnumber/{classId}/{subClassId}/{regionId}")
     public String createNewDataSheet(@PathVariable(value = "classId") Long classId,
-    		@PathVariable(value = "subClassId") Long subClassId,@PathVariable(value = "classId") Long regionId) {
+    		@PathVariable(value = "subClassId") Long subClassId,@PathVariable(value = "regionId") Long regionId) {
     	return dataSheetService.getNewRevisonNumber(classId,subClassId,regionId);
     }
     @PostMapping("/datasheet/edit")

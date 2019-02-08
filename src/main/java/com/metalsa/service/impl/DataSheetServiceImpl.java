@@ -29,6 +29,7 @@ import com.metalsa.domain.MmrDataSheetDetailUt;
 import com.metalsa.domain.MmrDataSheetUt;
 import com.metalsa.domain.MmrEditDataSheetDetailView;
 import com.metalsa.domain.MmrNewDataSheetDetailView;
+import com.metalsa.domain.MmrRegionMasterUt;
 import com.metalsa.exception.ExceptionHandler;
 import com.metalsa.model.MmrBaseAttributeMasterUtModel;
 import com.metalsa.model.MmrBaseAttributeTableDataTypeUtModel;
@@ -478,6 +479,12 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 		if(sheetDetailUtModel.getBaseAttributeName().equalsIgnoreCase(MetalsaConstant.METALSA_DESIGNATION)) {
 			dataSheetUt.setDataSheetName(sheetDetailUtModel.getTestingInformation());
 		}
+		if(sheetDetailUtModel.getMmrDataTypeMasterUt().equalsIgnoreCase("Region Dropdown")) {
+			MmrRegionMasterUt regionMasterUt= regionRepository.findByName(sheetDetailUtModel.getTestingInformation());
+			if(regionMasterUt!=null) {
+				dataSheetUt.setRegionId(new BigDecimal(regionMasterUt.getId()));
+			}
+		}
 		dataSheetDetailUt.setCreatedBy(model.getCreatedBy());
 		dataSheetDetailUt.setModifiedBy(sheetDetailUtModel.getModifiedBy());
 		dataSheetDetailUt.setStatus(model.getStatus());
@@ -725,9 +732,25 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 
 	@Override
 	public String getNewRevisonNumber(Long classId, Long subClassId, Long regionId) {
-		
-		return null;
-	}
 
+		
+		MmrRegionMasterUt regionMasterUt= regionRepository.findById(regionId)
+        .orElseThrow(() -> new ExceptionHandler("RegionMasterUt", "id", regionId));
+		String count=dataSheetRepository.getMaxHeaderCount(classId, subClassId, regionId);
+		long maxCount = 0;
+		
+		if(count!=null) {
+			maxCount=Long.parseLong(count);
+		}
+		long updateCount=maxCount+1;
+		/*Random ran = new Random();
+		int x = ran.nextInt(1000) + 5;*/
+		String input = updateCount+"";
+        String result = "000" + input;
+        int length = result.length();
+        result = result.substring(length - 3, length);
+		return MetalsaConstant.METALSA_DESIGNATION_PREFIX+regionMasterUt.getAbbreviation()+result;
+	}
+	
 
 }

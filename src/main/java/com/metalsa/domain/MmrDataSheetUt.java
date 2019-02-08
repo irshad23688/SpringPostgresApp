@@ -51,8 +51,8 @@ public class MmrDataSheetUt implements Serializable {
 	@Column(nullable=false, precision=38)
 	private BigDecimal revision;
 
-//	@Column(name="REGION_ID", precision=38)
-//	private BigDecimal regionId;
+	@Column(name="REGION_ID", precision=38)
+	private BigDecimal regionId;
 	
 	@Column(nullable=false, precision=38)
 	private BigDecimal status;
@@ -215,6 +215,15 @@ public class MmrDataSheetUt implements Serializable {
 	public void setRevParentId(Long revParentId) {
 		this.revParentId = revParentId;
 	}
+
+	public BigDecimal getRegionId() {
+		return regionId;
+	}
+
+	public void setRegionId(BigDecimal regionId) {
+		this.regionId = regionId;
+	}
+
 	
 	
 
