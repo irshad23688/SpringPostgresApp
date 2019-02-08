@@ -29,9 +29,10 @@ public interface TestSheetDetailUtViewRepository extends JpaRepository<MmrTestSh
 	 		"    mmr_base_attribute_master_ut base\r\n" + 
 	 		"        LEFT JOIN mmr_header_attribute_master_ut header ON base.header_attribute_id = header.id\r\n" + 
 	 		"        LEFT JOIN mmr_test_sheet_detail_ut testSheetDtl ON base.id = testSheetDtl.base_attribute_id\r\n" + 
-	 		"        AND testsheetdtl.status=1 AND base.status= 1 AND header.status = 1 AND header.istableheader_flag=0\r\n" + 
+	 		"        AND testsheetdtl.status=1\r\n" + 
 	 		"        AND testSheetDtl.mmr_test_sheet_ut_id =?1\r\n" + 
-	 		"        ORDER BY testsheetdtl.base_attribute_sequence_no,testsheetdtl.header_attribute_id", 
+	 		"        where base.status= 1 AND header.status = 1 AND header.istableheader_flag=0\r\n" + 
+	 		"        ORDER BY header.id,testsheetdtl.base_attribute_sequence_no", 
 		        nativeQuery=true
 		    )
 	 List<MmrTestSheetDetailUtView> findByTestSheetDetail(Long mmrTestSheetUtId);
