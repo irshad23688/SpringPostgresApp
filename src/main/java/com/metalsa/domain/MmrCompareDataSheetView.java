@@ -32,6 +32,9 @@ public class MmrCompareDataSheetView implements Serializable{
 	@Column(name ="HEADERNAME")
 	private String headerName;
 	
+	@Column(name ="NAME")
+	private String baseName;
+	
 	@Column(name ="BASE_ATTRIBUTE_NAME")
 	private String baseAttributeName;
 
@@ -177,6 +180,14 @@ public class MmrCompareDataSheetView implements Serializable{
 
 	public void setHeaderName(String headerName) {
 		this.headerName = headerName;
+	}
+
+	public String getBaseName() {
+		return baseName;
+	}
+
+	public void setBaseName(String baseName) {
+		this.baseName = baseName;
 	}
 	
 	

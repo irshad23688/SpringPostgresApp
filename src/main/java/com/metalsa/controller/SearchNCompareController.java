@@ -1,6 +1,5 @@
 package com.metalsa.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.metalsa.domain.MmrCompareDataSheetView;
-import com.metalsa.domain.MmrDataSheetUt;
 import com.metalsa.model.MmrCompareDataSheetModel;
 import com.metalsa.model.SearchModel;
 import com.metalsa.service.SearchNCompareService;

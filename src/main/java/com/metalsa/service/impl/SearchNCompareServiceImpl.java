@@ -146,7 +146,7 @@ public class SearchNCompareServiceImpl implements SearchNCompareService {
 		for (MmrCompareDataSheetView viewObj : list) {
 			if(0l!=viewObj.getDataSheetId()) {
 				headerMap.put(viewObj.getHeaderAttributeId(), viewObj.getHeaderName());
-				baseMap.put(viewObj.getBaseAttributeId(), viewObj.getBaseAttributeName());
+				baseMap.put(viewObj.getBaseAttributeId(), viewObj.getBaseAttributeName()+"|"+ viewObj.getBaseName());
 				List< String> testinfoLst;
 				if(testingInfo.keySet().contains(viewObj.getBaseAttributeId())) {
 					testinfoLst = testingInfo.get(viewObj.getBaseAttributeId());
@@ -180,7 +180,13 @@ public class SearchNCompareServiceImpl implements SearchNCompareService {
 			for (Long baseId : headerBaseMap.get(headreId)) {
 				CompareBaseModel baseModel = new CompareBaseModel();
 				baseModel.setBaseAttributeId(baseId);
-				baseModel.setBaseAttributeDefaultDisplayName(baseMap.get(baseId));
+				List lst = Arrays.asList(baseMap.get(baseId).split("\\|"));
+				if(null!=lst.get(0)) {
+					baseModel.setBaseAttributeDefaultDisplayName(lst.get(0)+"");
+				}
+				if(lst.size()>1 && null!=lst.get(1)) {
+					baseModel.setBaseAttribName(lst.get(1)+"");
+				}
 				List materialModelLst = new ArrayList<CompareMaterialModel>();
 				List<Long> tmpDatasheetId = new ArrayList<>();
 				

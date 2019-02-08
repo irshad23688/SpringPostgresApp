@@ -5,6 +5,7 @@ import java.util.List;
 public class CompareBaseModel {
 	
 	private String baseAttributeDefaultDisplayName;
+	private String baseAttribName;
 	private Long baseAttributeId;
 	List<CompareMaterialModel> materialValue ;
 	
@@ -26,6 +27,11 @@ public class CompareBaseModel {
 	public void setMaterialValue(List<CompareMaterialModel> materialValue) {
 		this.materialValue = materialValue;
 	}
-	
+	public String getBaseAttribName() {
+		return baseAttribName;
+	}
+	public void setBaseAttribName(String baseAttribName) {
+		this.baseAttribName = baseAttribName;
+	}
 	
 }
