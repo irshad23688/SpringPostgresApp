@@ -10,6 +10,7 @@ public class DashboardModel {
 	private List<DataSheetDashboardModel> datasheetPendingList ;
 	private List<DataSheetDashboardModel> datasheetHistory ;
 	private Integer pendingListCount;
+	private UserMasterModel userData;
 
 	public List<DataSheetDashboardModel> getDatasheetPendingList() {
 		return datasheetPendingList;
@@ -47,5 +48,13 @@ public class DashboardModel {
 	public void setApprovedby(Long approvedby) {
 		this.approvedby = approvedby;
 	}
+	public UserMasterModel getUserData() {
+		return userData;
+	}
+	public void setUserData(UserMasterModel userData) {
+		this.userData = userData;
+	}
+	
+	
 	
 }

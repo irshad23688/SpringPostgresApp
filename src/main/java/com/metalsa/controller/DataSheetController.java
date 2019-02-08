@@ -88,7 +88,13 @@ public class DataSheetController {
     }
     @PostMapping("/datasheet/edit")
     public MmrDataSheetUtModel getDataSheet(@Valid @RequestBody MmrDataSheetUtModel model) {
-    	return dataSheetService.getEditDatasheet(model);
+    	if(model.getCurrentSequenceNo()==0) {
+    		model= dataSheetService.getEditDatasheet(model);
+    		
+    	}else {
+    		model = dataSheetService.persistDataSheet(model);
+    	}
+    	return model;
     }
     @GetMapping("/datasheet/new1/{classId}/{subClassId}")
     public MmrDataSheetUtModel createNewDataSheet1(@PathVariable(value = "classId") Long classId,

@@ -23,6 +23,7 @@ public class DashboardServiceImpl implements DashboardSevice {
 		
 		DashboardModel dashboardModel = new DashboardModel();
 	
+		dashboardModel.setUserData(customRepository.findUserDetailsByUserId(userId.longValue()));
 		dashboardModel.setDatasheetPendingList(customRepository.findDatasheetByStatus(new BigDecimal(2)));
 		dashboardModel.setDatasheetHistory(customRepository.getDatasheetForDashboard(userId));
 		dashboardModel.setPendingListCount(dashboardModel.getDatasheetPendingList().size());
