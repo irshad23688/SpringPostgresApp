@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="SEARCH_DATASHEET_VIEW")
 public class MmrSearchDataSheetView implements Serializable{
@@ -55,6 +57,7 @@ public class MmrSearchDataSheetView implements Serializable{
 	@Column(name ="STATUS")
 	private long status;
 	
+	@JsonIgnore
 	@Transient
 	private Map<String, String> uomMap = new LinkedHashMap<>();
 

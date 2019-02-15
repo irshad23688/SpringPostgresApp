@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
@@ -187,7 +188,11 @@ public class CustomRepositoryImpl implements CustomRepository {
 		if(null!= model.getTextBaseAttributeList() && !model.getTextBaseAttributeList().isEmpty()) {
 			for (SearchBaseModel searchBaseModel  : model.getTextBaseAttributeList()) {
 				Predicate pred1 = cb.equal(root.get("baseAttributeId"),Long.parseLong(searchBaseModel.getProperty()));
-				Predicate pred2 = cb.like(root.get("testingInformation"), "%"+searchBaseModel.getValue()+"%");
+				Expression<String> path = root.get("testingInformation");
+				Expression<String> upper =cb.upper(path);
+				
+				Predicate pred2 = cb.like(upper, "%"+searchBaseModel.getValue()+"%");
+				
 				predicates.add(cb.and(pred1,pred2));
 			}
 		}
