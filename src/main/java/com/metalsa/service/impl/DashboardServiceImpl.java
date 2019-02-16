@@ -1,12 +1,14 @@
 package com.metalsa.service.impl;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import com.metalsa.model.DashboardModel;
+import com.metalsa.model.DataSheetDashboardModel;
 import com.metalsa.repository.CustomRepository;
 import com.metalsa.service.DashboardSevice;
 
@@ -25,8 +27,15 @@ public class DashboardServiceImpl implements DashboardSevice {
 	
 		dashboardModel.setUserData(customRepository.findUserDetailsByUserId(userId.longValue()));
 		dashboardModel.setDatasheetPendingList(customRepository.findDatasheetByStatus(new BigDecimal(2)));
-		dashboardModel.setDatasheetHistory(customRepository.getDatasheetForDashboard(userId));
+		List<DataSheetDashboardModel> datasheetHistoryList = customRepository.getDatasheetForDashboard(userId);
+		dashboardModel.setDatasheetHistory(datasheetHistoryList);
 		dashboardModel.setPendingListCount(dashboardModel.getDatasheetPendingList().size());
+		if(datasheetHistoryList.size()>0) {
+			dashboardModel.setLastDesignation(datasheetHistoryList.get(0).getDatasheetName());
+			dashboardModel.setLastUpdatedOn(datasheetHistoryList.get(0).getApprovedOn());
+			
+		}
+		
 		
 		return dashboardModel;
 	}

@@ -5,12 +5,14 @@ import java.util.List;
 public class DashboardModel {
 	
 	private Long status;
-	private  Long id; 
-	private  Long approvedby;
+	private Long id; 
+	private Long approvedby;
 	private List<DataSheetDashboardModel> datasheetPendingList ;
 	private List<DataSheetDashboardModel> datasheetHistory ;
 	private Integer pendingListCount;
 	private UserMasterModel userData;
+	private String lastDesignation;
+	private String lastUpdatedOn;
 
 	public List<DataSheetDashboardModel> getDatasheetPendingList() {
 		return datasheetPendingList;
@@ -53,6 +55,19 @@ public class DashboardModel {
 	}
 	public void setUserData(UserMasterModel userData) {
 		this.userData = userData;
+	}
+	
+	public String getLastDesignation() {
+		return lastDesignation;
+	}
+	public void setLastDesignation(String lastDesignation) {
+		this.lastDesignation = lastDesignation;
+	}
+	public String getLastUpdatedOn() {
+		return lastUpdatedOn;
+	}
+	public void setLastUpdatedOn(String lastUpdatedOn) {
+		this.lastUpdatedOn = lastUpdatedOn;
 	}
 	
 	
