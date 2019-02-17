@@ -154,7 +154,13 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 
 	@Override
 	public MmrDataSheetUtModel getNewDataTestSheetDetailByClassSubClass(Long classId, Long subClassId) {
-		long min =newDataSheetDetailViewRepository.getMinHeaderCount(classId, subClassId);
+		String minVal =newDataSheetDetailViewRepository.getMinHeaderCount(classId, subClassId);
+		
+		Long min = 0l;
+		if(null!=minVal) {
+			min = Long.parseLong(minVal);
+		}
+		
 		MmrDataSheetUtModel model= getHeaderWiseBaseAttributeList(newDataSheetDetailViewRepository.
 				findByClassIdAndSubClassIdAndHeaderAttributeSequenceNo(classId, subClassId, min));
 		model.setRevision(BigDecimal.ONE);
@@ -180,8 +186,18 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 					dataSheetUtModel.setClassId(detailView.getClassId());
 					dataSheetUtModel.setSubclassId(detailView.getSubClassId());
 					dataSheetUtModel.setTestSheetId(detailView.getTestSheetId());
-					long max =newDataSheetDetailViewRepository.getMaxHeaderCount(detailView.getClassId(), detailView.getSubClassId());
-					long min =newDataSheetDetailViewRepository.getMinHeaderCount(detailView.getClassId(), detailView.getSubClassId());
+					
+					long max = 0l;
+					long min = 0l;
+					
+					String maxVal = newDataSheetDetailViewRepository.getMaxHeaderCount(detailView.getClassId(), detailView.getSubClassId());
+					String minVal = newDataSheetDetailViewRepository.getMinHeaderCount(detailView.getClassId(), detailView.getSubClassId());
+					if(null!=maxVal) {
+						max = Long.parseLong(maxVal);
+					}
+					if(null!=minVal) {
+						min = Long.parseLong(minVal);
+					}
 					long nextHeader=min+1;
 					if(nextHeader>max) {
 						nextHeader=min;
@@ -643,12 +659,26 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 		
 		MmrDataSheetUtModel mmrDataSheetUtModel = model;
 		MmrDataSheetUtModel	nextModel=null;
+		
+		long max = 0l;
+		long min = 0l;
+		
+		
+		
 		if(model.getMaxHeaders()==null){
-			long max =editDataSheetDetailViewRepository.getMaxHeaderCount(model.getDataSheetId());
+			String maxVal =editDataSheetDetailViewRepository.getMaxHeaderCount(model.getDataSheetId());
+			if(null!=maxVal) {
+				max = Long.parseLong(maxVal);
+			}
+			
 			mmrDataSheetUtModel.setMaxHeaders(max);
 		}
 		if(model.getMinHeaders()==null){
-			long min =editDataSheetDetailViewRepository.getMinHeaderCount(model.getDataSheetId());
+			
+			String minVal =editDataSheetDetailViewRepository.getMinHeaderCount(model.getDataSheetId());
+			if(null!=minVal) {
+				min = Long.parseLong(minVal);
+			}
 			mmrDataSheetUtModel.setMinHeaders(min);
 		}
 		if(model.getCurrentSequenceNo()==null){
@@ -769,7 +799,6 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 
 		return model;
 	}
-
 	private void calCulateValuesArPerUom(MmrDataSheetDetailListViewUtModel viewModel,String som) {
 		if(MetalsaConstant.SOM1.equals(som)) {
 			viewModel.getBaseAttribute().setUserSelectUom(viewModel.getBaseAttribute().getSom1Uom());
@@ -808,6 +837,7 @@ public class DataSheetServiceImpl implements DataSheetSevice {
 			}
 		}
 	}
+
 	
 
 }

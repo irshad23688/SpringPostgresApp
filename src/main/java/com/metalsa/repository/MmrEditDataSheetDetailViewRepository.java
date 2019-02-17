@@ -20,9 +20,9 @@ public interface MmrEditDataSheetDetailViewRepository extends JpaRepository<MmrE
 
 	@Query(value = "select max(v.header_attribute_sequence_no) from mmr_edit_data_sheet_detail_view v where v.mmr_data_sheet_ut_id=?1 ", 
 			nativeQuery=true)
-	long getMaxHeaderCount(long dataSheetId);
+	String getMaxHeaderCount(long dataSheetId);
 
 	@Query(value = "select min(v.header_attribute_sequence_no) from mmr_edit_data_sheet_detail_view v where v.mmr_data_sheet_ut_id=?1 ", 
 			nativeQuery=true)
-	long getMinHeaderCount(long dataSheetId);
+	String getMinHeaderCount(long dataSheetId);
 }
