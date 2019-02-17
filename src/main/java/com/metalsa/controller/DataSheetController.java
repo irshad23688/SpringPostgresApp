@@ -107,6 +107,11 @@ public class DataSheetController {
     	model = dataSheetService.persistDataSheet(model);
     	return model;
     }
+    @PostMapping("/datasheet/conversion/{som}")
+    public MmrDataSheetUtModel changeConversionDataSheetModel(@PathVariable(value = "som") String som,@Valid @RequestBody MmrDataSheetUtModel model) {
+    	model = dataSheetService.changeConversionDataSheetModel(model,som);
+    	return model;
+    }
     
     @PostMapping("/datasheetSave")
     public MmrDataSheetUt persistDataSheetModel1(@Valid @RequestBody MmrDataSheetUt model) {

@@ -19,4 +19,5 @@ public interface DataSheetSevice {
 	MmrDataSheetUtModel getDataSheetById(MmrDataSheetUt dataSheetUt);
 	MmrDataSheetUtModel getEditDatasheet(@Valid MmrDataSheetUtModel model);
 	String getNewRevisonNumber(Long classId, Long subClassId, Long regionId);
+	MmrDataSheetUtModel changeConversionDataSheetModel(@Valid MmrDataSheetUtModel model, String som);
 }

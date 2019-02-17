@@ -751,6 +751,63 @@ public class DataSheetServiceImpl implements DataSheetSevice {
         result = result.substring(length - 3, length);
 		return MetalsaConstant.METALSA_DESIGNATION_PREFIX+regionMasterUt.getAbbreviation()+result;
 	}
+
+	@Override
+	public MmrDataSheetUtModel changeConversionDataSheetModel(@Valid MmrDataSheetUtModel model,String som) {
+
+		for(MmrDataSheetHeaderModel mmrDataSheetHeaderModel : model.getDataSheetHeaderDetails()) {
+			for (MmrDataSheetDetailUtModel dataSheetDetailUtModel : mmrDataSheetHeaderModel.getDataSheetDetails()) {
+				if(dataSheetDetailUtModel.getMmrDataTypeMasterUt().equalsIgnoreCase(MetalsaConstant.DATA_TYPE_LISTVIEW)) {
+					for (MmrDataSheetDetailListViewUtModel viewModel : dataSheetDetailUtModel.getListviewData()) {
+						calCulateValuesArPerUom(viewModel,som);
+					}
+				}
+				
+			}
+			
+		}
+
+		return model;
+	}
+
+	private void calCulateValuesArPerUom(MmrDataSheetDetailListViewUtModel viewModel,String som) {
+		if(MetalsaConstant.SOM1.equals(som)) {
+			viewModel.getBaseAttribute().setUserSelectUom(viewModel.getBaseAttribute().getSom1Uom());
+			if(viewModel.getBaseAttribute().getSom1ConversionFactor()!=null && viewModel.getBaseAttribute().getSom1ConversionFactor().contains("/") ) {
+				BigDecimal cal=new BigDecimal(viewModel.getBaseAttribute().getTestingInformation()).
+						divide(new BigDecimal(viewModel.getBaseAttribute().getSom1ConversionFactor().split("/")[1]));
+//				dataSheetDetailUt.setUserUom2(cal+"");
+				viewModel.getBaseAttribute().setTestingInformation(cal+"");
+			}
+//			dataSheetDetailUt.setTestingInformation(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformation());
+//			dataSheetDetailUt.setUserUom1(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformation());
+			if(viewModel.getBaseAttribute().getSom1ConversionFactor()!=null &&
+					viewModel.getBaseAttribute().getSom1ConversionFactor().contains("*") ) {
+				BigDecimal cal=new BigDecimal(viewModel.getBaseAttribute().getTestingInformation()).
+						multiply(new BigDecimal(viewModel.getBaseAttribute().getSom1ConversionFactor().split("*")[1]));
+//				dataSheetDetailUt.setUserUom2(cal+"");
+				viewModel.getBaseAttribute().setTestingInformation(cal+"");
+			}
+		}else {
+//			dataSheetDetailUt.setTestingInformation(dataSheetDetailUt.getTestingInformation());
+//			dataSheetDetailUt.setUserUom2(mmrDataSheetDetailUt.getBaseAttribute().getTestingInformation());
+			viewModel.getBaseAttribute().setUserSelectUom(viewModel.getBaseAttribute().getSom2Uom());
+			if(viewModel.getBaseAttribute().getSom2ConversionFactor()!=null 
+					&& viewModel.getBaseAttribute().getSom2ConversionFactor().contains("/") ) {
+				BigDecimal cal=new BigDecimal(viewModel.getBaseAttribute().getTestingInformation()).
+						divide(new BigDecimal(viewModel.getBaseAttribute().getSom2ConversionFactor().split("/")[1]));
+//				dataSheetDetailUt.setUserUom1(cal+"");
+				viewModel.getBaseAttribute().setTestingInformation(cal+"");
+			}
+			if(viewModel.getBaseAttribute().getSom2ConversionFactor()!=null &&
+					viewModel.getBaseAttribute().getSom2ConversionFactor().contains("*") ) {
+				BigDecimal cal=new BigDecimal(viewModel.getBaseAttribute().getTestingInformation()).
+						multiply(new BigDecimal(viewModel.getBaseAttribute().getSom2ConversionFactor().split("\\*")[1]));
+//				dataSheetDetailUt.setUserUom1(cal+"");
+				viewModel.getBaseAttribute().setTestingInformation(cal+"");
+			}
+		}
+	}
 	
 
 }
